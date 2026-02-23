@@ -33,20 +33,20 @@ import PageLayout from "@layouts/Layout.astro";
       >2D Map</button>
     </div>
 
-    <!-- 3D Globe view -->
+    <!-- 3D Globe view (cobe WebGL) -->
     <div
       id="view-3d"
       class="animate mt-6 w-full aspect-video border border-black/10 dark:border-white/10 rounded-lg overflow-hidden bg-neutral-950 relative"
     >
-      <canvas id="globe-canvas" class="w-full h-full"></canvas>
+      <canvas id="globe-canvas" style="width:100%;height:100%"></canvas>
     </div>
 
-    <!-- 2D Map view (hidden by default) -->
+    <!-- 2D Map view (D3 + TopoJSON SVG) -->
     <div
       id="view-2d"
       class="animate mt-6 w-full aspect-video border border-black/10 dark:border-white/10 rounded-lg overflow-hidden bg-neutral-100 dark:bg-neutral-800 relative hidden"
     >
-      <canvas id="map-canvas" class="w-full h-full"></canvas>
+      <svg id="map-svg" style="width:100%;height:100%"></svg>
     </div>
 
     <!-- Terminal Log -->
@@ -67,6 +67,11 @@ import PageLayout from "@layouts/Layout.astro";
 </PageLayout>
 
 <script>
+  import createGlobe from "cobe";
+  import { geoNaturalEarth1, geoPath, geoGraticule } from "d3-geo";
+  import { feature } from "topojson-client";
+  import type { Topology, GeometryCollection } from "topojson-specification";
+
   // ── Data Layer ──────────────────────────────────────────────
   interface Footprint {
     city: string;
@@ -89,6 +94,15 @@ import PageLayout from "@layouts/Layout.astro";
     { city: "Seattle",    country: "USA",     lat: 47.61, lng:-122.33, year: 2023, note: "Visited the cloud capital of the world" },
     { city: "San Francisco", country: "USA",  lat: 37.77, lng:-122.42, year: 2024, note: "AI pilgrimage to the Bay Area" },
   ];
+
+  // Country name → ISO 3166-1 numeric code (used by world-atlas TopoJSON)
+  const COUNTRY_CODES: Record<string, string> = {
+    China: "156",
+    Japan: "392",
+    Singapore: "702",
+    Canada: "124",
+    USA: "840",
+  };
 
   // ── State ──────────────────────────────────────────────────
   let activeYear: number | "all" = "all";
@@ -152,199 +166,149 @@ import PageLayout from "@layouts/Layout.astro";
   btn3d.addEventListener("click", () => setView("3d"));
   btn2d.addEventListener("click", () => setView("2d"));
 
-  // ── Helpers ────────────────────────────────────────────────
-  const DEG = Math.PI / 180;
-
-  function latLngToSphere(lat: number, lng: number, r: number): [number, number, number] {
-    const phi = (90 - lat) * DEG;
-    const theta = (lng + 180) * DEG;
-    return [
-      r * Math.sin(phi) * Math.cos(theta),
-      r * Math.cos(phi),
-      r * Math.sin(phi) * Math.sin(theta),
-    ];
-  }
-
-  function rotate(x: number, y: number, z: number, ay: number): [number, number, number] {
-    const cos = Math.cos(ay);
-    const sin = Math.sin(ay);
-    return [x * cos - z * sin, y, x * sin + z * cos];
-  }
-
-  // ── 3D Particle Globe ─────────────────────────────────────
+  // ── 1) 3D WebGL Particle Globe (cobe) ─────────────────────
   const globeCanvas = document.getElementById("globe-canvas") as HTMLCanvasElement;
-  const gCtx = globeCanvas.getContext("2d")!;
-  let gAngle = 0;
+  let currentGlobe: ReturnType<typeof createGlobe> | null = null;
+  let phi = 0;
 
-  // Pre-generate sphere surface dots (fibonacci sphere)
-  const SPHERE_DOTS = 1200;
-  const spherePoints: [number, number, number][] = [];
-  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-  for (let i = 0; i < SPHERE_DOTS; i++) {
-    const y = 1 - (i / (SPHERE_DOTS - 1)) * 2;
-    const radius = Math.sqrt(1 - y * y);
-    const theta = goldenAngle * i;
-    spherePoints.push([Math.cos(theta) * radius, y, Math.sin(theta) * radius]);
+  function buildMarkers() {
+    return filtered().map((fp) => ({
+      location: [fp.lat, fp.lng] as [number, number],
+      size: 0.05,
+    }));
   }
 
-  function drawGlobe() {
-    const w = globeCanvas.clientWidth;
-    const h = globeCanvas.clientHeight;
-    if (w === 0 || h === 0) return;
-    const dpr = window.devicePixelRatio || 1;
-    globeCanvas.width = w * dpr;
-    globeCanvas.height = h * dpr;
-    gCtx.scale(dpr, dpr);
-
-    const cx = w / 2;
-    const cy = h / 2;
-    const R = Math.min(w, h) * 0.38;
-
-    gCtx.clearRect(0, 0, w, h);
-
-    // Draw sphere dots
-    for (const [px, py, pz] of spherePoints) {
-      const [rx, ry, rz] = rotate(px * R, py * R, pz * R, gAngle);
-      if (rz < 0) continue; // back-face cull
-      const alpha = 0.08 + 0.12 * (rz / R);
-      gCtx.fillStyle = `rgba(255,255,255,${alpha})`;
-      gCtx.fillRect(cx + rx - 0.5, cy - ry - 0.5, 1.2, 1.2);
+  function renderGlobe() {
+    if (currentGlobe) {
+      currentGlobe.destroy();
+      currentGlobe = null;
     }
-
-    // Draw footprint markers
-    const data = filtered();
-    for (const fp of data) {
-      const [sx, sy, sz] = latLngToSphere(fp.lat, fp.lng, R);
-      const [rx, ry, rz] = rotate(sx, sy, sz, gAngle);
-      if (rz < -R * 0.1) continue; // show markers slightly past the horizon for visibility
-      const scale = 0.6 + 0.4 * (rz / R);
-      const dotR = 3 * scale;
-      const alpha = Math.max(0.3, scale);
-
-      // Glow
-      const grad = gCtx.createRadialGradient(cx + rx, cy - ry, 0, cx + rx, cy - ry, dotR * 4);
-      grad.addColorStop(0, `rgba(56,189,248,${0.4 * alpha})`);
-      grad.addColorStop(1, "rgba(56,189,248,0)");
-      gCtx.fillStyle = grad;
-      gCtx.fillRect(cx + rx - dotR * 4, cy - ry - dotR * 4, dotR * 8, dotR * 8);
-
-      // Dot
-      gCtx.beginPath();
-      gCtx.arc(cx + rx, cy - ry, dotR, 0, Math.PI * 2);
-      gCtx.fillStyle = `rgba(56,189,248,${alpha})`;
-      gCtx.fill();
-
-      // Label only in the front ~70% of the visible hemisphere to avoid clutter
-      if (rz > R * 0.3) {
-        gCtx.font = `${10 * scale}px ui-monospace, monospace`;
-        gCtx.fillStyle = `rgba(255,255,255,${alpha * 0.8})`;
-        gCtx.fillText(fp.city, cx + rx + dotR + 4, cy - ry + 3);
-      }
-    }
-  }
-
-  let globeRaf: number;
-  function animateGlobe() {
-    gAngle += 0.003;
-    drawGlobe();
-    globeRaf = requestAnimationFrame(animateGlobe);
-  }
-
-  // ── 2D Flat Map ────────────────────────────────────────────
-  const mapCanvas = document.getElementById("map-canvas") as HTMLCanvasElement;
-  const mCtx = mapCanvas.getContext("2d")!;
-
-  function project2d(lat: number, lng: number, w: number, h: number): [number, number] {
-    const x = ((lng + 180) / 360) * w;
-    const y = ((90 - lat) / 180) * h;
-    return [x, y];
-  }
-
-  function drawMap() {
-    const w = mapCanvas.clientWidth;
-    const h = mapCanvas.clientHeight;
+    const container = globeCanvas.parentElement!;
+    const w = container.clientWidth;
+    const h = container.clientHeight;
     if (w === 0 || h === 0) return;
-    const dpr = window.devicePixelRatio || 1;
-    mapCanvas.width = w * dpr;
-    mapCanvas.height = h * dpr;
-    mCtx.scale(dpr, dpr);
 
+    // Dimensions are doubled for crisp rendering on high-DPI displays
+    currentGlobe = createGlobe(globeCanvas, {
+      devicePixelRatio: window.devicePixelRatio || 2,
+      width: w * 2,
+      height: h * 2,
+      phi: 0,
+      theta: 0.3,
+      dark: 1,
+      diffuse: 1.2,
+      mapSamples: 16000,
+      mapBrightness: 6,
+      baseColor: [0.3, 0.3, 0.3],
+      markerColor: [0.1, 0.8, 1.0],
+      glowColor: [1.2, 1.2, 1.2],
+      markers: buildMarkers(),
+      onRender: (state) => {
+        state.phi = phi;
+        phi += 0.005;
+      },
+    });
+  }
+
+  // ── 2) 2D SVG Vector World Map (D3.js + TopoJSON) ─────────
+  const mapSvg = document.getElementById("map-svg")!;
+  let cachedWorld: Topology | null = null;
+
+  async function loadWorld(): Promise<Topology> {
+    if (cachedWorld) return cachedWorld;
+    const res = await fetch(
+      "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+    );
+    cachedWorld = (await res.json()) as Topology;
+    return cachedWorld;
+  }
+
+  async function renderMap() {
+    const world = await loadWorld();
+
+    const countriesGeo = feature(
+      world,
+      world.objects.countries as GeometryCollection
+    );
+
+    const w = mapSvg.clientWidth || 800;
+    const h = mapSvg.clientHeight || 450;
+    mapSvg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    mapSvg.innerHTML = "";
+
+    const projection = geoNaturalEarth1().fitSize([w, h], countriesGeo);
+    const pathGen = geoPath(projection);
     const isDark = document.documentElement.classList.contains("dark");
-    mCtx.clearRect(0, 0, w, h);
 
-    // Grid lines
-    mCtx.strokeStyle = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
-    mCtx.lineWidth = 0.5;
-    for (let lng = -180; lng <= 180; lng += 30) {
-      const x = ((lng + 180) / 360) * w;
-      mCtx.beginPath();
-      mCtx.moveTo(x, 0);
-      mCtx.lineTo(x, h);
-      mCtx.stroke();
-    }
-    for (let lat = -90; lat <= 90; lat += 30) {
-      const y = ((90 - lat) / 180) * h;
-      mCtx.beginPath();
-      mCtx.moveTo(0, y);
-      mCtx.lineTo(w, y);
-      mCtx.stroke();
-    }
+    // Graticule (grid lines)
+    const graticuleData = geoGraticule()();
+    const gratEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    gratEl.setAttribute("d", pathGen(graticuleData) || "");
+    gratEl.setAttribute("fill", "none");
+    gratEl.setAttribute("stroke", isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)");
+    gratEl.setAttribute("stroke-width", "0.5");
+    mapSvg.appendChild(gratEl);
 
-    // Equator & prime meridian
-    mCtx.strokeStyle = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)";
-    mCtx.lineWidth = 1;
-    const eqY = h / 2;
-    mCtx.beginPath(); mCtx.moveTo(0, eqY); mCtx.lineTo(w, eqY); mCtx.stroke();
-    const pmX = w / 2;
-    mCtx.beginPath(); mCtx.moveTo(pmX, 0); mCtx.lineTo(pmX, h); mCtx.stroke();
-
-    // Connection lines between consecutive footprints
+    // Determine which country codes are visited (based on filtered data)
     const data = filtered();
-    if (data.length > 1) {
-      mCtx.strokeStyle = isDark ? "rgba(56,189,248,0.2)" : "rgba(14,116,144,0.2)";
-      mCtx.lineWidth = 1;
-      mCtx.setLineDash([4, 4]);
-      mCtx.beginPath();
-      const [fx, fy] = project2d(data[0].lat, data[0].lng, w, h);
-      mCtx.moveTo(fx, fy);
-      for (let i = 1; i < data.length; i++) {
-        const [nx, ny] = project2d(data[i].lat, data[i].lng, w, h);
-        mCtx.lineTo(nx, ny);
-      }
-      mCtx.stroke();
-      mCtx.setLineDash([]);
+    const visitedCodes = new Set(
+      data.map((fp) => COUNTRY_CODES[fp.country]).filter(Boolean)
+    );
+
+    // Draw country polygons — highlight visited countries
+    const defaultFill = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)";
+    const highlightFill = "rgba(56,189,248,0.55)";
+    const strokeColor = isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)";
+
+    for (const feat of countriesGeo.features) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      el.setAttribute("d", pathGen(feat) || "");
+      const isVisited = visitedCodes.has(String(feat.id));
+      el.setAttribute("fill", isVisited ? highlightFill : defaultFill);
+      el.setAttribute("stroke", strokeColor);
+      el.setAttribute("stroke-width", "0.5");
+      mapSvg.appendChild(el);
     }
 
-    // Location markers
-    const dotColor = isDark ? "rgb(56,189,248)" : "rgb(14,116,144)";
-    const labelColor = isDark ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.75)";
+    // Draw city markers (driven by city lat/lng)
     for (const fp of data) {
-      const [x, y] = project2d(fp.lat, fp.lng, w, h);
+      const coords = projection([fp.lng, fp.lat]);
+      if (!coords) continue;
+      const [x, y] = coords;
 
-      // Glow
-      const grad = mCtx.createRadialGradient(x, y, 0, x, y, 16);
-      grad.addColorStop(0, isDark ? "rgba(56,189,248,0.25)" : "rgba(14,116,144,0.15)");
-      grad.addColorStop(1, "rgba(56,189,248,0)");
-      mCtx.fillStyle = grad;
-      mCtx.fillRect(x - 16, y - 16, 32, 32);
+      // Glow ring
+      const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      glow.setAttribute("cx", String(x));
+      glow.setAttribute("cy", String(y));
+      glow.setAttribute("r", "10");
+      glow.setAttribute("fill", "rgba(56,189,248,0.15)");
+      mapSvg.appendChild(glow);
 
-      // Dot
-      mCtx.beginPath();
-      mCtx.arc(x, y, 4, 0, Math.PI * 2);
-      mCtx.fillStyle = dotColor;
-      mCtx.fill();
+      // Solid dot
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", String(x));
+      dot.setAttribute("cy", String(y));
+      dot.setAttribute("r", "3.5");
+      dot.setAttribute("fill", "rgb(56,189,248)");
+      dot.setAttribute("stroke", "white");
+      dot.setAttribute("stroke-width", "1.2");
+      mapSvg.appendChild(dot);
 
-      // Label
-      mCtx.font = "11px ui-monospace, monospace";
-      mCtx.fillStyle = labelColor;
-      mCtx.fillText(`${fp.city} (${fp.year})`, x + 8, y + 4);
+      // City label
+      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      label.setAttribute("x", String(x + 7));
+      label.setAttribute("y", String(y + 3));
+      label.setAttribute("font-size", "9");
+      label.setAttribute("font-family", "ui-monospace, monospace");
+      label.setAttribute("fill", isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.65)");
+      label.textContent = fp.city;
+      mapSvg.appendChild(label);
     }
   }
 
-  // ── Terminal Log ───────────────────────────────────────────
+  // ── 3) Terminal Log ────────────────────────────────────────
   function renderTerminal() {
     const body = document.getElementById("terminal-body")!;
-    // Keep the prompt line, clear the rest
     while (body.children.length > 1) body.removeChild(body.lastChild!);
 
     const data = filtered().slice().sort((a, b) => a.year - b.year);
@@ -355,7 +319,7 @@ import PageLayout from "@layouts/Layout.astro";
       body.appendChild(line);
       return;
     }
-    data.forEach((fp, i) => {
+    for (const fp of data) {
       const line = document.createElement("p");
       line.innerHTML =
         `<span class="text-yellow-400/70">[${fp.year}]</span> ` +
@@ -363,8 +327,7 @@ import PageLayout from "@layouts/Layout.astro";
         `<span class="text-white/30">, ${fp.country}</span>` +
         ` — <span class="text-green-300/80">${fp.note}</span>`;
       body.appendChild(line);
-    });
-    // EOF
+    }
     const eof = document.createElement("p");
     eof.className = "text-white/30 mt-2";
     eof.textContent = `$ # ${data.length} entries | EOF`;
@@ -374,19 +337,18 @@ import PageLayout from "@layouts/Layout.astro";
   // ── Render orchestrator ────────────────────────────────────
   function renderAll() {
     if (activeView === "3d") {
-      drawGlobe();
+      renderGlobe();
     } else {
-      drawMap();
+      renderMap();
     }
     renderTerminal();
   }
 
   // ── Init ───────────────────────────────────────────────────
   renderAll();
-  animateGlobe();
 
   // Responsive resize
   const ro = new ResizeObserver(() => renderAll());
   ro.observe(globeCanvas.parentElement!);
-  ro.observe(mapCanvas.parentElement!);
+  ro.observe(mapSvg.parentElement!);
 </script>
