@@ -188,6 +188,7 @@ import PageLayout from "@layouts/Layout.astro";
     const h = container.clientHeight;
     if (w === 0 || h === 0) return;
 
+    // Dimensions are doubled for crisp rendering on high-DPI displays
     currentGlobe = createGlobe(globeCanvas, {
       devicePixelRatio: window.devicePixelRatio || 2,
       width: w * 2,
@@ -288,7 +289,7 @@ import PageLayout from "@layouts/Layout.astro";
       dot.setAttribute("cx", String(x));
       dot.setAttribute("cy", String(y));
       dot.setAttribute("r", "3.5");
-      dot.setAttribute("fill", "rgb(248,113,113)");
+      dot.setAttribute("fill", "rgb(56,189,248)");
       dot.setAttribute("stroke", "white");
       dot.setAttribute("stroke-width", "1.2");
       mapSvg.appendChild(dot);
