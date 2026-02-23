@@ -69,19 +69,6 @@ const projects = (await getCollection("projects"))
               <ArrowCard entry={project} />
             </li>
           ))}
-          <!-- 硬编码的静态 Demo 接入点 -->
-          <li class="group relative flex flex-col gap-2 rounded-md border border-black/10 dark:border-white/10 p-4 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
-            <a href="/demos/weather/index.html" target="_blank" class="w-full flex justify-between items-center">
-              <div class="flex flex-col">
-                <div class="font-semibold text-black dark:text-white">AI Inference API (Static Demo)</div>
-                <div class="text-sm opacity-75">A pure static frontend demo talking to my backend infrastructure.</div>
-              </div>
-              <svg xmlns="http://www.w3.org/20svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="stroke-current group-hover:stroke-black group-hover:dark:stroke-white">
-                <line x1="5" y1="12" x2="19" y2="12" class="scale-x-0 translate-x-[10px] transition-all duration-300 ease-in-out group-hover:scale-x-100 group-hover:translate-x-0"></line>
-                <polyline points="12 5 19 12 12 19" class="translate-x-0 transition-all duration-300 ease-in-out group-hover:translate-x-1"></polyline>
-              </svg>
-            </a>
-          </li>
         </ul>
       </section>
 
