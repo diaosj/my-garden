@@ -36,9 +36,11 @@ import PageLayout from "@layouts/Layout.astro";
     <!-- 3D Globe view (cobe WebGL) -->
     <div
       id="view-3d"
-      class="animate mt-6 w-full aspect-video border border-black/10 dark:border-white/10 rounded-lg overflow-hidden bg-neutral-950 relative"
+      class="animate mt-6 w-full h-[400px] relative overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-neutral-950"
     >
-      <canvas id="globe-canvas" style="width:100%;height:100%"></canvas>
+      <div class="absolute top-[30%] left-[40%] w-[1000px] h-[1000px] max-w-none pointer-events-none">
+        <canvas id="globe-canvas" class="w-full h-full"></canvas>
+      </div>
     </div>
 
     <!-- 2D Map view (D3 + TopoJSON SVG) -->
