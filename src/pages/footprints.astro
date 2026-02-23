@@ -38,16 +38,20 @@ import PageLayout from "@layouts/Layout.astro";
       id="view-3d"
       class="animate mt-6 w-full h-[400px] relative overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-neutral-950"
     >
-      <!-- 巨大化地球容器，移除 pointer-events-none 以允许拖拽旋转 -->
-      <div class="absolute top-[5%] left-[25%] w-[900px] h-[900px] md:top-[0%] md:left-[45%] max-w-none cursor-grab active:cursor-grabbing z-0">
+      <!-- 1. 地球容器：垂直居中（top-1/2 -translate-y-1/2），向右推（left-[30%]），尺寸巨大以产生压迫感 -->
+      <div class="absolute top-1/2 -translate-y-1/2 left-[20%] md:left-[45%] w-[900px] h-[900px] cursor-grab active:cursor-grabbing z-0">
         <canvas id="globe-canvas" class="w-full h-full"></canvas>
       </div>
-      
-      <!-- 深空渐变遮罩魔法 (消除生硬切边，营造宇宙深邃感) -->
-      <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,1)] z-10"></div>
-      <div class="absolute inset-0 pointer-events-none bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10"></div>
-      <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-neutral-950/80 to-transparent h-1/4 z-10"></div>
-      <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-neutral-950/80 to-transparent h-1/4 bottom-0 z-10"></div>
+
+      <!-- 2. 左侧平滑黑雾：只遮盖左半边，完美过渡到透明，不吃掉右侧的星光 -->
+      <div class="absolute inset-y-0 left-0 w-1/2 md:w-2/3 pointer-events-none bg-gradient-to-r from-neutral-950 via-neutral-950/60 to-transparent z-10"></div>
+
+      <!-- 3. 上下平滑黑雾：消除地球上下边缘的突兀感 -->
+      <div class="absolute top-0 inset-x-0 h-24 pointer-events-none bg-gradient-to-b from-neutral-950 to-transparent z-10"></div>
+      <div class="absolute bottom-0 inset-x-0 h-24 pointer-events-none bg-gradient-to-t from-neutral-950 to-transparent z-10"></div>
+
+      <!-- 4. 全局暗角边缘：强化深邃感 -->
+      <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_60px_rgba(0,0,0,0.8)] z-10"></div>
     </div>
 
     <!-- 2D Map view (D3 + TopoJSON SVG) -->
