@@ -20,12 +20,17 @@
     "astro": "^5.13.9",
     "astro-pagefind": "^1.8.5",
     "clsx": "^2.1.1",
+    "cobe": "^0.6.5",
+    "d3-geo": "^3.1.1",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.13",
+    "topojson-client": "^3.1.0",
     "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.18",
+    "@types/d3-geo": "^3.1.0",
+    "@types/topojson-client": "^3.1.5",
     "pagefind": "^1.4.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
