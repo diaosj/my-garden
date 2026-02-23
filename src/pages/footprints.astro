@@ -13,11 +13,380 @@ import PageLayout from "@layouts/Layout.astro";
       Coding locally, deploying globally. A map of the cities and countries I've explored.
     </p>
 
+    <!-- Year filter -->
+    <div id="year-filter" class="animate mt-8 flex flex-wrap gap-2">
+      <button
+        class="year-btn active px-3 py-1 text-xs rounded-full border border-black/15 dark:border-white/20 bg-black text-white dark:bg-white dark:text-black transition-colors"
+        data-year="all"
+      >All</button>
+    </div>
+
+    <!-- A/B view toggle -->
+    <div class="animate mt-4 flex gap-2">
+      <button
+        id="btn-3d"
+        class="view-toggle active px-4 py-1.5 text-xs font-medium rounded-md border border-black/15 dark:border-white/20 bg-black text-white dark:bg-white dark:text-black transition-colors"
+      >3D Globe</button>
+      <button
+        id="btn-2d"
+        class="view-toggle px-4 py-1.5 text-xs font-medium rounded-md border border-black/15 dark:border-white/20 bg-transparent text-black/75 dark:text-white/75 transition-colors"
+      >2D Map</button>
+    </div>
+
+    <!-- 3D Globe view -->
     <div
-      id="map-container"
-      class="animate mt-12 w-full aspect-video border border-black/10 dark:border-white/10 rounded-lg flex items-center justify-center"
+      id="view-3d"
+      class="animate mt-6 w-full aspect-video border border-black/10 dark:border-white/10 rounded-lg overflow-hidden bg-neutral-950 relative"
     >
-      Map loading...
+      <canvas id="globe-canvas" class="w-full h-full"></canvas>
+    </div>
+
+    <!-- 2D Map view (hidden by default) -->
+    <div
+      id="view-2d"
+      class="animate mt-6 w-full aspect-video border border-black/10 dark:border-white/10 rounded-lg overflow-hidden bg-neutral-100 dark:bg-neutral-800 relative hidden"
+    >
+      <canvas id="map-canvas" class="w-full h-full"></canvas>
+    </div>
+
+    <!-- Terminal Log -->
+    <div class="animate mt-12">
+      <div class="rounded-lg border border-black/10 dark:border-white/10 overflow-hidden font-mono text-xs">
+        <div class="flex items-center gap-2 px-4 py-2 bg-neutral-200 dark:bg-neutral-800 border-b border-black/10 dark:border-white/10">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-400"></span>
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-400"></span>
+          <span class="ml-2 text-black/50 dark:text-white/50 select-none">terminal — footprints.log</span>
+        </div>
+        <div id="terminal-body" class="p-4 bg-neutral-950 text-green-400 max-h-80 overflow-y-auto leading-relaxed space-y-0.5">
+          <p class="text-white/30">$ cat footprints.log</p>
+        </div>
+      </div>
     </div>
   </Container>
 </PageLayout>
+
+<script>
+  // ── Data Layer ──────────────────────────────────────────────
+  interface Footprint {
+    city: string;
+    country: string;
+    lat: number;
+    lng: number;
+    year: number;
+    note: string;
+  }
+
+  const footprints: Footprint[] = [
+    { city: "Beijing",    country: "China",   lat: 39.90, lng: 116.40, year: 2010, note: "Alma mater — where it all started" },
+    { city: "Shenzhen",   country: "China",   lat: 22.54, lng: 114.06, year: 2015, note: "Joined Tencent, dived into backend systems" },
+    { city: "Shanghai",   country: "China",   lat: 31.23, lng: 121.47, year: 2017, note: "Spoke at Apache APISIX Meetup" },
+    { city: "Guangzhou",  country: "China",   lat: 23.13, lng: 113.26, year: 2018, note: "Explored the Pearl River Delta tech scene" },
+    { city: "Hong Kong",  country: "China",   lat: 22.32, lng: 114.17, year: 2019, note: "Quick cross-border hop for conferences" },
+    { city: "Tokyo",      country: "Japan",   lat: 35.68, lng: 139.69, year: 2019, note: "Inspired by the craft of Japanese engineering" },
+    { city: "Singapore",  country: "Singapore", lat: 1.35, lng: 103.82, year: 2020, note: "Cloud-native community meetup" },
+    { city: "Vancouver",  country: "Canada",  lat: 49.28, lng:-123.12, year: 2022, note: "Started a new chapter in North America" },
+    { city: "Seattle",    country: "USA",     lat: 47.61, lng:-122.33, year: 2023, note: "Visited the cloud capital of the world" },
+    { city: "San Francisco", country: "USA",  lat: 37.77, lng:-122.42, year: 2024, note: "AI pilgrimage to the Bay Area" },
+  ];
+
+  // ── State ──────────────────────────────────────────────────
+  let activeYear: number | "all" = "all";
+  let activeView: "3d" | "2d" = "3d";
+
+  function filtered(): Footprint[] {
+    return activeYear === "all"
+      ? footprints
+      : footprints.filter((f) => f.year === activeYear);
+  }
+
+  // ── Year Filter Buttons ────────────────────────────────────
+  const yearSet = [...new Set(footprints.map((f) => f.year))].sort();
+  const yearBar = document.getElementById("year-filter")!;
+  yearSet.forEach((y) => {
+    const btn = document.createElement("button");
+    btn.className =
+      "year-btn px-3 py-1 text-xs rounded-full border border-black/15 dark:border-white/20 bg-transparent text-black/75 dark:text-white/75 transition-colors";
+    btn.dataset.year = String(y);
+    btn.textContent = String(y);
+    yearBar.appendChild(btn);
+  });
+
+  yearBar.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest(".year-btn") as HTMLElement | null;
+    if (!btn) return;
+    activeYear = btn.dataset.year === "all" ? "all" : Number(btn.dataset.year);
+    yearBar.querySelectorAll(".year-btn").forEach((b) => {
+      b.classList.remove("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black");
+      b.classList.add("bg-transparent", "text-black/75", "dark:text-white/75");
+    });
+    btn.classList.add("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black");
+    btn.classList.remove("bg-transparent", "text-black/75", "dark:text-white/75");
+    renderAll();
+  });
+
+  // ── A/B Toggle ─────────────────────────────────────────────
+  const btn3d = document.getElementById("btn-3d")!;
+  const btn2d = document.getElementById("btn-2d")!;
+  const view3d = document.getElementById("view-3d")!;
+  const view2d = document.getElementById("view-2d")!;
+
+  function setView(v: "3d" | "2d") {
+    activeView = v;
+    const active = "bg-black text-white dark:bg-white dark:text-black";
+    const idle = "bg-transparent text-black/75 dark:text-white/75";
+    if (v === "3d") {
+      view3d.classList.remove("hidden");
+      view2d.classList.add("hidden");
+      btn3d.className = btn3d.className.replace(idle, active);
+      btn2d.className = btn2d.className.replace(active, idle);
+    } else {
+      view2d.classList.remove("hidden");
+      view3d.classList.add("hidden");
+      btn2d.className = btn2d.className.replace(idle, active);
+      btn3d.className = btn3d.className.replace(active, idle);
+    }
+    requestAnimationFrame(() => renderAll());
+  }
+
+  btn3d.addEventListener("click", () => setView("3d"));
+  btn2d.addEventListener("click", () => setView("2d"));
+
+  // ── Helpers ────────────────────────────────────────────────
+  const DEG = Math.PI / 180;
+
+  function latLngToSphere(lat: number, lng: number, r: number): [number, number, number] {
+    const phi = (90 - lat) * DEG;
+    const theta = (lng + 180) * DEG;
+    return [
+      r * Math.sin(phi) * Math.cos(theta),
+      r * Math.cos(phi),
+      r * Math.sin(phi) * Math.sin(theta),
+    ];
+  }
+
+  function rotate(x: number, y: number, z: number, ay: number): [number, number, number] {
+    const cos = Math.cos(ay);
+    const sin = Math.sin(ay);
+    return [x * cos - z * sin, y, x * sin + z * cos];
+  }
+
+  // ── 3D Particle Globe ─────────────────────────────────────
+  const globeCanvas = document.getElementById("globe-canvas") as HTMLCanvasElement;
+  const gCtx = globeCanvas.getContext("2d")!;
+  let gAngle = 0;
+
+  // Pre-generate sphere surface dots (fibonacci sphere)
+  const SPHERE_DOTS = 1200;
+  const spherePoints: [number, number, number][] = [];
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < SPHERE_DOTS; i++) {
+    const y = 1 - (i / (SPHERE_DOTS - 1)) * 2;
+    const radius = Math.sqrt(1 - y * y);
+    const theta = goldenAngle * i;
+    spherePoints.push([Math.cos(theta) * radius, y, Math.sin(theta) * radius]);
+  }
+
+  function drawGlobe() {
+    const w = globeCanvas.clientWidth;
+    const h = globeCanvas.clientHeight;
+    if (w === 0 || h === 0) return;
+    const dpr = window.devicePixelRatio || 1;
+    globeCanvas.width = w * dpr;
+    globeCanvas.height = h * dpr;
+    gCtx.scale(dpr, dpr);
+
+    const cx = w / 2;
+    const cy = h / 2;
+    const R = Math.min(w, h) * 0.38;
+
+    gCtx.clearRect(0, 0, w, h);
+
+    // Draw sphere dots
+    for (const [px, py, pz] of spherePoints) {
+      const [rx, ry, rz] = rotate(px * R, py * R, pz * R, gAngle);
+      if (rz < 0) continue; // back-face cull
+      const alpha = 0.08 + 0.12 * (rz / R);
+      gCtx.fillStyle = `rgba(255,255,255,${alpha})`;
+      gCtx.fillRect(cx + rx - 0.5, cy - ry - 0.5, 1.2, 1.2);
+    }
+
+    // Draw footprint markers
+    const data = filtered();
+    for (const fp of data) {
+      const [sx, sy, sz] = latLngToSphere(fp.lat, fp.lng, R);
+      const [rx, ry, rz] = rotate(sx, sy, sz, gAngle);
+      if (rz < -R * 0.1) continue; // show markers slightly past the horizon for visibility
+      const scale = 0.6 + 0.4 * (rz / R);
+      const dotR = 3 * scale;
+      const alpha = Math.max(0.3, scale);
+
+      // Glow
+      const grad = gCtx.createRadialGradient(cx + rx, cy - ry, 0, cx + rx, cy - ry, dotR * 4);
+      grad.addColorStop(0, `rgba(56,189,248,${0.4 * alpha})`);
+      grad.addColorStop(1, "rgba(56,189,248,0)");
+      gCtx.fillStyle = grad;
+      gCtx.fillRect(cx + rx - dotR * 4, cy - ry - dotR * 4, dotR * 8, dotR * 8);
+
+      // Dot
+      gCtx.beginPath();
+      gCtx.arc(cx + rx, cy - ry, dotR, 0, Math.PI * 2);
+      gCtx.fillStyle = `rgba(56,189,248,${alpha})`;
+      gCtx.fill();
+
+      // Label only in the front ~70% of the visible hemisphere to avoid clutter
+      if (rz > R * 0.3) {
+        gCtx.font = `${10 * scale}px ui-monospace, monospace`;
+        gCtx.fillStyle = `rgba(255,255,255,${alpha * 0.8})`;
+        gCtx.fillText(fp.city, cx + rx + dotR + 4, cy - ry + 3);
+      }
+    }
+  }
+
+  let globeRaf: number;
+  function animateGlobe() {
+    gAngle += 0.003;
+    drawGlobe();
+    globeRaf = requestAnimationFrame(animateGlobe);
+  }
+
+  // ── 2D Flat Map ────────────────────────────────────────────
+  const mapCanvas = document.getElementById("map-canvas") as HTMLCanvasElement;
+  const mCtx = mapCanvas.getContext("2d")!;
+
+  function project2d(lat: number, lng: number, w: number, h: number): [number, number] {
+    const x = ((lng + 180) / 360) * w;
+    const y = ((90 - lat) / 180) * h;
+    return [x, y];
+  }
+
+  function drawMap() {
+    const w = mapCanvas.clientWidth;
+    const h = mapCanvas.clientHeight;
+    if (w === 0 || h === 0) return;
+    const dpr = window.devicePixelRatio || 1;
+    mapCanvas.width = w * dpr;
+    mapCanvas.height = h * dpr;
+    mCtx.scale(dpr, dpr);
+
+    const isDark = document.documentElement.classList.contains("dark");
+    mCtx.clearRect(0, 0, w, h);
+
+    // Grid lines
+    mCtx.strokeStyle = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)";
+    mCtx.lineWidth = 0.5;
+    for (let lng = -180; lng <= 180; lng += 30) {
+      const x = ((lng + 180) / 360) * w;
+      mCtx.beginPath();
+      mCtx.moveTo(x, 0);
+      mCtx.lineTo(x, h);
+      mCtx.stroke();
+    }
+    for (let lat = -90; lat <= 90; lat += 30) {
+      const y = ((90 - lat) / 180) * h;
+      mCtx.beginPath();
+      mCtx.moveTo(0, y);
+      mCtx.lineTo(w, y);
+      mCtx.stroke();
+    }
+
+    // Equator & prime meridian
+    mCtx.strokeStyle = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)";
+    mCtx.lineWidth = 1;
+    const eqY = h / 2;
+    mCtx.beginPath(); mCtx.moveTo(0, eqY); mCtx.lineTo(w, eqY); mCtx.stroke();
+    const pmX = w / 2;
+    mCtx.beginPath(); mCtx.moveTo(pmX, 0); mCtx.lineTo(pmX, h); mCtx.stroke();
+
+    // Connection lines between consecutive footprints
+    const data = filtered();
+    if (data.length > 1) {
+      mCtx.strokeStyle = isDark ? "rgba(56,189,248,0.2)" : "rgba(14,116,144,0.2)";
+      mCtx.lineWidth = 1;
+      mCtx.setLineDash([4, 4]);
+      mCtx.beginPath();
+      const [fx, fy] = project2d(data[0].lat, data[0].lng, w, h);
+      mCtx.moveTo(fx, fy);
+      for (let i = 1; i < data.length; i++) {
+        const [nx, ny] = project2d(data[i].lat, data[i].lng, w, h);
+        mCtx.lineTo(nx, ny);
+      }
+      mCtx.stroke();
+      mCtx.setLineDash([]);
+    }
+
+    // Location markers
+    const dotColor = isDark ? "rgb(56,189,248)" : "rgb(14,116,144)";
+    const labelColor = isDark ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.75)";
+    for (const fp of data) {
+      const [x, y] = project2d(fp.lat, fp.lng, w, h);
+
+      // Glow
+      const grad = mCtx.createRadialGradient(x, y, 0, x, y, 16);
+      grad.addColorStop(0, isDark ? "rgba(56,189,248,0.25)" : "rgba(14,116,144,0.15)");
+      grad.addColorStop(1, "rgba(56,189,248,0)");
+      mCtx.fillStyle = grad;
+      mCtx.fillRect(x - 16, y - 16, 32, 32);
+
+      // Dot
+      mCtx.beginPath();
+      mCtx.arc(x, y, 4, 0, Math.PI * 2);
+      mCtx.fillStyle = dotColor;
+      mCtx.fill();
+
+      // Label
+      mCtx.font = "11px ui-monospace, monospace";
+      mCtx.fillStyle = labelColor;
+      mCtx.fillText(`${fp.city} (${fp.year})`, x + 8, y + 4);
+    }
+  }
+
+  // ── Terminal Log ───────────────────────────────────────────
+  function renderTerminal() {
+    const body = document.getElementById("terminal-body")!;
+    // Keep the prompt line, clear the rest
+    while (body.children.length > 1) body.removeChild(body.lastChild!);
+
+    const data = filtered().slice().sort((a, b) => a.year - b.year);
+    if (data.length === 0) {
+      const line = document.createElement("p");
+      line.className = "text-white/30";
+      line.textContent = "  (no entries)";
+      body.appendChild(line);
+      return;
+    }
+    data.forEach((fp, i) => {
+      const line = document.createElement("p");
+      line.innerHTML =
+        `<span class="text-yellow-400/70">[${fp.year}]</span> ` +
+        `<span class="text-cyan-300">${fp.city}</span>` +
+        `<span class="text-white/30">, ${fp.country}</span>` +
+        ` — <span class="text-green-300/80">${fp.note}</span>`;
+      body.appendChild(line);
+    });
+    // EOF
+    const eof = document.createElement("p");
+    eof.className = "text-white/30 mt-2";
+    eof.textContent = `$ # ${data.length} entries | EOF`;
+    body.appendChild(eof);
+  }
+
+  // ── Render orchestrator ────────────────────────────────────
+  function renderAll() {
+    if (activeView === "3d") {
+      drawGlobe();
+    } else {
+      drawMap();
+    }
+    renderTerminal();
+  }
+
+  // ── Init ───────────────────────────────────────────────────
+  renderAll();
+  animateGlobe();
+
+  // Responsive resize
+  const ro = new ResizeObserver(() => renderAll());
+  ro.observe(globeCanvas.parentElement!);
+  ro.observe(mapCanvas.parentElement!);
+</script>
