@@ -216,7 +216,7 @@ import PageLayout from "@layouts/Layout.astro";
     for (const fp of data) {
       const [sx, sy, sz] = latLngToSphere(fp.lat, fp.lng, R);
       const [rx, ry, rz] = rotate(sx, sy, sz, gAngle);
-      if (rz < -R * 0.1) continue;
+      if (rz < -R * 0.1) continue; // show markers slightly past the horizon for visibility
       const scale = 0.6 + 0.4 * (rz / R);
       const dotR = 3 * scale;
       const alpha = Math.max(0.3, scale);
@@ -234,7 +234,7 @@ import PageLayout from "@layouts/Layout.astro";
       gCtx.fillStyle = `rgba(56,189,248,${alpha})`;
       gCtx.fill();
 
-      // Label (only for front-facing dots)
+      // Label only in the front ~70% of the visible hemisphere to avoid clutter
       if (rz > R * 0.3) {
         gCtx.font = `${10 * scale}px ui-monospace, monospace`;
         gCtx.fillStyle = `rgba(255,255,255,${alpha * 0.8})`;
@@ -344,10 +344,8 @@ import PageLayout from "@layouts/Layout.astro";
   // ── Terminal Log ───────────────────────────────────────────
   function renderTerminal() {
     const body = document.getElementById("terminal-body")!;
-    // Clear except the first line
-    const first = body.children[0];
-    body.innerHTML = "";
-    body.appendChild(first!);
+    // Keep the prompt line, clear the rest
+    while (body.children.length > 1) body.removeChild(body.lastChild!);
 
     const data = filtered().slice().sort((a, b) => a.year - b.year);
     if (data.length === 0) {
@@ -359,9 +357,8 @@ import PageLayout from "@layouts/Layout.astro";
     }
     data.forEach((fp, i) => {
       const line = document.createElement("p");
-      const ts = `${fp.year}-01-01`;
       line.innerHTML =
-        `<span class="text-yellow-400/70">[${ts}]</span> ` +
+        `<span class="text-yellow-400/70">[${fp.year}]</span> ` +
         `<span class="text-cyan-300">${fp.city}</span>` +
         `<span class="text-white/30">, ${fp.country}</span>` +
         ` — <span class="text-green-300/80">${fp.note}</span>`;
