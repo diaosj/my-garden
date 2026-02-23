@@ -24,6 +24,11 @@ export const PROJECTS: Metadata = {
     "A collection of my projects with links to repositories and live demos.",
 };
 
+export const ABOUT: Metadata = {
+  TITLE: "About",
+  DESCRIPTION: "Learn more about Shoujun (Adrian) Diao.",
+};
+
 export const SOCIALS: Socials = [
   {
     NAME: "X (formerly Twitter)",
