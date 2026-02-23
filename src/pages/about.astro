@@ -1,0 +1,45 @@
+---
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/Layout.astro";
+import Link from "@components/Link.astro";
+import { ABOUT, SITE, SOCIALS } from "@consts";
+---
+
+<PageLayout title={ABOUT.TITLE} description={ABOUT.DESCRIPTION}>
+  <Container>
+    <h1 class="animate font-semibold text-black dark:text-white mb-6">
+      About
+    </h1>
+
+    <div class="space-y-16">
+      <section>
+        <article class="space-y-4">
+          <p class="animate">
+            With 15 years of total professional experience, including 13.5 years in software engineering (progressing from junior roles to a Staff/Architect level) and over 5 years specifically dedicated to architecting and building scalable AI platforms on K8s, Go, and Python. My career journey has evolved from foundational software development to leading complex AI infrastructure initiatives. I am driven by a passion for creating robust systems that empower complex AI solutions.
+          </p>
+          <p class="animate">
+            My journey into AI was profoundly influenced by AlphaGo. As an accomplished amateur 5-dan Go player, witnessing AlphaGo's breakthrough was a key catalyst for my career pivot into the AI domain. This inspiration led me to self-teach Deep Reinforcement Learning, culminating in a technical seminar for my engineering team.
+          </p>
+          <p class="animate">
+            Beyond core engineering, I am committed to community engagement and knowledge sharing. I've had the privilege of speaking at the Apache APISIX Meetup, sharing insights on high-performance gateways. I also revitalized and led the Tencent Football Association for over 200 members, successfully fostering a highly engaged and competitive community. Furthermore, I am a published translator, having translated technical books such as 'Practical Data Analysis' from English to Chinese, which deepened my professional knowledge and honed my bilingual technical communication skills.
+          </p>
+          <p class="animate">
+            I am always excited to apply my expertise to challenging problems within dynamic, international environments, particularly in the realm of innovative AI engineering.
+          </p>
+        </article>
+      </section>
+
+      <section class="animate space-y-4">
+        <h5 class="font-semibold text-black dark:text-white">
+          Connect
+        </h5>
+        <div class="flex flex-wrap gap-x-4 gap-y-2">
+          <Link href="https://github.com/diaosj" external>github ↗</Link>
+          <Link href="https://www.linkedin.com/in/shoujun-diao/" external>linkedin ↗</Link>
+          <Link href="https://x.com/diaosj" external>twitter ↗</Link>
+          <Link href={`mailto:${SITE.EMAIL}`}>email ↗</Link>
+        </div>
+      </section>
+    </div>
+  </Container>
+</PageLayout>
