@@ -83,6 +83,7 @@ import PageLayout from "@layouts/Layout.astro";
   }
 
   const footprints: Footprint[] = [
+    // --- 日本足迹 ---
     { city: "Nagoya",    country: "Japan", lat: 35.1815, lng: 136.9066, year: 2026, description: "Legoland adventure with my eldest daughter" },
     { city: "Urayasu",   country: "Japan", lat: 35.6531, lng: 139.9039, year: 2024, description: "Tokyo Disneyland family trip" },
     { city: "Osaka",     country: "Japan", lat: 34.6937, lng: 135.5023, year: 2024, description: "Universal Studios Japan with the family" },
@@ -91,6 +92,92 @@ import PageLayout from "@layouts/Layout.astro";
     { city: "Himeji",    country: "Japan", lat: 34.8151, lng: 134.6853, year: 2024 },
     { city: "Amakusa",   country: "Japan", lat: 32.4601, lng: 130.1914, year: 2024, description: "Dolphin watching cruise" },
     { city: "Kumamoto",  country: "Japan", lat: 32.8032, lng: 130.7079, year: 2024 },
+    { city: "Narita",    country: "Japan", lat: 35.7767, lng: 140.3183, year: 2024 },
+    { city: "Tokyo",     country: "Japan", lat: 35.6762, lng: 139.6503, year: 2024 },
+    { city: "Kyoto",     country: "Japan", lat: 35.0116, lng: 135.7681, year: 2016 },
+    { city: "Tokyo",     country: "Japan", lat: 35.6762, lng: 139.6503, year: 2016 },
+    { city: "Nara",      country: "Japan", lat: 34.6851, lng: 135.8048, year: 2016 },
+    { city: "Osaka",     country: "Japan", lat: 34.6937, lng: 135.5023, year: 2016 },
+    { city: "Kyoto",     country: "Japan", lat: 35.0116, lng: 135.7681, year: 2017 },
+    { city: "Kagoshima", country: "Japan", lat: 31.5966, lng: 130.5571, year: 2019 },
+    { city: "Kumamoto",  country: "Japan", lat: 32.8032, lng: 130.7079, year: 2019 },
+    { city: "Fukuoka",   country: "Japan", lat: 33.5902, lng: 130.4017, year: 2019 },
+
+    // --- 欧洲足迹 ---
+    { city: "Paris",     country: "France", lat: 48.8566, lng: 2.3522, year: 2017 },
+    { city: "London",    country: "United Kingdom", lat: 51.5074, lng: -0.1278, year: 2017 },
+    { city: "Rome",      country: "Italy", lat: 41.9028, lng: 12.4964, year: 2017 },
+    { city: "Florence",  country: "Italy", lat: 43.7696, lng: 11.2558, year: 2017 },
+    { city: "Siena",     country: "Italy", lat: 43.3188, lng: 11.3308, year: 2017 },
+    { city: "Vatican City", country: "Vatican City", lat: 41.9029, lng: 12.4534, year: 2017 },
+
+    // --- 国内足迹 (早期启蒙) ---
+    { city: "Tianchang", country: "China", lat: 32.6912, lng: 119.0022, year: 1988, description: "Where it all started" },
+    { city: "Nanjing",   country: "China", lat: 32.0603, lng: 118.7969, year: 2003 },
+    { city: "Hefei",     country: "China", lat: 31.8206, lng: 117.2272, year: 2005 },
+    { city: "Shanghai",  country: "China", lat: 31.2304, lng: 121.4737, year: 2006, description: "University years" },
+    { city: "Yangzhou",  country: "China", lat: 32.3932, lng: 119.4127, year: 2006 },
+    
+    // --- 国内足迹 (2010 大爆发) ---
+    { city: "Lanzhou",   country: "China", lat: 36.0611, lng: 103.8343, year: 2010 },
+    { city: "Fuyang",    country: "China", lat: 32.8904, lng: 115.8154, year: 2010 },
+    { city: "Xining",    country: "China", lat: 36.6171, lng: 101.7782, year: 2010 },
+    { city: "Ma'anshan", country: "China", lat: 31.6704, lng: 118.5079, year: 2010 },
+    { city: "Yinchuan",  country: "China", lat: 38.4872, lng: 106.2309, year: 2010 },
+    { city: "Xianyang",  country: "China", lat: 34.3296, lng: 108.7090, year: 2010 },
+    { city: "Jingmen",   country: "China", lat: 31.0354, lng: 112.2043, year: 2010 },
+    { city: "Huainan",   country: "China", lat: 32.6254, lng: 117.0000, year: 2010 },
+    { city: "Wuhu",      country: "China", lat: 31.3528, lng: 118.4329, year: 2010 },
+    { city: "Tongling",  country: "China", lat: 30.9416, lng: 117.8115, year: 2010 },
+    { city: "Huanggang", country: "China", lat: 30.4500, lng: 114.8750, year: 2010 },
+    { city: "Jinhua",    country: "China", lat: 29.0781, lng: 119.6495, year: 2010 },
+    { city: "Suizhou",   country: "China", lat: 31.6997, lng: 113.3794, year: 2010 },
+    { city: "Huai'an",   country: "China", lat: 33.5975, lng: 119.0213, year: 2010 },
+    { city: "Baoji",     country: "China", lat: 34.3619, lng: 107.1500, year: 2010 },
+    { city: "Anqing",    country: "China", lat: 30.5122, lng: 117.0435, year: 2010 },
+    { city: "Chizhou",   country: "China", lat: 30.6583, lng: 117.4831, year: 2010 },
+    { city: "Xi'an",     country: "China", lat: 34.3416, lng: 108.9398, year: 2010 },
+    { city: "Wuhan",     country: "China", lat: 30.5928, lng: 114.3055, year: 2010 },
+    { city: "Zhengzhou", country: "China", lat: 34.7466, lng: 113.6253, year: 2010 },
+    { city: "Tianshui",  country: "China", lat: 34.5809, lng: 105.7250, year: 2010 },
+
+    // --- 国内足迹 (2011 - 2021) ---
+    { city: "Nantong",   country: "China", lat: 32.0162, lng: 120.8943, year: 2011 },
+    { city: "Xuyi",      country: "China", lat: 33.0109, lng: 118.5447, year: 2011 },
+    { city: "Beijing",   country: "China", lat: 39.9042, lng: 116.4074, year: 2011 },
+    { city: "Hong Kong", country: "China", lat: 22.3193, lng: 114.1694, year: 2011 },
+    { city: "Macau",     country: "China", lat: 22.1987, lng: 113.5439, year: 2011 },
+    { city: "Guangzhou", country: "China", lat: 23.1291, lng: 113.2644, year: 2011 },
+    { city: "Shenzhen",  country: "China", lat: 22.5431, lng: 114.0579, year: 2013 },
+    { city: "Haikou",    country: "China", lat: 20.0174, lng: 110.3212, year: 2014 },
+    { city: "Sanya",     country: "China", lat: 18.2528, lng: 109.5120, year: 2014 },
+    { city: "Xiamen",    country: "China", lat: 24.4798, lng: 118.0894, year: 2014 },
+    { city: "Hangzhou",  country: "China", lat: 30.2741, lng: 120.1551, year: 2016 },
+    { city: "Anji",      country: "China", lat: 30.6355, lng: 119.6808, year: 2020 },
+    { city: "Hangzhou",  country: "China", lat: 30.2741, lng: 120.1551, year: 2021 },
+
+    // --- 国内足迹 (2023 - 2025 近期高频) ---
+    { city: "Jinzhong",  country: "China", lat: 37.6870, lng: 112.7527, year: 2023 },
+    { city: "Deyang",    country: "China", lat: 31.1274, lng: 104.3979, year: 2023 },
+    { city: "Guangyuan", country: "China", lat: 32.4354, lng: 105.8297, year: 2023 },
+    { city: "Longnan",   country: "China", lat: 33.3886, lng: 104.9295, year: 2023 },
+    { city: "Heyuan",    country: "China", lat: 23.7337, lng: 114.6978, year: 2023 },
+    { city: "Huzhou",    country: "China", lat: 30.8943, lng: 120.0868, year: 2023 },
+    { city: "Nanjing",   country: "China", lat: 32.0603, lng: 118.7969, year: 2023 },
+    { city: "Luoyang",   country: "China", lat: 34.6198, lng: 112.4539, year: 2023 },
+    { city: "Taiyuan",   country: "China", lat: 37.8706, lng: 112.5489, year: 2023 },
+    { city: "Pingyao",   country: "China", lat: 37.1850, lng: 112.1760, year: 2023 },
+    { city: "Suzhou",    country: "China", lat: 31.2989, lng: 120.5853, year: 2023 },
+    { city: "Chengdu",   country: "China", lat: 30.5728, lng: 104.0668, year: 2023 },
+    { city: "Hanzhong",  country: "China", lat: 33.0718, lng: 107.0286, year: 2023 },
+    { city: "Xi'an",     country: "China", lat: 34.3416, lng: 108.9398, year: 2023 },
+    { city: "Tianshui",  country: "China", lat: 34.5809, lng: 105.7250, year: 2023 },
+    { city: "Tianjin",   country: "China", lat: 39.0842, lng: 117.2009, year: 2023 },
+    { city: "Foshan",    country: "China", lat: 23.0215, lng: 113.1214, year: 2023 },
+    { city: "Wuxi",      country: "China", lat: 31.4912, lng: 120.3119, year: 2024 },
+    { city: "Tonglu",    country: "China", lat: 29.7978, lng: 119.6816, year: 2024 },
+    { city: "Qingdao",   country: "China", lat: 36.0671, lng: 120.3826, year: 2025 },
+    { city: "Ningbo",    country: "China", lat: 29.8683, lng: 121.5440, year: 2025 }
   ];
 
   // Country name → ISO 3166-1 numeric code (used by world-atlas TopoJSON)
@@ -100,6 +187,10 @@ import PageLayout from "@layouts/Layout.astro";
     Singapore: "702",
     Canada: "124",
     USA: "840",
+    France: "250",
+    "United Kingdom": "826",
+    Italy: "380",
+    "Vatican City": "336",
   };
 
   // ── State ──────────────────────────────────────────────────
