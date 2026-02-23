@@ -79,18 +79,18 @@ import PageLayout from "@layouts/Layout.astro";
     lat: number;
     lng: number;
     year: number;
-    note: string;
+    description?: string;
   }
 
   const footprints: Footprint[] = [
-    { city: "Nagoya",    country: "Japan", lat: 35.1815, lng: 136.9066, year: 2026, note: "Took my eldest daughter to LEGOLAND" },
-    { city: "Urayasu",   country: "Japan", lat: 35.6531, lng: 139.9039, year: 2024, note: "Family of three at Tokyo Disneyland" },
-    { city: "Osaka",     country: "Japan", lat: 34.6937, lng: 135.5023, year: 2024, note: "Family of three at Universal Studios" },
-    { city: "Nara",      country: "Japan", lat: 34.6851, lng: 135.8048, year: 2024, note: "Fed the deer" },
-    { city: "Fukuoka",   country: "Japan", lat: 33.5902, lng: 130.4017, year: 2024, note: "" },
-    { city: "Himeji",    country: "Japan", lat: 34.8151, lng: 134.6853, year: 2024, note: "" },
-    { city: "Amakusa",   country: "Japan", lat: 32.4601, lng: 130.1914, year: 2024, note: "Chased dolphins" },
-    { city: "Kumamoto",  country: "Japan", lat: 32.8032, lng: 130.7079, year: 2024, note: "" },
+    { city: "Nagoya",    country: "Japan", lat: 35.1815, lng: 136.9066, year: 2026, description: "Legoland adventure with my eldest daughter" },
+    { city: "Urayasu",   country: "Japan", lat: 35.6531, lng: 139.9039, year: 2024, description: "Tokyo Disneyland family trip" },
+    { city: "Osaka",     country: "Japan", lat: 34.6937, lng: 135.5023, year: 2024, description: "Universal Studios Japan with the family" },
+    { city: "Nara",      country: "Japan", lat: 34.6851, lng: 135.8048, year: 2024, description: "Feeding the sacred deer" },
+    { city: "Fukuoka",   country: "Japan", lat: 33.5902, lng: 130.4017, year: 2024 },
+    { city: "Himeji",    country: "Japan", lat: 34.8151, lng: 134.6853, year: 2024 },
+    { city: "Amakusa",   country: "Japan", lat: 32.4601, lng: 130.1914, year: 2024, description: "Dolphin watching cruise" },
+    { city: "Kumamoto",  country: "Japan", lat: 32.8032, lng: 130.7079, year: 2024 },
   ];
 
   // Country name → ISO 3166-1 numeric code (used by world-atlas TopoJSON)
@@ -167,7 +167,7 @@ import PageLayout from "@layouts/Layout.astro";
   // ── 1) 3D WebGL Particle Globe (cobe) ─────────────────────
   const globeCanvas = document.getElementById("globe-canvas") as HTMLCanvasElement;
   let currentGlobe: ReturnType<typeof createGlobe> | null = null;
-  let phi = 0;
+  let phi = 2.8;
 
   function buildMarkers() {
     return filtered().map((fp) => ({
@@ -192,7 +192,7 @@ import PageLayout from "@layouts/Layout.astro";
       width: w * 2,
       height: h * 2,
       phi: 0,
-      theta: 0.3,
+      theta: 0.15,
       dark: 1,
       diffuse: 1.2,
       mapSamples: 16000,
@@ -282,7 +282,7 @@ import PageLayout from "@layouts/Layout.astro";
       glow.setAttribute("fill", "rgba(56,189,248,0.15)");
       mapSvg.appendChild(glow);
 
-      // Solid dot
+      // Solid dot with hover tooltip
       const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       dot.setAttribute("cx", String(x));
       dot.setAttribute("cy", String(y));
@@ -290,17 +290,10 @@ import PageLayout from "@layouts/Layout.astro";
       dot.setAttribute("fill", "rgb(56,189,248)");
       dot.setAttribute("stroke", "white");
       dot.setAttribute("stroke-width", "1.2");
+      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+      title.textContent = fp.city;
+      dot.appendChild(title);
       mapSvg.appendChild(dot);
-
-      // City label
-      const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      label.setAttribute("x", String(x + 7));
-      label.setAttribute("y", String(y + 3));
-      label.setAttribute("font-size", "9");
-      label.setAttribute("font-family", "ui-monospace, monospace");
-      label.setAttribute("fill", isDark ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.65)");
-      label.textContent = fp.city;
-      mapSvg.appendChild(label);
     }
   }
 
@@ -319,11 +312,14 @@ import PageLayout from "@layouts/Layout.astro";
     }
     for (const fp of data) {
       const line = document.createElement("p");
-      line.innerHTML =
+      let html =
         `<span class="text-yellow-400/70">[${fp.year}]</span> ` +
         `<span class="text-cyan-300">${fp.city}</span>` +
-        `<span class="text-white/30">, ${fp.country}</span>` +
-        ` — <span class="text-green-300/80">${fp.note}</span>`;
+        `<span class="text-white/30">, ${fp.country}</span>`;
+      if (fp.description) {
+        html += ` — <span class="text-green-300/80">${fp.description}</span>`;
+      }
+      line.innerHTML = html;
       body.appendChild(line);
     }
     const eof = document.createElement("p");
