@@ -38,9 +38,16 @@ import PageLayout from "@layouts/Layout.astro";
       id="view-3d"
       class="animate mt-6 w-full h-[400px] relative overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-neutral-950"
     >
-      <div class="absolute top-[30%] left-[40%] w-[1000px] h-[1000px] max-w-none pointer-events-none">
+      <!-- 巨大化地球容器，移除 pointer-events-none 以允许拖拽旋转 -->
+      <div class="absolute top-[5%] left-[25%] w-[900px] h-[900px] md:top-[0%] md:left-[45%] max-w-none cursor-grab active:cursor-grabbing z-0">
         <canvas id="globe-canvas" class="w-full h-full"></canvas>
       </div>
+      
+      <!-- 深空渐变遮罩魔法 (消除生硬切边，营造宇宙深邃感) -->
+      <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,1)] z-10"></div>
+      <div class="absolute inset-0 pointer-events-none bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent z-10"></div>
+      <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-neutral-950/80 to-transparent h-1/4 z-10"></div>
+      <div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-neutral-950/80 to-transparent h-1/4 bottom-0 z-10"></div>
     </div>
 
     <!-- 2D Map view (D3 + TopoJSON SVG) -->
@@ -169,7 +176,7 @@ import PageLayout from "@layouts/Layout.astro";
   // ── 1) 3D WebGL Particle Globe (cobe) ─────────────────────
   const globeCanvas = document.getElementById("globe-canvas") as HTMLCanvasElement;
   let currentGlobe: ReturnType<typeof createGlobe> | null = null;
-  let phi = 2.8;
+  let phi = 1.8;
 
   function buildMarkers() {
     return filtered().map((fp) => ({
@@ -194,7 +201,7 @@ import PageLayout from "@layouts/Layout.astro";
       width: w * 2,
       height: h * 2,
       phi: 0,
-      theta: 0.15,
+      theta: 0.25,
       dark: 1,
       diffuse: 1.2,
       mapSamples: 16000,
