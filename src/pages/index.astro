@@ -19,27 +19,25 @@ const projects = (await getCollection("projects"))
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
-    <h1 class="animate font-semibold text-black dark:text-white mb-6">
-      Hi, I'm Shoujun (Adrian) Diao
-    </h1>
-    
     <div class="space-y-16">
       <!-- 1. 门面/名片区 (Hero) -->
-      <section>
-        <article class="space-y-4">
-          <p class="animate leading-relaxed text-black dark:text-white">
-            Architecting backend systems and AI infrastructure built to last. <br>
-            Welcome to my digital garden.
-          </p>
+      <section class="animate flex flex-col items-center text-center py-16 sm:py-24">
+        <h1 class="font-semibold text-black dark:text-white text-4xl sm:text-5xl tracking-tight">
+          Shoujun <span class="font-serif italic font-normal">(Adrian)</span> Diao
+        </h1>
+        <p class="mt-6 leading-relaxed text-black/60 dark:text-white/60 max-w-xl font-serif italic text-lg">
+          Architecting backend systems and AI infrastructure built to last.
+        </p>
+        <div class="mt-8">
           <Link href="/about">More about me & connect ↗</Link>
-        </article>
+        </div>
       </section>
 
       <!-- 2. 思考/文章区 (Thoughts & Notes) -->
       <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Thoughts & Notes
+        <div class="flex items-end justify-between border-b border-black/10 dark:border-white/10 pb-4">
+          <h5 class="font-medium text-black dark:text-white tracking-wide uppercase text-sm">
+            Latest from the Journal
           </h5>
           <Link href="/blog">
             See all posts
@@ -56,9 +54,9 @@ const projects = (await getCollection("projects"))
 
       <!-- 3. 实验室/Demo区 (The Lab) -->
       <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            The Lab
+        <div class="flex items-end justify-between border-b border-black/10 dark:border-white/10 pb-4">
+          <h5 class="font-medium text-black dark:text-white tracking-wide uppercase text-sm">
+            Selected Craft
           </h5>
           <Link href="/projects">
             See all projects
@@ -75,23 +73,23 @@ const projects = (await getCollection("projects"))
 
       <!-- 4. 生活与社区区 (Life & Community) -->
       <section class="animate space-y-6">
-        <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Beyond Engineering
+        <div class="flex items-end justify-between border-b border-black/10 dark:border-white/10 pb-4">
+          <h5 class="font-medium text-black dark:text-white tracking-wide uppercase text-sm">
+            Beyond the Code
           </h5>
         </div>
-        <ul class="flex flex-col gap-4">
-          <li class="group relative flex flex-col gap-2 rounded-md border border-black/10 dark:border-white/10 p-4 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
-            <div class="font-semibold text-black dark:text-white">Speaker at Apache APISIX Meetup</div>
-            <div class="text-sm opacity-75">Shared insights on high-performance gateways and cloud-native networking.</div>
+        <ul class="flex flex-col">
+          <li class="group flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-black/5 dark:border-white/5">
+            <h3 class="font-medium text-black dark:text-white text-lg">Speaker at Apache APISIX Meetup</h3>
+            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 sm:ml-4 text-sm sm:text-base">Shared insights on high-performance gateways and cloud-native networking.</div>
           </li>
-          <li class="group relative flex flex-col gap-2 rounded-md border border-black/10 dark:border-white/10 p-4 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
-            <div class="font-semibold text-black dark:text-white">Technical Book Translator</div>
-            <div class="text-sm opacity-75">Translated "Practical Data Analysis" from English to Chinese, honing bilingual technical communication.</div>
+          <li class="group flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-black/5 dark:border-white/5">
+            <h3 class="font-medium text-black dark:text-white text-lg">Technical Book Translator</h3>
+            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 sm:ml-4 text-sm sm:text-base">Translated "Practical Data Analysis" from English to Chinese, honing bilingual technical communication.</div>
           </li>
-          <li class="group relative flex flex-col gap-2 rounded-md border border-black/10 dark:border-white/10 p-4 transition-colors hover:bg-black/5 dark:hover:bg-white/5">
-            <div class="font-semibold text-black dark:text-white">Community Builder</div>
-            <div class="text-sm opacity-75">Revitalized and led the Tencent Football Association for over 200 members.</div>
+          <li class="group flex flex-col sm:flex-row sm:items-center justify-between py-6 border-b border-black/5 dark:border-white/5">
+            <h3 class="font-medium text-black dark:text-white text-lg">Community Builder</h3>
+            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 sm:ml-4 text-sm sm:text-base">Revitalized and led the Tencent Football Association for over 200 members.</div>
           </li>
         </ul>
       </section>
