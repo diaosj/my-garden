@@ -194,248 +194,266 @@ import PageLayout from "@layouts/Layout.astro";
     "Vatican City": "336",
   };
 
-  // ── State ──────────────────────────────────────────────────
-  let activeYear: number | "all" = "all";
-  let activeView: "3d" | "2d" = "3d";
+  // Astro ViewTransitions lifecycle: re-run DOM logic on every client-side navigation
+  document.addEventListener('astro:page-load', () => {
+    // Defensive check: if not on the Atlas page, bail out
+    if (!document.getElementById("year-filter")) return;
 
-  function filtered(): Footprint[] {
-    return activeYear === "all"
-      ? footprints
-      : footprints.filter((f) => f.year === activeYear);
-  }
+    // Reset year-filter to avoid duplicate buttons on re-navigation
+    const yearBar = document.getElementById("year-filter")!;
+    yearBar.innerHTML = `<button class="year-btn active px-3 py-1 text-xs rounded-full border border-black/15 dark:border-white/20 bg-black text-white dark:bg-white dark:text-black transition-colors" data-year="all">All</button>`;
 
-  // ── Year Filter Buttons ────────────────────────────────────
-  const yearSet = [...new Set(footprints.map((f) => f.year))].sort();
-  const yearBar = document.getElementById("year-filter")!;
-  yearSet.forEach((y) => {
-    const btn = document.createElement("button");
-    btn.className =
-      "year-btn px-3 py-1 text-xs rounded-full border border-black/15 dark:border-white/20 bg-transparent text-black/75 dark:text-white/75 transition-colors";
-    btn.dataset.year = String(y);
-    btn.textContent = String(y);
-    yearBar.appendChild(btn);
-  });
+    // ── State ──────────────────────────────────────────────────
+    let activeYear: number | "all" = "all";
+    let activeView: "3d" | "2d" = "3d";
 
-  yearBar.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest(".year-btn") as HTMLElement | null;
-    if (!btn) return;
-    activeYear = btn.dataset.year === "all" ? "all" : Number(btn.dataset.year);
-    yearBar.querySelectorAll(".year-btn").forEach((b) => {
-      b.classList.remove("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black");
-      b.classList.add("bg-transparent", "text-black/75", "dark:text-white/75");
+    function filtered(): Footprint[] {
+      return activeYear === "all"
+        ? footprints
+        : footprints.filter((f) => f.year === activeYear);
+    }
+
+    // ── Year Filter Buttons ────────────────────────────────────
+    const yearSet = [...new Set(footprints.map((f) => f.year))].sort();
+    yearSet.forEach((y) => {
+      const btn = document.createElement("button");
+      btn.className =
+        "year-btn px-3 py-1 text-xs rounded-full border border-black/15 dark:border-white/20 bg-transparent text-black/75 dark:text-white/75 transition-colors";
+      btn.dataset.year = String(y);
+      btn.textContent = String(y);
+      yearBar.appendChild(btn);
     });
-    btn.classList.add("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black");
-    btn.classList.remove("bg-transparent", "text-black/75", "dark:text-white/75");
-    renderAll();
-  });
 
-  // ── A/B Toggle ─────────────────────────────────────────────
-  const btn3d = document.getElementById("btn-3d")!;
-  const btn2d = document.getElementById("btn-2d")!;
-  const view3d = document.getElementById("view-3d")!;
-  const view2d = document.getElementById("view-2d")!;
-
-  function setView(v: "3d" | "2d") {
-    activeView = v;
-    const active = "bg-black text-white dark:bg-white dark:text-black";
-    const idle = "bg-transparent text-black/75 dark:text-white/75";
-    if (v === "3d") {
-      view3d.classList.remove("hidden");
-      view2d.classList.add("hidden");
-      btn3d.className = btn3d.className.replace(idle, active);
-      btn2d.className = btn2d.className.replace(active, idle);
-    } else {
-      view2d.classList.remove("hidden");
-      view3d.classList.add("hidden");
-      btn2d.className = btn2d.className.replace(idle, active);
-      btn3d.className = btn3d.className.replace(active, idle);
-    }
-    requestAnimationFrame(() => renderAll());
-  }
-
-  btn3d.addEventListener("click", () => setView("3d"));
-  btn2d.addEventListener("click", () => setView("2d"));
-
-  // ── 1) 3D WebGL Particle Globe (cobe) ─────────────────────
-  const globeCanvas = document.getElementById("globe-canvas") as HTMLCanvasElement;
-  let currentGlobe: ReturnType<typeof createGlobe> | null = null;
-  let phi = 2.4;
-
-  function buildMarkers() {
-    return filtered().map((fp) => ({
-      location: [fp.lat, fp.lng] as [number, number],
-      size: 0.05,
-    }));
-  }
-
-  function renderGlobe() {
-    if (currentGlobe) {
-      currentGlobe.destroy();
-      currentGlobe = null;
-    }
-    const container = globeCanvas.parentElement!;
-    const w = container.clientWidth;
-    const h = container.clientHeight;
-    if (w === 0 || h === 0) return;
-
-    // Dimensions are doubled for crisp rendering on high-DPI displays
-    currentGlobe = createGlobe(globeCanvas, {
-      devicePixelRatio: window.devicePixelRatio || 2,
-      width: w * 2,
-      height: h * 2,
-      offset: [0, h * 1.5],
-      phi: 0,
-      theta: 0.25,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.3, 0.3, 0.3],
-      markerColor: [0.1, 0.8, 1.0],
-      glowColor: [1.2, 1.2, 1.2],
-      markers: buildMarkers(),
-      onRender: (state) => {
-        state.phi = phi;
-        phi += 0.005;
-      },
+    yearBar.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest(".year-btn") as HTMLElement | null;
+      if (!btn) return;
+      activeYear = btn.dataset.year === "all" ? "all" : Number(btn.dataset.year);
+      yearBar.querySelectorAll(".year-btn").forEach((b) => {
+        b.classList.remove("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black");
+        b.classList.add("bg-transparent", "text-black/75", "dark:text-white/75");
+      });
+      btn.classList.add("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black");
+      btn.classList.remove("bg-transparent", "text-black/75", "dark:text-white/75");
+      renderAll();
     });
-  }
 
-  // ── 2) 2D SVG Vector World Map (D3.js + TopoJSON) ─────────
-  const mapSvg = document.getElementById("map-svg")!;
-  let cachedWorld: Topology | null = null;
+    // ── A/B Toggle ─────────────────────────────────────────────
+    const btn3d = document.getElementById("btn-3d")!;
+    const btn2d = document.getElementById("btn-2d")!;
+    const view3d = document.getElementById("view-3d")!;
+    const view2d = document.getElementById("view-2d")!;
 
-  async function loadWorld(): Promise<Topology> {
-    if (cachedWorld) return cachedWorld;
-    const res = await fetch(
-      "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
-    );
-    cachedWorld = (await res.json()) as Topology;
-    return cachedWorld;
-  }
-
-  async function renderMap() {
-    const world = await loadWorld();
-
-    const countriesGeo = feature(
-      world,
-      world.objects.countries as GeometryCollection
-    );
-
-    const w = mapSvg.clientWidth || 800;
-    const h = mapSvg.clientHeight || 450;
-    mapSvg.setAttribute("viewBox", `0 0 ${w} ${h}`);
-    mapSvg.innerHTML = "";
-
-    const projection = geoNaturalEarth1().fitSize([w, h], countriesGeo);
-    const pathGen = geoPath(projection);
-    const isDark = document.documentElement.classList.contains("dark");
-
-    // Graticule (grid lines)
-    const graticuleData = geoGraticule()();
-    const gratEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    gratEl.setAttribute("d", pathGen(graticuleData) || "");
-    gratEl.setAttribute("fill", "none");
-    gratEl.setAttribute("stroke", isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)");
-    gratEl.setAttribute("stroke-width", "0.5");
-    mapSvg.appendChild(gratEl);
-
-    // Determine which country codes are visited (based on filtered data)
-    const data = filtered();
-    const visitedCodes = new Set(
-      data.map((fp) => COUNTRY_CODES[fp.country]).filter(Boolean)
-    );
-
-    // Draw country polygons — highlight visited countries
-    const defaultFill = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)";
-    const highlightFill = "rgba(56,189,248,0.55)";
-    const strokeColor = isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)";
-
-    for (const feat of countriesGeo.features) {
-      const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      el.setAttribute("d", pathGen(feat) || "");
-      const isVisited = visitedCodes.has(String(feat.id));
-      el.setAttribute("fill", isVisited ? highlightFill : defaultFill);
-      el.setAttribute("stroke", strokeColor);
-      el.setAttribute("stroke-width", "0.5");
-      mapSvg.appendChild(el);
-    }
-
-    // Draw city markers (driven by city lat/lng)
-    for (const fp of data) {
-      const coords = projection([fp.lng, fp.lat]);
-      if (!coords) continue;
-      const [x, y] = coords;
-
-      // Glow ring
-      const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      glow.setAttribute("cx", String(x));
-      glow.setAttribute("cy", String(y));
-      glow.setAttribute("r", "10");
-      glow.setAttribute("fill", "rgba(56,189,248,0.15)");
-      mapSvg.appendChild(glow);
-
-      // Solid dot with hover tooltip
-      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      dot.setAttribute("cx", String(x));
-      dot.setAttribute("cy", String(y));
-      dot.setAttribute("r", "3.5");
-      dot.setAttribute("fill", "rgb(56,189,248)");
-      dot.setAttribute("stroke", "white");
-      dot.setAttribute("stroke-width", "1.2");
-      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-      title.textContent = fp.city;
-      dot.appendChild(title);
-      mapSvg.appendChild(dot);
-    }
-  }
-
-  // ── 3) Terminal Log ────────────────────────────────────────
-  function renderTerminal() {
-    const body = document.getElementById("terminal-body")!;
-    while (body.children.length > 1) body.removeChild(body.lastChild!);
-
-    const data = filtered().slice().sort((a, b) => a.year - b.year);
-    if (data.length === 0) {
-      const line = document.createElement("p");
-      line.className = "text-white/30";
-      line.textContent = "  (no entries)";
-      body.appendChild(line);
-      return;
-    }
-    for (const fp of data) {
-      const line = document.createElement("p");
-      let html =
-        `<span class="text-yellow-400/70">[${fp.year}]</span> ` +
-        `<span class="text-cyan-300">${fp.city}</span>` +
-        `<span class="text-white/30">, ${fp.country}</span>`;
-      if (fp.description) {
-        html += ` — <span class="text-green-300/80">${fp.description}</span>`;
+    function setView(v: "3d" | "2d") {
+      activeView = v;
+      const active = "bg-black text-white dark:bg-white dark:text-black";
+      const idle = "bg-transparent text-black/75 dark:text-white/75";
+      if (v === "3d") {
+        view3d.classList.remove("hidden");
+        view2d.classList.add("hidden");
+        btn3d.className = btn3d.className.replace(idle, active);
+        btn2d.className = btn2d.className.replace(active, idle);
+      } else {
+        view2d.classList.remove("hidden");
+        view3d.classList.add("hidden");
+        btn2d.className = btn2d.className.replace(idle, active);
+        btn3d.className = btn3d.className.replace(active, idle);
       }
-      line.innerHTML = html;
-      body.appendChild(line);
+      requestAnimationFrame(() => renderAll());
     }
-    const eof = document.createElement("p");
-    eof.className = "text-white/30 mt-2";
-    eof.textContent = `$ # ${data.length} entries | EOF`;
-    body.appendChild(eof);
-  }
 
-  // ── Render orchestrator ────────────────────────────────────
-  function renderAll() {
-    if (activeView === "3d") {
-      renderGlobe();
-    } else {
-      renderMap();
+    btn3d.addEventListener("click", () => setView("3d"));
+    btn2d.addEventListener("click", () => setView("2d"));
+
+    // ── 1) 3D WebGL Particle Globe (cobe) ─────────────────────
+    const globeCanvas = document.getElementById("globe-canvas") as HTMLCanvasElement;
+    let currentGlobe: ReturnType<typeof createGlobe> | null = null;
+    let phi = 2.4;
+
+    function buildMarkers() {
+      return filtered().map((fp) => ({
+        location: [fp.lat, fp.lng] as [number, number],
+        size: 0.05,
+      }));
     }
-    renderTerminal();
-  }
 
-  // ── Init ───────────────────────────────────────────────────
-  renderAll();
+    function renderGlobe() {
+      if (currentGlobe) {
+        currentGlobe.destroy();
+        currentGlobe = null;
+      }
+      const container = globeCanvas.parentElement!;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w === 0 || h === 0) return;
 
-  // Responsive resize
-  const ro = new ResizeObserver(() => renderAll());
-  ro.observe(globeCanvas.parentElement!);
-  ro.observe(mapSvg.parentElement!);
+      // Dimensions are doubled for crisp rendering on high-DPI displays
+      currentGlobe = createGlobe(globeCanvas, {
+        devicePixelRatio: window.devicePixelRatio || 2,
+        width: w * 2,
+        height: h * 2,
+        offset: [0, h * 1.5],
+        phi: 0,
+        theta: 0.25,
+        dark: 1,
+        diffuse: 1.2,
+        mapSamples: 16000,
+        mapBrightness: 6,
+        baseColor: [0.3, 0.3, 0.3],
+        markerColor: [0.1, 0.8, 1.0],
+        glowColor: [1.2, 1.2, 1.2],
+        markers: buildMarkers(),
+        onRender: (state) => {
+          state.phi = phi;
+          phi += 0.005;
+        },
+      });
+    }
+
+    // ── 2) 2D SVG Vector World Map (D3.js + TopoJSON) ─────────
+    const mapSvg = document.getElementById("map-svg")!;
+    let cachedWorld: Topology | null = null;
+
+    async function loadWorld(): Promise<Topology> {
+      if (cachedWorld) return cachedWorld;
+      const res = await fetch(
+        "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
+      );
+      cachedWorld = (await res.json()) as Topology;
+      return cachedWorld;
+    }
+
+    async function renderMap() {
+      const world = await loadWorld();
+
+      const countriesGeo = feature(
+        world,
+        world.objects.countries as GeometryCollection
+      );
+
+      const w = mapSvg.clientWidth || 800;
+      const h = mapSvg.clientHeight || 450;
+      mapSvg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+      mapSvg.innerHTML = "";
+
+      const projection = geoNaturalEarth1().fitSize([w, h], countriesGeo);
+      const pathGen = geoPath(projection);
+      const isDark = document.documentElement.classList.contains("dark");
+
+      // Graticule (grid lines)
+      const graticuleData = geoGraticule()();
+      const gratEl = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      gratEl.setAttribute("d", pathGen(graticuleData) || "");
+      gratEl.setAttribute("fill", "none");
+      gratEl.setAttribute("stroke", isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)");
+      gratEl.setAttribute("stroke-width", "0.5");
+      mapSvg.appendChild(gratEl);
+
+      // Determine which country codes are visited (based on filtered data)
+      const data = filtered();
+      const visitedCodes = new Set(
+        data.map((fp) => COUNTRY_CODES[fp.country]).filter(Boolean)
+      );
+
+      // Draw country polygons — highlight visited countries
+      const defaultFill = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)";
+      const highlightFill = "rgba(56,189,248,0.55)";
+      const strokeColor = isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)";
+
+      for (const feat of countriesGeo.features) {
+        const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        el.setAttribute("d", pathGen(feat) || "");
+        const isVisited = visitedCodes.has(String(feat.id));
+        el.setAttribute("fill", isVisited ? highlightFill : defaultFill);
+        el.setAttribute("stroke", strokeColor);
+        el.setAttribute("stroke-width", "0.5");
+        mapSvg.appendChild(el);
+      }
+
+      // Draw city markers (driven by city lat/lng)
+      for (const fp of data) {
+        const coords = projection([fp.lng, fp.lat]);
+        if (!coords) continue;
+        const [x, y] = coords;
+
+        // Glow ring
+        const glow = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        glow.setAttribute("cx", String(x));
+        glow.setAttribute("cy", String(y));
+        glow.setAttribute("r", "10");
+        glow.setAttribute("fill", "rgba(56,189,248,0.15)");
+        mapSvg.appendChild(glow);
+
+        // Solid dot with hover tooltip
+        const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        dot.setAttribute("cx", String(x));
+        dot.setAttribute("cy", String(y));
+        dot.setAttribute("r", "3.5");
+        dot.setAttribute("fill", "rgb(56,189,248)");
+        dot.setAttribute("stroke", "white");
+        dot.setAttribute("stroke-width", "1.2");
+        const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+        title.textContent = fp.city;
+        dot.appendChild(title);
+        mapSvg.appendChild(dot);
+      }
+    }
+
+    // ── 3) Terminal Log ────────────────────────────────────────
+    function renderTerminal() {
+      const body = document.getElementById("terminal-body")!;
+      while (body.children.length > 1) body.removeChild(body.lastChild!);
+
+      const data = filtered().slice().sort((a, b) => a.year - b.year);
+      if (data.length === 0) {
+        const line = document.createElement("p");
+        line.className = "text-white/30";
+        line.textContent = "  (no entries)";
+        body.appendChild(line);
+        return;
+      }
+      for (const fp of data) {
+        const line = document.createElement("p");
+        let html =
+          `<span class="text-yellow-400/70">[${fp.year}]</span> ` +
+          `<span class="text-cyan-300">${fp.city}</span>` +
+          `<span class="text-white/30">, ${fp.country}</span>`;
+        if (fp.description) {
+          html += ` — <span class="text-green-300/80">${fp.description}</span>`;
+        }
+        line.innerHTML = html;
+        body.appendChild(line);
+      }
+      const eof = document.createElement("p");
+      eof.className = "text-white/30 mt-2";
+      eof.textContent = `$ # ${data.length} entries | EOF`;
+      body.appendChild(eof);
+    }
+
+    // ── Render orchestrator ────────────────────────────────────
+    function renderAll() {
+      if (activeView === "3d") {
+        renderGlobe();
+      } else {
+        renderMap();
+      }
+      renderTerminal();
+    }
+
+    // ── Init ───────────────────────────────────────────────────
+    renderAll();
+
+    // Responsive resize
+    const ro = new ResizeObserver(() => renderAll());
+    ro.observe(globeCanvas.parentElement!);
+    ro.observe(mapSvg.parentElement!);
+
+    // Cleanup on navigation away to prevent memory leaks
+    document.addEventListener('astro:before-swap', () => {
+      ro.disconnect();
+      if (currentGlobe) {
+        currentGlobe.destroy();
+        currentGlobe = null;
+      }
+    }, { once: true });
+  });
 </script>
