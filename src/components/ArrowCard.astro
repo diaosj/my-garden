@@ -12,7 +12,7 @@ const { entry } = Astro.props as {
 
 <a
   href={`/${entry.collection}/${entry.id}`}
-  class="not-prose group flex flex-col sm:grid sm:grid-cols-[60%_40%] sm:items-center py-6 border-b border-black/5 dark:border-white/5"
+  class="not-prose group flex flex-col sm:grid sm:grid-cols-[3fr_2fr] sm:gap-x-8 sm:items-center py-6 border-b border-black/5 dark:border-white/5"
 >
   <h3 class="font-medium text-black dark:text-white text-lg group-hover:underline underline-offset-4 decoration-black/20 dark:decoration-white/20">
     {entry.data.title}
