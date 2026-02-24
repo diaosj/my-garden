@@ -19,6 +19,9 @@ const projects = (await getCollection("projects"))
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
+    <p class="animate text-xs uppercase tracking-[0.3em] text-white/50 mb-4">
+      AI PLATFORM ARCHITECT &amp; STAFF ENGINEER
+    </p>
     <h1 class="animate font-semibold text-black dark:text-white mb-6">
       Hi, I'm Shoujun (Adrian) Diao
     </h1>
@@ -27,8 +30,8 @@ const projects = (await getCollection("projects"))
       <!-- 1. 门面/名片区 (Hero) -->
       <section>
         <article class="space-y-4">
-          <p class="animate font-medium text-black dark:text-white">
-            AI Platform Architect &amp; Staff Engineer | 14 Years of Software Engineering Experience | Architecting Scalable &amp; Resilient AI Infrastructure (6 Years K8s/Cloud-Native Focus)
+          <p class="animate font-serif tracking-wide leading-relaxed font-medium text-black dark:text-white">
+            AI Platform Architect &amp; Staff Engineer | 14 Years of Software Engineering Experience | Architecting Scalable &amp; Resilient AI Infrastructure (6 Years <span class="underline decoration-1 underline-offset-4">K8s</span>/Cloud-Native Focus)
           </p>
           <Link href="/about">More about me & connect ↗</Link>
         </article>
