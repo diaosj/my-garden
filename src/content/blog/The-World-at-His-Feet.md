@@ -1,12 +1,12 @@
+---
 title: The World at His Feet
 date: 2014-08-05 00:51:50
-tags: 
-- 足球
-
+description: "Archived from my original Hexo blog."
+tags: ["足球"]
 ---
 今天看到一段视频。应该是今年世界杯之前拍的。
 
-{% youtube e-fgnnGhuKw %}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/e-fgnnGhuKw" frameborder="0" allowfullscreen></iframe>
 
 <!--more-->
 

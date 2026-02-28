@@ -1,6 +1,8 @@
+---
 title: The Cultural Dimension of Globalization
 date: 2016-05-14 10:31:14
-tags: English
+description: "Archived from my original Hexo blog."
+tags: ["English"]
 ---
 If we ask an ordinary person on the busy streets about the essence of globalization, the answer would probably involve some reference to profound economic transformations fueled by exploding information and cutting-edge communication technologies. Global financial markets, worldwide labour flows, transnational corporations, offshore financial centers, foreign direct investment, such intricacies often leave general observers with a one-dimensional understanding of globalization as primarily an economic phenomenon.
 

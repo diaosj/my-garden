@@ -1,10 +1,8 @@
+---
 title: Redis源码阅读
 date: 2015-06-04 22:57:27
-tags: 
- - Redis
- - C
- - 数据结构
-
+description: "Archived from my original Hexo blog."
+tags: ["Redis", "C", "数据结构"]
 ---
 Redis里每个键值对都是由对象组成的。
 

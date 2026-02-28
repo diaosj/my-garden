@@ -1,7 +1,8 @@
+---
 title: "blackhole引擎用作中转站"
 date: 2015-03-17 12:21:46
-tags: MySQL
-
+description: "Archived from my original Hexo blog."
+tags: ["MySQL"]
 ---
 #引擎
 BLACKHOLE存储引擎是将进来的数据全都扔掉，所有的查询永远返回一个空集，但该记的log还是全都记的。相当于只打卡不做事。创建一个BLACKHOLE的表时，MySQL server在数据库目录下创建一个对应的.frm格式文件，除此之外没有对应的文件了。

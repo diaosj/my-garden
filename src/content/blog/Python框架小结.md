@@ -1,17 +1,8 @@
+---
 title: Python框架小结
 date: 2015-03-25 22:58:14
-tags:
- - Python
- - Django
- - Tornado
- - Flask
- - Gevent
- - Web.py
- - Bottle
- - Celery
- - Twisted
- - NumPy
- 
+description: "Archived from my original Hexo blog."
+tags: ["Python", "Django", "Tornado", "Flask", "Gevent", "Web.py", "Bottle", "Celery", "Twisted", "NumPy"]
 ---
 <!--more-->
 

@@ -1,9 +1,8 @@
+---
 title: RAID卡相关信息查询
 date: 2016-01-22 17:01:28
-tags:
- - MySQL
- - Linux
-
+description: "Archived from my original Hexo blog."
+tags: ["MySQL", "Linux"]
 ---
 查看电量百分比：
 

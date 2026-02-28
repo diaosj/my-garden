@@ -1,9 +1,8 @@
+---
 title: jQuery源码阅读
 date: 2016-01-18 09:55:19
-tags:
- - JavaScript
- - jQuery
-
+description: "Archived from my original Hexo blog."
+tags: ["JavaScript", "jQuery"]
 ---
 
 #整体结构

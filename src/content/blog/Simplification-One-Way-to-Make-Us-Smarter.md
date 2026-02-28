@@ -1,6 +1,8 @@
+---
 title: "Simplification: One Way to Make Us Smarter"
 date: 2016-05-30 10:31:38
-tags: English
+description: "Archived from my original Hexo blog."
+tags: ["English"]
 ---
 
 People value their powers of thinking, and most of us are interested in why some people seem to drive a highly tuned Maserati brain while others potter along with a merely serviceable Chery QQ. The fact that the broad powers of human intelligence show differences has been recognized since antiquity. Some people reliably obtain more correct answers, and often achieve these faster. How do they score better on  mathematics, science, or any realm where problem solving plays a prominent role?

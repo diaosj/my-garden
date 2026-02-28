@@ -1,7 +1,8 @@
+---
 title: null和undefined的区别
 date: 2011-08-02 09:48:07
-tags: JavaScript
-
+description: "Archived from my original Hexo blog."
+tags: ["JavaScript"]
 ---
 null是一个表示“无”的对象，转为数值时为0；undefined是一个表示“无”的原始值，转为数值时为NaN。
 
