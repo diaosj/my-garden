@@ -1,8 +1,10 @@
+---
 title: Lua注释技巧
 date: 2014-07-03 12:11:40
 tags:
  - Lua
 
+description: "Archived from my original Hexo blog."
 ---
 Lua中可以在任何地方以两个连字符（--）开始行注释，而块注释以“--[[”开始，以“]]”结束。所以注释时就有了这么一个技巧。具体来说，如果要注释掉一段代码：
 

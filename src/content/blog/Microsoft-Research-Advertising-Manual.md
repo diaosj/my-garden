@@ -1,7 +1,9 @@
+---
 title: "Microsoft Research Advertising Manual"
 date: 2013-05-29 08:42:18
-tags: 乱翻书
+tags: ["乱翻书"]
 
+description: "Archived from my original Hexo blog."
 ---
 　　上周吧，MSRA微博上发了一张Rick Rashid跟James Doohan的合照让人猜他们什么关系。说是猜对有奖。打着呵欠回复了下，然后昨天传说中的“精美礼品”就到了，一套精美的明信片加这本，不怎么精美的，额，广告手册。
 　　<!--more--> 

@@ -1,7 +1,9 @@
+---
 title: MySQL从csv文件导入数据
 date: 2013-08-06 14:12:51
-tags: MySQL
+tags: ["MySQL"]
 
+description: "Archived from my original Hexo blog."
 ---
 要从一个csv文件里导数据到某张表中，表的结构如下：
 <!--more-->

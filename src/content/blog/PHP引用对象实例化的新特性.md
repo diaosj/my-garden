@@ -1,7 +1,9 @@
+---
 title: PHP引用对象实例化的新特性
 date: 2011-11-12 09:19:23
-tags: PHP
+tags: ["PHP"]
 
+description: "Archived from my original Hexo blog."
 ---
 在鸟哥博客上看到的，以前我们不能直接操作一个对象实例化的结果，只能把实例化结果先保存起来，然后再调用：
 

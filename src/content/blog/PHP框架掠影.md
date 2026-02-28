@@ -1,3 +1,4 @@
+---
 title: "PHP框架掠影"
 date: 2015-03-24 20:37:52
 tags: 
@@ -8,6 +9,7 @@ tags:
  - CodeIgniter
  - Zend
 
+description: "Archived from my original Hexo blog."
 ---
 
 <!--more-->

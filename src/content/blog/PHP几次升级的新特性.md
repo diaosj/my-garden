@@ -1,7 +1,9 @@
+---
 title: "PHP几次升级的新特性一览"
 date: 2015-03-26 02:03:11
-tags: PHP
+tags: ["PHP"]
 
+description: "Archived from my original Hexo blog."
 ---
 #5.2.x to 5.3.x
 <!--more-->

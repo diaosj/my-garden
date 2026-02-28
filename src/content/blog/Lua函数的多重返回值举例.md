@@ -1,8 +1,10 @@
+---
 title: Lua函数的多重返回值举例
 date: 2014-08-05 09:20:51
 tags:
  - Lua
 
+description: "Archived from my original Hexo blog."
 ---
 Lua的函数可以返回多个结果，假设有这么几个函数：
 

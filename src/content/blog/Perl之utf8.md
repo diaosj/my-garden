@@ -1,7 +1,9 @@
+---
 title: "Perl之utf8"
 date: 2014-12-15 10:09:37
-tags: Perl
+tags: ["Perl"]
 
+description: "Archived from my original Hexo blog."
 ---
 今天遇到一个问题。MySQL中用的是UTF-8编码，有一些日文词汇，从数据库中读取出来时能正常输出，但是经过encode_json之后就成了乱码，再存入数据库中也是乱码。
 <!--more-->

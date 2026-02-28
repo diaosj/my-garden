@@ -1,7 +1,9 @@
+---
 title: "MySQL里的DESCRIBE/EXPLAIN"
 date: 2013-09-06 21:02:39
-tags: MySQL
+tags: ["MySQL"]
 
+description: "Archived from my original Hexo blog."
 ---
 本来是想详细学一下EXPLAIN的用法，查下文档，意外地发现DESCRIBE和EXPLAIN竟然是同义词。以前一直用DESCRIBE获取表格结构信息，用EXPLAIN来分析查询语句。其实对于MySQL parser来说，两者完全等价。
 <!--more-->
