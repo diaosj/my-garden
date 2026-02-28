@@ -1,7 +1,9 @@
+---
 title: 姜博的SQL题
 date: 2015-07-28 11:38:35
-tags: MySQL
+tags: ["MySQL"]
 
+description: "Archived from my original Hexo blog."
 ---
 大半夜的，InsideMySQL君在群里发了一道题，具体可以去公众号上查看。
 
