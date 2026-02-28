@@ -1,7 +1,7 @@
 ---
 title: "Cookie和Session的区别"
 date: 2012-02-27 20:58:28
-tags: HTTP
+tags: ["HTTP"]
 description: "Archived from my original Hexo blog."
 ---
 * cookie是服务器通过HTTP响应头指示浏览器生成的，存在客户端；session是写在服务器上的文件。

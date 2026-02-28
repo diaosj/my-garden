@@ -1,7 +1,7 @@
 ---
 title: "JavaScript中的执行环境与作用链"
 date: 2011-10-25 19:45:46
-tags: JavaScript
+tags: ["JavaScript"]
 description: "Archived from my original Hexo blog."
 ---
 #执行环境
