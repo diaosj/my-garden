@@ -1,7 +1,8 @@
+---
 title: "UNIX信号"
 date: 2012-04-30 23:33:02
-tags: Linux
-
+description: "Archived from my original Hexo blog."
+tags: ["Linux"]
 ---
 信号是Unix、类Unix以及其他POSIX兼容的操作系统中进程间通信的一种有限制的方式。它是一种异步的通知机制，用来提醒进程一个事件已经发生。当一个信号发送给一个进程，操作系统中断了进程正常的控制流程，此时，任何非原子操作都将被中断。如果进程定义了信号的处理函数，那么它将被执行，否则就执行默认的处理函数。
 <!--more-->

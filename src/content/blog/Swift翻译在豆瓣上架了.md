@@ -1,6 +1,7 @@
+---
 title: "Swift翻译在豆瓣上架了"
 date: 2014-11-20 21:55:48
-tags:
+description: "Archived from my original Hexo blog."
 ---
 嘛，感谢小鱼同学。
 

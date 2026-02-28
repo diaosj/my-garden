@@ -1,7 +1,8 @@
+---
 title: "一行JavaScript代码"
 date: 2014-10-13 10:07:26
-tags: JavaScript
-
+description: "Archived from my original Hexo blog."
+tags: ["JavaScript"]
 ---
 今天看到一枚gist。作者的描述是“a tweet-sized debugger for visualizing your CSS layouts”。你们这些丧心病狂的人，不追求长，倒追求短……
 

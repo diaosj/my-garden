@@ -1,7 +1,8 @@
+---
 title: "The Great Gatsby"
 date: 2012-09-29 15:19:09
-tags: 乱翻书
-
+description: "Archived from my original Hexo blog."
+tags: ["乱翻书"]
 ---
 >Yet high over the city our line of yellow windows must have contributed their share of human secrecy to the casual watcher in the darkening streets, and I was him too, looking up and wondering. I was within and without, simultaneously enchanted and repelled by the inexhaustible variety of life.
 
