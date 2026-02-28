@@ -1,7 +1,8 @@
+---
 title: JavaScript中的this
 date: 2015-04-02 10:23:43
-tags: JavaScript
-
+tags: ["JavaScript"]
+description: "Archived from my original Hexo blog."
 ---
 JavaScript总是要在一个宿主环境中运行的，最常见的宿主环境就是web浏览器，与之对接的是JavaScript引擎，这才是真正执行JavaScript代码的地方。常见的引擎有V8、JavaScript core。
 

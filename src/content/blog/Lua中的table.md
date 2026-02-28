@@ -1,8 +1,9 @@
+---
 title: Lua中的table
 date: 2014-08-03 12:33:30
 tags:
  - Lua
-
+description: "Archived from my original Hexo blog."
 ---
 table是Lua中仅有的数据结构。其实就是PHP里面说的associative array。Lua通过table来表示module、package和object。例如，当输入io.read的时候，其含义是“使用read作为key来索引io这个table”。
 

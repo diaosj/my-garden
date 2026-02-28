@@ -1,8 +1,9 @@
+---
 title: FOUC
 date: 2015-07-02 09:31:56
-tags: CSS
+tags: ["CSS"]
+description: "Archived from my original Hexo blog."
 ---
-
 即Flash Of Unstyled Content，文档样式闪烁。举个例子：
 
 ```css

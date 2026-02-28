@@ -1,7 +1,8 @@
+---
 title: "HTTP状态码"
 date: 2012-03-27 20:57:52
-tags: HTTP
-
+tags: ["HTTP"]
+description: "Archived from my original Hexo blog."
 ---
 在推上看到有人这么描述HTTP状态码的本质，笑死了，好精准：
 
