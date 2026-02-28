@@ -1,7 +1,8 @@
+---
 title: "C++中的const pointer"
 date: 2012-07-27 10:59:41
 tags: C++
-
+description: "Archived from my original Hexo blog."
 ---
 关于细节的小小整理。
 <!--more-->

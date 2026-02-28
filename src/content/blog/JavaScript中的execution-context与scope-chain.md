@@ -1,7 +1,8 @@
+---
 title: "JavaScript中的执行环境与作用链"
 date: 2011-10-25 19:45:46
 tags: JavaScript
-
+description: "Archived from my original Hexo blog."
 ---
 #执行环境
 执行环境（execution context）是JavaScript中非常重要的一个概念。每个执行环境对应着一个变量对象（variable object），环境中的变量和函数都保存在这个对象中。提到变量与函数，就要意识到这是在环境中的变量与函数。环境决定了变量与函数的行为。

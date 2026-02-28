@@ -1,8 +1,9 @@
+---
 title: JavaScript惰性载入
 date: 2015-07-25 10:11:19
 tags:
  - JavaScript
-
+description: "Archived from my original Hexo blog."
 ---
 一个小trick，可以用于提高函数代码的性能。
 

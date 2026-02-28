@@ -1,9 +1,10 @@
+---
 title: AVL树
 date: 2009-04-03 09:35:34
 tags:
  - C++
  - 数据结构
-
+description: "Archived from my original Hexo blog."
 ---
 一棵AVL树或者是空树，或者是具有下列性质的二叉搜索树：它的左子树和右子树都是AVL树，且左子树和右子树的高度之差绝对值不超过1.
 

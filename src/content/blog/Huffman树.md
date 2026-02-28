@@ -1,9 +1,10 @@
+---
 title: Huffman树
 date: 2009-03-02 10:54:44
 tags:
  - C++
  - 数据结构
-
+description: "Archived from my original Hexo blog."
 ---
 直观上，带权路径长度最小的二叉树应是权值大的外节点离根节点最近的扩充二叉树，这就是Huffman树。
 

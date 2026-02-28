@@ -1,7 +1,8 @@
+---
 title: JavaScript中的异步编程
 date: 2015-06-27 09:09:08
 tags: JavaScript
-
+description: "Archived from my original Hexo blog."
 ---
 JavaScript的执行环境是单线程的，不用考虑资源同步、死锁等问题。但这带来一个很现实的问题，就是某个任务执行时间很长时，后面的任务都要干等着，用户看到的就是响应不能，这显然不能忍。
 

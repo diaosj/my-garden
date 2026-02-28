@@ -1,7 +1,8 @@
+---
 title: JavaScript操作cookie
 date: 2011-08-03 00:18:05
 tags: JavaScript
-
+description: "Archived from my original Hexo blog."
 ---
 直接看代码。
 
