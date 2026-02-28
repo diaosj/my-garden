@@ -3,7 +3,6 @@ title: Lua中的递归函数
 date: 2014-08-07 11:21:41
 tags:
  - Lua
-
 description: "Archived from my original Hexo blog."
 ---
 先说个容易犯的错误。

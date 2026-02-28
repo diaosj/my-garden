@@ -2,7 +2,6 @@
 title: "Our only light in paradise"
 date: 2013-05-01 23:26:40
 tags: ["足球"]
-
 description: "Archived from my original Hexo blog."
 ---
 　　看了上半场之后出门接亲。 
