@@ -1,8 +1,8 @@
+---
 title: "利用FastDFS存储图片"
 date: 2014-10-09 09:55:12
-tags: 
- - PHP
- - FastDFS
+tags: ["PHP", "FastDFS"]
+description: "Archived from my original Hexo blog."
 ---
 现在做的这个应用，可以让用户查看久远的商品及相关的广告之类的活动。遇到一个问题，就是乐天上的图片可能失效。因此想把商品图片存至本地。由于都是一堆小图片，看资料上说FastDFS特别适合存储大量大小在4KB与500MB之间的文件。
 
