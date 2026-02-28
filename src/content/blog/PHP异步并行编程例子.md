@@ -1,7 +1,8 @@
+---
 title: PHP异步并行编程例子
 date: 2014-08-27 13:26:41
-tags: PHP
-
+tags: ["PHP"]
+description: "Archived from my original Hexo blog."
 ---
 今天看了今年**PHPCONCHINA**一些PPT。分享的一些工具还是很有用的，比如Dash、httpie。正在考虑IDE是否需要采用推荐的PhpStorm。
 

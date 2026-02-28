@@ -1,7 +1,8 @@
+---
 title: PCRE之递归匹配
 date: 2011-09-30 09:40:24
-tags: PHP
-
+tags: ["PHP"]
+description: "Archived from my original Hexo blog."
 ---
 主要是引入了一个新符号(?R)，用以表示正则模式本身。
 

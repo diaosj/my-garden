@@ -1,8 +1,9 @@
+---
 title: Perl复习
 date: 2014-07-28 01:26:32
 tags:
 - Perl
-
+description: "Archived from my original Hexo blog."
 ---
 骆驼书是去年看的了，最近在做的项目中，爬虫基本上是用Perl写的。趁着这个机会，复习一下Perl——因为基本上已经不记得Perl该怎么写了……
 

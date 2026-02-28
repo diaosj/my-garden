@@ -1,7 +1,8 @@
+---
 title: MySQL5.6中TIMESTAMP有变化
 date: 2014-09-06 11:38:23
-tags: MySQL
-
+tags: ["MySQL"]
+description: "Archived from my original Hexo blog."
 ---
 之前的默认行为：
 
