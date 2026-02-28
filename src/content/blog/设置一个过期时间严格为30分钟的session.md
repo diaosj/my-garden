@@ -1,7 +1,8 @@
+---
 title: 设置一个过期时间严格为30分钟的session
 date: 2012-01-11 19:13:15
-tags: PHP
-
+description: "Archived from my original Hexo blog."
+tags: ["PHP"]
 ---
 在鸟哥博客上看到这么一道题，存一下鸟哥的讲解。
 
