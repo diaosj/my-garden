@@ -1,9 +1,7 @@
 ---
 title: CodeIgniter框架学习
 date: 2015-05-25 13:33:40
-tags: 
-- PHP
-- CodeIgniter
+tags: ["PHP", "CodeIgniter"]
 description: "Archived from my original Hexo blog."
 ---
 离开前东家之后就挺背的，Paperwhite屏幕被挤裂，Surface Pro蓝屏，QQ、微信都被冻结，球衣球鞋弄丢了，折腾信用卡，折腾保险，连Mac上搭开发环境都搭得七窍生烟，更不要提C++被鄙视，面谈被误解。两周过得跟几个月似的。新东家用的是CodeIgniter框架，版本号2.2.0。一周来在各种培训与杂事之间抽空学习了框架的官方文档，完成了几个简单的功能。框架还不太熟，记了一些笔记在这里，希望能尽快用熟。

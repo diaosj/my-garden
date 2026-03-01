@@ -1,9 +1,7 @@
 ---
 title: Nginx源码阅读
 date: 2016-01-20 20:58:29
-tags:
- - Nginx
- - C
+tags: ["Nginx", "C"]
 description: "Archived from my original Hexo blog."
 ---
 

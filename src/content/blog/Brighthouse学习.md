@@ -1,9 +1,7 @@
 ---
 title: "Brighthouse学习"
 date: 2015-04-16 16:23:11
-tags: 
- - MySQL
- - Infobright
+tags: ["MySQL", "Infobright"]
 description: "Archived from my original Hexo blog."
 ---
 最近接到开发专门research站点的任务。数据是放到数据仓库中的。虽然都是一样的连接，插入脚本生成的数据，取出数据用于业务逻辑，对于要做的任务来说，“数据仓库”这四个字是透明的。不过查知table的引擎是Brighthouse，去搜索了一些资料学习一下，主要是《Brighthouse: An Analytic Data Warehouse for Ad-hoc Queries》这篇文档。
