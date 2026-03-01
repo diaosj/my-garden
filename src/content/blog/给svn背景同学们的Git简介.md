@@ -1,9 +1,8 @@
+---
 title: 给svn背景同学们的Git简介
 date: 2015-05-26 16:20:35
-tags:
-- SVN
-- Git
-
+description: "Archived from my original Hexo blog."
+tags: ["SVN", "Git"]
 ---
 #快速上手
 其实版本控制软件最常用到的命令也就那么几条。看了一下本地svn相关的历史命令，我用得最多的就是svn up了，然后svn commit > svn st > svn log，然后就是其它零零碎碎的命令了。估计大家情形也都差不多。所以，我们先来看一下短时间内最常用到的几条命令。
