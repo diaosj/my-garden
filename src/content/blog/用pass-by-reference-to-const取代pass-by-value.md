@@ -1,7 +1,7 @@
 ---
 title: "用pass by reference to const取代pass by value"
 date: 2012-08-24 17:42:10
-tags: [C++]
+tags: ["C++"]
 description: "Archived from my original Hexo blog."
 ---
 缺省情况下，C++以传值方式将对象传入或传出函数。这个特性继承自C。

@@ -1,13 +1,7 @@
 ---
 title: "PHP框架掠影"
 date: 2015-03-24 20:37:52
-tags: 
- - PHP
- - Yaf
- - Laravel
- - Yii
- - CodeIgniter
- - Zend
+tags: ["PHP", "Yaf", "Laravel", "Yii", "CodeIgniter", "Zend"]
 description: "Archived from my original Hexo blog."
 ---
 

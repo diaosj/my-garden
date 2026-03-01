@@ -1,8 +1,7 @@
 ---
 title: Lua中具名实参举例
 date: 2014-08-07 10:45:27
-tags:
- - Lua
+tags: ["Lua"]
 description: "Archived from my original Hexo blog."
 ---
 Lua中参数传递机制是具有位置性的。所以只能通过传table来实现具名实参。下面举个例子，实在太像JavaScript了。

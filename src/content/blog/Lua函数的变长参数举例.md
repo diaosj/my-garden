@@ -1,8 +1,7 @@
 ---
 title: Lua函数的变长参数举例
 date: 2014-08-05 10:05:10
-tags:
- - Lua
+tags: ["Lua"]
 description: "Archived from my original Hexo blog."
 ---
 Lua中的函数可以接受不同数量的实参。
