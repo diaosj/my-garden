@@ -1,0 +1,41 @@
+---
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/Layout.astro";
+import { VOYAGES } from "@consts";
+import kyushu from "@data/kyushu-2026.json";
+
+const trips = [{ slug: "kyushu-2026", data: kyushu, emoji: "\u{1F338}" }];
+---
+
+<PageLayout title={VOYAGES.TITLE} description={VOYAGES.DESCRIPTION}>
+  <Container>
+    <h1 class="animate font-semibold text-black dark:text-white">
+      {VOYAGES.TITLE}
+    </h1>
+    <p class="animate mt-2 text-black/75 dark:text-white/75">
+      {VOYAGES.DESCRIPTION}
+    </p>
+
+    <div class="animate mt-8 space-y-3">
+      {
+        trips.map((trip) => (
+          <a
+            href={`/voyages/${trip.slug}`}
+            class="group flex items-center gap-4 rounded-lg border border-black/10 dark:border-white/10 p-4 transition-colors duration-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
+          >
+            <span class="text-3xl">{trip.emoji}</span>
+            <div>
+              <div class="font-medium text-black dark:text-white group-hover:underline underline-offset-4 decoration-black/20 dark:decoration-white/20">
+                {trip.data.title}
+              </div>
+              <div class="text-sm text-black/50 dark:text-white/50 mt-0.5">
+                {trip.data.startDate} &rarr; {trip.data.endDate} &middot;{" "}
+                {trip.data.region}
+              </div>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </Container>
+</PageLayout>

@@ -29,6 +29,11 @@ export const ABOUT: Metadata = {
   DESCRIPTION: "Learn more about Shoujun (Adrian) Diao.",
 };
 
+export const VOYAGES: Metadata = {
+  TITLE: "Voyages",
+  DESCRIPTION: "Adventures beyond the code.",
+};
+
 export const SOCIALS: Socials = [
   {
     NAME: "X (formerly Twitter)",

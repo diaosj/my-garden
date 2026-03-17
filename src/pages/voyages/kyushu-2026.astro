@@ -1,0 +1,342 @@
+---
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/Layout.astro";
+import BackToPrevious from "@components/BackToPrevious.astro";
+import rawData from "@data/kyushu-2026.json";
+
+// ── Types ───────────────────────────────────────────────────
+interface Coord {
+  lng: number;
+  lat: number;
+}
+interface Stop {
+  id: string;
+  name: string;
+  nameJa?: string;
+  coordinate: Coord;
+  time?: string;
+  description?: string;
+  type: string;
+  icon?: string;
+}
+interface Leg {
+  from: string;
+  to: string;
+  transport: string;
+  duration?: string;
+}
+interface DayPlan {
+  date: string;
+  dayIndex: number;
+  weekday: string;
+  title: string;
+  theme: string;
+  color: string;
+  stops: Stop[];
+  legs: Leg[];
+}
+interface Itinerary {
+  title: string;
+  startDate: string;
+  endDate: string;
+  region: string;
+  days: DayPlan[];
+}
+
+const data = rawData as unknown as Itinerary;
+
+// ── Emoji map ───────────────────────────────────────────────
+const emojiMap: Record<string, string> = {
+  "plane-departure": "\u{1F6EB}",
+  "plane-arrival": "\u{1F6EC}",
+  utensils: "\u{1F35C}",
+  bed: "\u{1F3E8}",
+  flag: "\u{1F6A9}",
+  monument: "\u{1F5FF}",
+  camera: "\u{1F4F8}",
+  shrine: "\u26E9\uFE0F",
+  memorial: "\u{1F54A}\uFE0F",
+  temple: "\u{1F6D5}",
+  "cherry-blossom": "\u{1F338}",
+  transport: "\u2708\uFE0F",
+  attraction: "\u{1F4CD}",
+  food: "\u{1F35C}",
+  hotel: "\u{1F3E8}",
+  station: "\u{1F689}",
+};
+
+function getEmoji(s: Stop): string {
+  return emojiMap[s.icon || ""] || emojiMap[s.type] || "\u{1F4CD}";
+}
+
+// ── Strip hotel nightly cost from description ───────────────
+function cleanDesc(desc: string, type: string): string {
+  if (type !== "hotel") return desc;
+  return desc
+    .replace(/[，,]?\s*[¥￥][\d,]+\/晚/g, "")
+    .replace(/^[，,\s]+/, "")
+    .trim();
+}
+
+// ── Route map projection (build-time) ───────────────────────
+interface MapPoint {
+  x: number;
+  y: number;
+  big: boolean;
+}
+
+function projectDay(
+  stops: Stop[],
+  w: number,
+  h: number,
+  pad: number,
+): MapPoint[] {
+  const ks = stops.filter(
+    (s) =>
+      s.coordinate.lng >= 128 &&
+      s.coordinate.lng <= 133 &&
+      s.coordinate.lat >= 31.5 &&
+      s.coordinate.lat <= 35,
+  );
+  if (ks.length < 2) return [];
+
+  const lngs = ks.map((s) => s.coordinate.lng);
+  const lats = ks.map((s) => s.coordinate.lat);
+  const [mnLng, mxLng] = [Math.min(...lngs), Math.max(...lngs)];
+  const [mnLat, mxLat] = [Math.min(...lats), Math.max(...lats)];
+  const spanLng = mxLng - mnLng || 0.01;
+  const spanLat = mxLat - mnLat || 0.01;
+
+  const dw = w - 2 * pad;
+  const dh = h - 2 * pad;
+  const scale = Math.min(dw / spanLng, dh / spanLat);
+  const ox = pad + (dw - spanLng * scale) / 2;
+  const oy = pad + (dh - spanLat * scale) / 2;
+
+  return ks.map((s, i) => ({
+    x: Math.round((ox + (s.coordinate.lng - mnLng) * scale) * 10) / 10,
+    y: Math.round((oy + (mxLat - s.coordinate.lat) * scale) * 10) / 10,
+    big:
+      i === 0 ||
+      i === ks.length - 1 ||
+      s.type === "attraction" ||
+      s.type === "hotel",
+  }));
+}
+
+// ── Pre-compute view data ───────────────────────────────────
+interface TLItem {
+  kind: "stop" | "leg";
+  time: string;
+  emoji: string;
+  name: string;
+  nameJa: string;
+  desc: string;
+  transport: string;
+  duration: string;
+  isLast: boolean;
+}
+
+interface DayView {
+  dayIndex: number;
+  date: string;
+  weekday: string;
+  title: string;
+  theme: string;
+  color: string;
+  timeline: TLItem[];
+  route: MapPoint[];
+}
+
+const days: DayView[] = data.days.map((day) => {
+  const timeline: TLItem[] = [];
+  for (let i = 0; i < day.stops.length; i++) {
+    const s = day.stops[i];
+    timeline.push({
+      kind: "stop",
+      time: s.time || "",
+      emoji: getEmoji(s),
+      name: s.name,
+      nameJa: s.nameJa || "",
+      desc: cleanDesc(s.description || "", s.type),
+      transport: "",
+      duration: "",
+      isLast: i === day.stops.length - 1,
+    });
+    if (i < day.stops.length - 1) {
+      const leg = day.legs.find(
+        (l) => l.from === s.id && l.to === day.stops[i + 1].id,
+      );
+      if (leg) {
+        timeline.push({
+          kind: "leg",
+          time: "",
+          emoji: "",
+          name: "",
+          nameJa: "",
+          desc: "",
+          transport: leg.transport,
+          duration: leg.duration || "",
+          isLast: false,
+        });
+      }
+    }
+  }
+  return {
+    dayIndex: day.dayIndex,
+    date: day.date,
+    weekday: day.weekday,
+    title: day.title,
+    theme: day.theme,
+    color: day.color,
+    timeline,
+    route: projectDay(day.stops, 400, 120, 24),
+  };
+});
+
+const dateRange = `${data.startDate} \u2192 ${data.endDate}`;
+---
+
+<PageLayout title={data.title} description={`${dateRange} \xB7 ${data.region}`}>
+  <Container>
+    <div class="animate">
+      <BackToPrevious href="/voyages">Voyages</BackToPrevious>
+    </div>
+
+    <h1 class="animate mt-6 font-semibold text-2xl text-black dark:text-white">
+      {data.title}
+    </h1>
+    <p class="animate mt-2 text-sm text-black/50 dark:text-white/50">
+      {dateRange} &middot; {data.region}
+    </p>
+
+    <div class="animate mt-10 space-y-3">
+      {
+        days.map((day, dayIdx) => (
+          <details
+            class="group rounded-lg border border-black/10 dark:border-white/10 overflow-hidden"
+            open={dayIdx === 0 || undefined}
+          >
+            <summary class="list-none [&::-webkit-details-marker]:hidden flex items-center gap-3 px-4 py-3.5 cursor-pointer select-none transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02]">
+              <span
+                class="inline-flex items-center justify-center w-8 h-8 rounded-full text-white text-xs font-bold shrink-0"
+                style={`background:${day.color}`}
+              >
+                D{day.dayIndex}
+              </span>
+              <div class="min-w-0 flex-1">
+                <div class="font-medium text-black dark:text-white text-sm truncate">
+                  {day.title}
+                </div>
+                <div class="text-xs text-black/40 dark:text-white/40 mt-0.5">
+                  {day.date} {day.weekday} &middot; {day.theme}
+                </div>
+              </div>
+              <svg
+                class="w-4 h-4 text-black/30 dark:text-white/30 transition-transform duration-200 group-open:rotate-180 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
+
+            <div class="px-4 pb-5 border-t border-black/5 dark:border-white/5">
+              {/* ── Route map ── */}
+              {day.route.length >= 2 && (
+                <div class="mt-4 mb-5 rounded-md bg-neutral-50 dark:bg-neutral-800/50 border border-black/5 dark:border-white/5 overflow-hidden">
+                  <svg
+                    viewBox="0 0 400 120"
+                    class="w-full h-auto block"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <polyline
+                      points={day.route
+                        .map((p) => `${p.x},${p.y}`)
+                        .join(" ")}
+                      fill="none"
+                      stroke={day.color}
+                      stroke-width="2"
+                      stroke-dasharray="6,4"
+                      stroke-linecap="round"
+                      opacity="0.45"
+                    />
+                    {day.route.map((p) => (
+                      <circle
+                        cx={p.x}
+                        cy={p.y}
+                        r={p.big ? 4 : 2.5}
+                        fill={day.color}
+                        opacity={p.big ? 0.9 : 0.55}
+                      />
+                    ))}
+                  </svg>
+                </div>
+              )}
+
+              {/* ── Timeline ── */}
+              <div>
+                {day.timeline.map((item) =>
+                  item.kind === "stop" ? (
+                    <div class="flex items-start gap-2">
+                      {/* Time */}
+                      <div class="w-[3.25rem] shrink-0 text-right font-mono text-[11px] text-black/40 dark:text-white/40 pt-0.5">
+                        {item.time}
+                      </div>
+                      {/* Dot + line */}
+                      <div class="flex flex-col items-center w-5 shrink-0 self-stretch">
+                        <div
+                          class="w-2.5 h-2.5 mt-1 rounded-full shrink-0"
+                          style={`background:${day.color}`}
+                        />
+                        {!item.isLast && (
+                          <div class="flex-1 w-px bg-black/10 dark:bg-white/10 mt-1" />
+                        )}
+                      </div>
+                      {/* Content */}
+                      <div class="pb-4 min-w-0">
+                        <div class="font-medium text-sm text-black dark:text-white leading-snug">
+                          {item.name}
+                        </div>
+                        {item.nameJa && (
+                          <div class="text-[11px] text-black/30 dark:text-white/30 mt-0.5">
+                            {item.nameJa}
+                          </div>
+                        )}
+                        {item.desc && (
+                          <div class="text-xs text-black/50 dark:text-white/50 mt-1 leading-relaxed">
+                            {item.desc}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div class="flex items-stretch gap-2">
+                      <div class="w-[3.25rem] shrink-0" />
+                      <div class="flex flex-col items-center w-5 shrink-0">
+                        <div class="flex-1 w-px bg-black/10 dark:bg-white/10" />
+                      </div>
+                      <div class="flex items-center py-0.5 min-w-0">
+                        <span class="text-[11px] text-black/35 dark:text-white/35 leading-relaxed">
+                          {item.transport}
+                          {item.duration && (
+                            <span>
+                              {" "}
+                              &middot; {item.duration}
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </Container>
+</PageLayout>
