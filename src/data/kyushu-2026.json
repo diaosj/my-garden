@@ -137,8 +137,8 @@
         },
         {
           "id": "hirado-pier",
-          "name": "平户栈桥",
-          "nameJa": "平戸桟橋",
+          "name": "平户桟橋",
+          "nameJa": "ひらどさんばし",
           "coordinate": { "lng": 129.5568, "lat": 33.3683 },
           "time": "~11:30",
           "description": "到达平户",
@@ -185,8 +185,8 @@
         },
         {
           "id": "hirado-pier-return",
-          "name": "平户栈桥",
-          "nameJa": "平戸桟橋",
+          "name": "平户桟橋",
+          "nameJa": "ひらどさんばし",
           "coordinate": { "lng": 129.5568, "lat": 33.3683 },
           "time": "~13:45",
           "description": "还车，候车",
@@ -240,11 +240,11 @@
         },
         {
           "id": "sasebo-burger",
-          "name": "佐世保汉堡 Big Man",
-          "nameJa": "ビッグマン",
-          "coordinate": { "lng": 129.7217, "lat": 33.1696 },
-          "time": "~17:15",
-          "description": "佐世保名物汉堡",
+          "name": "ヒカリ 五番街店",
+          "nameJa": "ひかり させぼごばんがいてん",
+          "coordinate": { "lng": 129.7260, "lat": 33.1630 },
+          "time": "~17:10",
+          "description": "佐世保名物汉堡，佐世保站旁2min",
           "type": "food",
           "icon": "utensils"
         },
@@ -263,18 +263,18 @@
         { "from": "karatsu-sta-morning", "to": "imari-sta", "transport": "JR筑肥線 08:40発", "duration": "53min", "cost": "¥760", "verified": true, "note": "当日唯一实用早班，下一班12:09！绝对不能错过" },
         { "from": "imari-sta", "to": "tabira-sta", "transport": "松浦铁道 10:07発", "duration": "~68min", "cost": "¥1,460", "verified": true, "note": "伊万里JR和MR站房分开，步行3min换乘，34min等待" },
         { "from": "tabira-sta", "to": "hirado-pier", "transport": "巴士/出租车", "duration": "~20min", "cost": "~¥350", "verified": true, "note": "步行到平戸口桟橋巴士站~10min，或出租车~¥1,500" },
-        { "from": "hirado-pier", "to": "sakigata-park", "transport": "步行", "duration": "~10min", "note": "先拍照，展望台「遠見」海+樱花+平户城" },
-        { "from": "sakigata-park", "to": "hirado-lunch", "transport": "步行", "duration": "~10min" },
-        { "from": "hirado-lunch", "to": "hirado-ebike-start", "transport": "步行", "duration": "~5min", "note": "取预约好的e-bike。备选：出租车往返郑成功儿诞石~¥4,000-5,000" },
-        { "from": "hirado-ebike-start", "to": "tei-stone", "transport": "e-bike 骑行", "duration": "~30-45min", "note": "~7-10km，有山坡，国道383号无自行车道。运动型e-bike推荐" },
-        { "from": "tei-stone", "to": "hirado-pier-return", "transport": "e-bike 骑行+还车", "duration": "~30-45min" },
-        { "from": "hirado-pier-return", "to": "saza-bus-center", "transport": "西肥巴士 14:10発 途中下车", "duration": "~55min", "cost": "¥1,300", "note": "佐々バスセンター下车，不坐到佐世保" },
-        { "from": "saza-bus-center", "to": "kozakibana", "transport": "出租车 (レインボータクシー 0956-41-1010)", "duration": "~15min", "cost": "~¥8,000 往返含等待", "note": "提前电话预约。往返含20-25min参观" },
-        { "from": "kozakibana", "to": "kosaza-center", "transport": "出租车 (顺路停靠)", "duration": "~10min", "note": "领取到达证明书（免费，凭现场照片）" },
-        { "from": "kosaza-center", "to": "saza-sta", "transport": "出租车 (返回佐々)", "duration": "~10min" },
-        { "from": "saza-sta", "to": "sasebo-sta", "transport": "松浦铁道", "duration": "~40min", "cost": "¥650", "note": "每20min一班，不用赶时间" },
-        { "from": "sasebo-sta", "to": "sasebo-burger", "transport": "步行", "duration": "3min" },
-        { "from": "sasebo-burger", "to": "hotel-sasebo", "transport": "步行", "duration": "5min" }
+        { "from": "hirado-pier", "to": "sakigata-park", "transport": "步行", "duration": "~10min", "verified": true, "note": "先拍照，展望台「遠見」海+樱花+平户城" },
+        { "from": "sakigata-park", "to": "hirado-lunch", "transport": "步行", "duration": "~10min", "verified": true },
+        { "from": "hirado-lunch", "to": "hirado-ebike-start", "transport": "步行", "duration": "~5min", "verified": true, "note": "首选e-bike(0950-22-2015预约)，备选出租车(マンボウタクシー0950-21-1188预约)。两个都提前电话预约，到现场选一个" },
+        { "from": "hirado-ebike-start", "to": "tei-stone", "transport": "e-bike 骑行", "duration": "~35-40min", "verified": true, "note": "~8-9km，前半段爬山后半段下坡到海岸，国道383号无自行车道。运动型e-bike推荐" },
+        { "from": "tei-stone", "to": "hirado-pier-return", "transport": "e-bike 骑行+还车", "duration": "~35-40min", "verified": true, "note": "回程先海岸后爬山" },
+        { "from": "hirado-pier-return", "to": "saza-bus-center", "transport": "西肥巴士 14:10発 途中下车", "duration": "~55min", "cost": "¥1,300", "verified": true, "note": "佐々バスセンター下车，不坐到佐世保。备选15:30発" },
+        { "from": "saza-bus-center", "to": "kozakibana", "transport": "出租车 (レインボータクシー 0956-41-1010)", "duration": "~15min", "cost": "~¥8,000 往返含等待", "verified": true, "note": "巴士上提前10-15min电话预约，让出租车到バスセンター接。往返含20-25min参观" },
+        { "from": "kozakibana", "to": "kosaza-center", "transport": "出租车 (顺路停靠)", "duration": "~10min", "verified": true, "note": "领取到达证明书（免费，凭现场照片）。コミュニティセンター在回程路上不绕路" },
+        { "from": "kosaza-center", "to": "saza-sta", "transport": "出租车 (返回佐々)", "duration": "~10min", "verified": true },
+        { "from": "saza-sta", "to": "sasebo-sta", "transport": "松浦铁道 ~16:26発", "duration": "~40min", "cost": "¥650", "verified": true, "note": "每20min一班(16:06/16:26/16:46...)，16:26是14:10巴士方案最可能赶上的" },
+        { "from": "sasebo-sta", "to": "sasebo-burger", "transport": "步行", "duration": "2min", "verified": true, "note": "ヒカリ五番街店，させぼ五番街商场内，站旁" },
+        { "from": "sasebo-burger", "to": "hotel-sasebo", "transport": "步行", "duration": "1-2min", "verified": true, "note": "Hotel Resol距佐世保站100-160m，几乎隔壁" }
       ]
     },
     {
@@ -354,12 +354,12 @@
         }
       ],
       "legs": [
-        { "from": "hotel-sasebo-morning", "to": "sasebo-sta-day3", "transport": "步行", "duration": "5min" },
-        { "from": "sasebo-sta-day3", "to": "nagasaki-sta", "transport": "JR快速 Sea Side Liner 07:51発", "duration": "~127min", "cost": "¥1,930", "verified": true, "note": "3/14改正后确认。07:51快速→09:58着。备选: 09:11区間快速→11:09着" },
-        { "from": "nagasaki-sta", "to": "peace-park", "transport": "路面电车", "duration": "~20min", "cost": "~¥140" },
-        { "from": "peace-park", "to": "sofukuji", "transport": "路面电车", "duration": "~30min", "cost": "~¥140" },
-        { "from": "sofukuji", "to": "chinatown", "transport": "步行", "duration": "10min" },
-        { "from": "chinatown", "to": "hotel-nagasaki", "transport": "路面电车 + 步行", "duration": "~20min" }
+        { "from": "hotel-sasebo-morning", "to": "sasebo-sta-day3", "transport": "步行", "duration": "1-2min", "verified": true, "note": "Hotel Resol距佐世保站100-160m" },
+        { "from": "sasebo-sta-day3", "to": "nagasaki-sta", "transport": "快速シーサイドライナー 07:51発 (佐世保線/大村線/長崎本線)", "duration": "127min", "cost": "¥1,930", "verified": true, "note": "NAVITIME确认: 07:51発→09:58着。非特急，直接买票。备选: 09:11区間快速→11:09着" },
+        { "from": "nagasaki-sta", "to": "peace-park", "transport": "路面电车 1号線 赤迫行 (長崎駅前→原爆資料館)", "duration": "~11min", "cost": "¥150", "verified": true, "note": "电停下车后步行5min上坡到资料馆" },
+        { "from": "peace-park", "to": "sofukuji", "transport": "路面电车 1号線 崇福寺行 (原爆資料館→崇福寺)", "duration": "~30-35min", "cost": "¥150", "verified": true, "note": "直达不用换乘，崇福寺是终点站" },
+        { "from": "sofukuji", "to": "chinatown", "transport": "步行", "duration": "8-10min", "verified": true, "note": "只隔600-700m，步行比坐电车方便" },
+        { "from": "chinatown", "to": "hotel-nagasaki", "transport": "路面电车/步行", "duration": "8min/20min", "cost": "¥150/免费", "verified": true, "note": "电车1号線赤迫行(新地中華街→長崎駅前)8min；步行沿海滨~20min。当天行程宽裕可步行" }
       ]
     },
     {
@@ -448,13 +448,13 @@
         }
       ],
       "legs": [
-        { "from": "hotel-nagasaki-morning", "to": "nagasaki-sta-day4", "transport": "步行", "duration": "5min" },
+        { "from": "hotel-nagasaki-morning", "to": "nagasaki-sta-day4", "transport": "步行", "duration": "5min", "verified": true },
         { "from": "nagasaki-sta-day4", "to": "hakata-sta", "transport": "かもめ12号 08:44発 + リレーかもめ12号", "duration": "~1h23m", "cost": "~¥4,200", "verified": true, "note": "かもめネットきっぷ~¥4,200(窗口价¥6,050)。武雄温泉同站台对面换乘(3min)。早特3:~¥3,600(3日前购入)" },
-        { "from": "hakata-sta", "to": "tenjin", "transport": "福冈地铁空港线", "duration": "~5min", "cost": "~¥210" },
-        { "from": "tenjin", "to": "dazaifu", "transport": "西铁大牟田线 + 太宰府线", "duration": "~30min", "cost": "~¥580" },
-        { "from": "dazaifu", "to": "tenjin-back", "transport": "西铁 原路返回", "duration": "~30min", "cost": "~¥580" },
-        { "from": "tenjin-back", "to": "fuk-depart", "transport": "福冈地铁空港线", "duration": "11min", "cost": "~¥260" },
-        { "from": "fuk-depart", "to": "pvg-arrival", "transport": "春秋航空 9C6538", "duration": "~2h" }
+        { "from": "hakata-sta", "to": "tenjin", "transport": "福冈地铁空港线", "duration": "~5min", "cost": "~¥210", "verified": true, "note": "天神存行李到储物柜，然后西铁去太宰府" },
+        { "from": "tenjin", "to": "dazaifu", "transport": "西铁大牟田线 + 太宰府线", "duration": "~30min", "cost": "~¥580", "verified": true },
+        { "from": "dazaifu", "to": "tenjin-back", "transport": "西铁 原路返回", "duration": "~30min", "cost": "~¥580", "verified": true },
+        { "from": "tenjin-back", "to": "fuk-depart", "transport": "福冈地铁空港线", "duration": "11min", "cost": "~¥260", "verified": true },
+        { "from": "fuk-depart", "to": "pvg-arrival", "transport": "春秋航空 9C6538 18:00発", "duration": "~2h", "verified": true, "note": "15:00到国内线→接驳巴士→15:20国际线→值机→16:30过完出境→免税店→18:00起飞。3h buffer充裕" }
       ]
     }
   ]
