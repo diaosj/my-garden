@@ -25,7 +25,8 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.13",
     "topojson-client": "^3.1.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.18",

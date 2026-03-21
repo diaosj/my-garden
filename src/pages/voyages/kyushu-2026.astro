@@ -3,6 +3,17 @@ import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
 import BackToPrevious from "@components/BackToPrevious.astro";
 import rawData from "@data/kyushu-2026.json";
+import { geoMercator, geoPath } from "d3-geo";
+import { feature } from "topojson-client";
+import type { Topology, GeometryCollection } from "topojson-specification";
+// @ts-ignore — world-atlas JSON import
+import worldTopo from "world-atlas/countries-50m.json";
+
+const countries = feature(
+  worldTopo as unknown as Topology,
+  (worldTopo as unknown as Topology).objects.countries as GeometryCollection,
+);
+const japan = countries.features.find((f: any) => f.id === "392");
 
 // ── Types ───────────────────────────────────────────────────
 interface Coord {
@@ -78,19 +89,24 @@ function cleanDesc(desc: string, type: string): string {
     .trim();
 }
 
-// ── Route map projection (build-time) ───────────────────────
+// ── Route map with coastline (build-time d3-geo) ────────────
 interface MapPoint {
   x: number;
   y: number;
   big: boolean;
 }
 
-function projectDay(
+interface RouteMapData {
+  coastline: string;
+  points: MapPoint[];
+}
+
+function buildRouteMap(
   stops: Stop[],
   w: number,
   h: number,
   pad: number,
-): MapPoint[] {
+): RouteMapData | null {
   const ks = stops.filter(
     (s) =>
       s.coordinate.lng >= 128 &&
@@ -98,30 +114,63 @@ function projectDay(
       s.coordinate.lat >= 31.5 &&
       s.coordinate.lat <= 35,
   );
-  if (ks.length < 2) return [];
+  if (ks.length < 2) return null;
 
   const lngs = ks.map((s) => s.coordinate.lng);
   const lats = ks.map((s) => s.coordinate.lat);
-  const [mnLng, mxLng] = [Math.min(...lngs), Math.max(...lngs)];
-  const [mnLat, mxLat] = [Math.min(...lats), Math.max(...lats)];
-  const spanLng = mxLng - mnLng || 0.01;
-  const spanLat = mxLat - mnLat || 0.01;
+  const geoPad = 0.15;
+  const minLng = Math.min(...lngs) - geoPad;
+  const maxLng = Math.max(...lngs) + geoPad;
+  const minLat = Math.min(...lats) - geoPad;
+  const maxLat = Math.max(...lats) + geoPad;
 
-  const dw = w - 2 * pad;
-  const dh = h - 2 * pad;
-  const scale = Math.min(dw / spanLng, dh / spanLat);
-  const ox = pad + (dw - spanLng * scale) / 2;
-  const oy = pad + (dh - spanLat * scale) / 2;
+  // Clockwise winding — d3-geo requires CW for exterior rings < hemisphere
+  const bbox: GeoJSON.Feature = {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [
+        [
+          [minLng, minLat],
+          [minLng, maxLat],
+          [maxLng, maxLat],
+          [maxLng, minLat],
+          [minLng, minLat],
+        ],
+      ],
+    },
+    properties: {},
+  };
 
-  return ks.map((s, i) => ({
-    x: Math.round((ox + (s.coordinate.lng - mnLng) * scale) * 10) / 10,
-    y: Math.round((oy + (mxLat - s.coordinate.lat) * scale) * 10) / 10,
-    big:
-      i === 0 ||
-      i === ks.length - 1 ||
-      s.type === "attraction" ||
-      s.type === "hotel",
-  }));
+  const projection = geoMercator().fitExtent(
+    [
+      [pad, pad],
+      [w - pad, h - pad],
+    ],
+    bbox,
+  );
+  projection.clipExtent([
+    [0, 0],
+    [w, h],
+  ]);
+
+  const pathGen = geoPath(projection);
+  const coastline = japan ? pathGen(japan) || "" : "";
+
+  const points = ks.map((s, i) => {
+    const p = projection([s.coordinate.lng, s.coordinate.lat])!;
+    return {
+      x: Math.round(p[0] * 10) / 10,
+      y: Math.round(p[1] * 10) / 10,
+      big:
+        i === 0 ||
+        i === ks.length - 1 ||
+        s.type === "attraction" ||
+        s.type === "hotel",
+    };
+  });
+
+  return { coastline, points };
 }
 
 // ── Pre-compute view data ───────────────────────────────────
@@ -145,7 +194,7 @@ interface DayView {
   theme: string;
   color: string;
   timeline: TLItem[];
-  route: MapPoint[];
+  routeMap: RouteMapData | null;
 }
 
 const days: DayView[] = data.days.map((day) => {
@@ -190,7 +239,7 @@ const days: DayView[] = data.days.map((day) => {
     theme: day.theme,
     color: day.color,
     timeline,
-    route: projectDay(day.stops, 400, 120, 24),
+    routeMap: buildRouteMap(day.stops, 400, 140, 20),
   };
 });
 
@@ -244,16 +293,21 @@ const dateRange = `${data.startDate} \u2192 ${data.endDate}`;
             </summary>
 
             <div class="px-4 pb-5 border-t border-black/5 dark:border-white/5">
-              {/* ── Route map ── */}
-              {day.route.length >= 2 && (
-                <div class="mt-4 mb-5 rounded-md bg-neutral-50 dark:bg-neutral-800/50 border border-black/5 dark:border-white/5 overflow-hidden">
+              {/* ── Route map with coastline ── */}
+              {day.routeMap && (
+                <div class="mt-4 mb-5 rounded-md bg-sky-50/60 dark:bg-sky-950/20 border border-black/5 dark:border-white/5 overflow-hidden">
                   <svg
-                    viewBox="0 0 400 120"
+                    viewBox="0 0 400 140"
                     class="w-full h-auto block"
                     xmlns="http://www.w3.org/2000/svg"
                   >
+                    <path
+                      d={day.routeMap.coastline}
+                      class="fill-emerald-800/[0.06] dark:fill-emerald-200/[0.08] stroke-emerald-800/[0.12] dark:stroke-emerald-200/[0.12]"
+                      stroke-width="0.6"
+                    />
                     <polyline
-                      points={day.route
+                      points={day.routeMap.points
                         .map((p) => `${p.x},${p.y}`)
                         .join(" ")}
                       fill="none"
@@ -261,13 +315,13 @@ const dateRange = `${data.startDate} \u2192 ${data.endDate}`;
                       stroke-width="2"
                       stroke-dasharray="6,4"
                       stroke-linecap="round"
-                      opacity="0.45"
+                      opacity="0.5"
                     />
-                    {day.route.map((p) => (
+                    {day.routeMap.points.map((p) => (
                       <circle
                         cx={p.x}
                         cy={p.y}
-                        r={p.big ? 4 : 2.5}
+                        r={p.big ? 4.5 : 2.5}
                         fill={day.color}
                         opacity={p.big ? 0.9 : 0.55}
                       />
