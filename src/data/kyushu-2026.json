@@ -25,7 +25,7 @@
         {
           "id": "fuk",
           "name": "福冈机场 国际线",
-          "nameJa": "福岡空港 国際線",
+          "nameJa": "ふくおかくうこう こくさいせん",
           "coordinate": { "lng": 130.4510, "lat": 33.5840 },
           "time": "17:55",
           "description": "到达国际线航站楼",
@@ -35,7 +35,7 @@
         {
           "id": "fuk-domestic",
           "name": "福冈机场 国内线",
-          "nameJa": "福岡空港 国内線",
+          "nameJa": "ふくおかくうこう こくないせん",
           "coordinate": { "lng": 130.4505, "lat": 33.5855 },
           "time": "~18:50",
           "description": "地铁/JR直通乘车口，直接坐到唐津",
@@ -44,7 +44,7 @@
         {
           "id": "karatsu-sta",
           "name": "唐津站",
-          "nameJa": "唐津駅",
+          "nameJa": "からつえき",
           "coordinate": { "lng": 129.9673, "lat": 33.4410 },
           "time": "~20:10",
           "description": "到达唐津",
@@ -63,7 +63,7 @@
         {
           "id": "karatsu-castle-night",
           "name": "唐津城 夜樱",
-          "nameJa": "唐津城（舞鶴公園）",
+          "nameJa": "からつじょう（まいづるこうえん）",
           "coordinate": { "lng": 129.9782, "lat": 33.4535 },
           "time": "~21:00",
           "description": "舞鶴公園免费入园，夜樱ライトアップ ~22:00结束",
@@ -72,11 +72,11 @@
         },
         {
           "id": "karatsu-dinner",
-          "name": "活乌贼刺身",
-          "nameJa": "呼子イカの活き造り",
+          "name": "大志（たいし）",
+          "nameJa": "たいし",
           "coordinate": { "lng": 129.9700, "lat": 33.4480 },
           "time": "~21:30",
-          "description": "唐津名物，透明活乌贼",
+          "description": "活イカ（ゲソは天ぷらで安全）、唐津名物、18:00-23:00",
           "type": "food",
           "icon": "utensils"
         }
@@ -101,7 +101,7 @@
         {
           "id": "karatsu-morning-photo",
           "name": "舞鶴桥 远摄唐津城",
-          "nameJa": "舞鶴橋",
+          "nameJa": "まいづるばし",
           "coordinate": { "lng": 129.9756, "lat": 33.4509 },
           "time": "07:30",
           "description": "日间版唐津城 + 樱花同框",
@@ -111,7 +111,7 @@
         {
           "id": "karatsu-sta-morning",
           "name": "唐津站",
-          "nameJa": "唐津駅",
+          "nameJa": "からつえき",
           "coordinate": { "lng": 129.9673, "lat": 33.4410 },
           "time": "08:15",
           "description": "提前到站，08:40绝对不能错过",
@@ -120,7 +120,7 @@
         {
           "id": "imari-sta",
           "name": "伊万里站",
-          "nameJa": "伊万里駅",
+          "nameJa": "いまりえき",
           "coordinate": { "lng": 129.8828, "lat": 33.2706 },
           "time": "09:33",
           "description": "JR到达，步行3min换松浦铁道（独立站房）",
@@ -129,7 +129,7 @@
         {
           "id": "tabira-sta",
           "name": "たびら平戸口站",
-          "nameJa": "たびら平戸口駅",
+          "nameJa": "たびらひらどぐちえき",
           "coordinate": { "lng": 129.5764, "lat": 33.3561 },
           "time": "~11:15",
           "description": "日本最西端车站，步行去巴士站",
@@ -147,7 +147,7 @@
         {
           "id": "sakigata-park",
           "name": "崎方公園",
-          "nameJa": "崎方公園",
+          "nameJa": "さきがたこうえん",
           "coordinate": { "lng": 129.5530, "lat": 33.3720 },
           "time": "~11:40",
           "description": "展望台「遠見」拍海+樱花+平户城同框",
@@ -156,18 +156,18 @@
         },
         {
           "id": "hirado-lunch",
-          "name": "平户午餐",
-          "nameJa": "平戸市内",
+          "name": "旬鮮館",
+          "nameJa": "しゅんせんかん",
           "coordinate": { "lng": 129.5542, "lat": 33.3700 },
           "time": "~12:00",
-          "description": "平户牛 / 比目鱼定食",
+          "description": "渔协直营，平户比目鱼定食~¥1,600，周四营业",
           "type": "food",
           "icon": "utensils"
         },
         {
           "id": "hirado-ebike-start",
           "name": "平户观光案内所",
-          "nameJa": "平戸市観光案内所",
+          "nameJa": "ひらどしかんこうあんないしょ",
           "coordinate": { "lng": 129.5568, "lat": 33.3683 },
           "time": "~12:30",
           "description": "取预约e-bike（运动型¥1,000/2h，电话0950-22-2015提前预约）",
@@ -176,7 +176,7 @@
         {
           "id": "tei-stone",
           "name": "郑成功儿诞石",
-          "nameJa": "鄭成功児誕石",
+          "nameJa": "ていせいこうじたんせき",
           "coordinate": { "lng": 129.5267, "lat": 33.3304 },
           "time": "~13:05",
           "description": "打卡拍照",
@@ -195,7 +195,7 @@
         {
           "id": "saza-bus-center",
           "name": "佐々バスセンター",
-          "nameJa": "佐々バスセンター",
+          "nameJa": "さざばすせんたー",
           "coordinate": { "lng": 129.6465, "lat": 33.2360 },
           "time": "~15:05",
           "description": "途中下车，出租车去神崎鼻",
@@ -204,7 +204,7 @@
         {
           "id": "kozakibana",
           "name": "神崎鼻 (日本本土最西端)",
-          "nameJa": "神崎鼻",
+          "nameJa": "こうざきばな",
           "coordinate": { "lng": 129.5525, "lat": 33.2178 },
           "time": "~15:25",
           "description": "打卡最西端纪念碑，拍照留念",
@@ -214,7 +214,7 @@
         {
           "id": "kosaza-center",
           "name": "小佐々コミュニティセンター",
-          "nameJa": "小佐々地区コミュニティセンター",
+          "nameJa": "こさざちくこみゅにてぃせんたー",
           "coordinate": { "lng": 129.6100, "lat": 33.2200 },
           "time": "~15:55",
           "description": "领取到达证明书（免费，开到21:00）",
@@ -223,7 +223,7 @@
         {
           "id": "saza-sta",
           "name": "佐々站",
-          "nameJa": "佐々駅",
+          "nameJa": "さざえき",
           "coordinate": { "lng": 129.6470, "lat": 33.2369 },
           "time": "~16:15",
           "description": "松浦铁道去佐世保（每20min一班）",
@@ -232,7 +232,7 @@
         {
           "id": "sasebo-sta",
           "name": "佐世保站",
-          "nameJa": "佐世保駅",
+          "nameJa": "させぼえき",
           "coordinate": { "lng": 129.7265, "lat": 33.1636 },
           "time": "~17:05",
           "description": "到达佐世保",
@@ -251,7 +251,7 @@
         {
           "id": "hotel-sasebo",
           "name": "Hotel Resol Sasebo",
-          "nameJa": "ホテルリソル佐世保",
+          "nameJa": "ほてるりそるさせぼ",
           "coordinate": { "lng": 129.7243, "lat": 33.1621 },
           "description": "白羽町8-17，¥11,220/晚",
           "type": "hotel",
@@ -288,7 +288,7 @@
         {
           "id": "hotel-sasebo-morning",
           "name": "Hotel Resol Sasebo",
-          "nameJa": "ホテルリソル佐世保",
+          "nameJa": "ほてるりそるさせぼ",
           "coordinate": { "lng": 129.7243, "lat": 33.1621 },
           "time": "07:30",
           "description": "退房，步行去佐世保站",
@@ -298,7 +298,7 @@
         {
           "id": "sasebo-sta-day3",
           "name": "佐世保站",
-          "nameJa": "佐世保駅",
+          "nameJa": "させぼえき",
           "coordinate": { "lng": 129.7265, "lat": 33.1636 },
           "time": "07:40",
           "description": "Sea Side Liner 07:51発",
@@ -307,7 +307,7 @@
         {
           "id": "nagasaki-sta",
           "name": "长崎站",
-          "nameJa": "長崎駅",
+          "nameJa": "ながさきえき",
           "coordinate": { "lng": 129.8691, "lat": 32.7527 },
           "time": "09:58",
           "description": "到达长崎，寄存行李",
@@ -316,7 +316,7 @@
         {
           "id": "peace-park",
           "name": "原爆资料馆",
-          "nameJa": "長崎原爆資料館",
+          "nameJa": "ながさきげんばくしりょうかん",
           "coordinate": { "lng": 129.8590, "lat": 32.7703 },
           "time": "10:30",
           "description": "原爆落下中心地碑，留足 1.5h",
@@ -326,7 +326,7 @@
         {
           "id": "sofukuji",
           "name": "崇福寺 (国宝)",
-          "nameJa": "崇福寺",
+          "nameJa": "そうふくじ",
           "coordinate": { "lng": 129.8834, "lat": 32.7425 },
           "time": "13:00",
           "description": "纯正明朝闽南建筑风格",
@@ -335,20 +335,20 @@
         },
         {
           "id": "chinatown",
-          "name": "长崎中华街",
-          "nameJa": "長崎新地中華街",
+          "name": "江山楼 中华街本店",
+          "nameJa": "こうざんろう ちゅうかがいほんてん",
           "coordinate": { "lng": 129.8753, "lat": 32.7415 },
           "time": "14:00",
-          "description": "长崎什锦面 Champon",
+          "description": "长崎ちゃんぽん名店~¥1,760。14:00前到（15:00休息）。备选: 会楽園",
           "type": "food",
           "icon": "utensils"
         },
         {
           "id": "hotel-nagasaki",
           "name": "长崎万豪酒店",
-          "nameJa": "長崎マリオットホテル",
+          "nameJa": "ながさきまりおっとほてる",
           "coordinate": { "lng": 129.8694, "lat": 32.7519 },
-          "description": "¥40,884/晚",
+          "description": "¥40,884/晚。晚餐推荐吉宗（よっそう）迷你卓袱料理，需当天预约095-821-0001",
           "type": "hotel",
           "icon": "bed"
         }
@@ -373,7 +373,7 @@
         {
           "id": "hotel-nagasaki-morning",
           "name": "长崎万豪酒店",
-          "nameJa": "長崎マリオットホテル",
+          "nameJa": "ながさきまりおっとほてる",
           "coordinate": { "lng": 129.8694, "lat": 32.7519 },
           "time": "08:00",
           "description": "退房出发",
@@ -383,7 +383,7 @@
         {
           "id": "nagasaki-sta-day4",
           "name": "长崎站",
-          "nameJa": "長崎駅",
+          "nameJa": "ながさきえき",
           "coordinate": { "lng": 129.8691, "lat": 32.7527 },
           "time": "08:15",
           "description": "新干线去博多",
@@ -392,7 +392,7 @@
         {
           "id": "hakata-sta",
           "name": "博多站",
-          "nameJa": "博多駅",
+          "nameJa": "はかたえき",
           "coordinate": { "lng": 130.4207, "lat": 33.5898 },
           "time": "10:07",
           "description": "换乘地铁去天神",
@@ -401,7 +401,7 @@
         {
           "id": "tenjin",
           "name": "天神站",
-          "nameJa": "天神駅",
+          "nameJa": "てんじんえき",
           "coordinate": { "lng": 130.3986, "lat": 33.5913 },
           "time": "~10:15",
           "description": "存行李到储物柜",
@@ -410,17 +410,17 @@
         {
           "id": "dazaifu",
           "name": "太宰府天满宫",
-          "nameJa": "太宰府天満宮",
+          "nameJa": "だざいふてんまんぐう",
           "coordinate": { "lng": 130.5343, "lat": 33.5195 },
           "time": "~10:55",
-          "description": "满开樱花 + 梅枝饼 + 隈研吾星巴克 + 一兰合格拉面",
+          "description": "满开樱花 + 一蘭合格ラーメン(16席，可能排队30-60min) + かさの家梅ヶ枝餅 + 隈研吾星巴克",
           "type": "attraction",
           "icon": "shrine"
         },
         {
           "id": "tenjin-back",
           "name": "天神站 (取行李)",
-          "nameJa": "天神駅",
+          "nameJa": "てんじんえき",
           "coordinate": { "lng": 130.3986, "lat": 33.5913 },
           "time": "14:30",
           "description": "取行李",
@@ -429,7 +429,7 @@
         {
           "id": "fuk-depart",
           "name": "福冈机场",
-          "nameJa": "福岡空港",
+          "nameJa": "ふくおかくうこう",
           "coordinate": { "lng": 130.4510, "lat": 33.5840 },
           "time": "15:00",
           "description": "3h buffer，免税店",

@@ -85,7 +85,7 @@ function cleanDesc(desc: string, type: string): string {
   if (type !== "hotel") return desc;
   return desc
     .replace(/[，,]?\s*[¥￥][\d,]+\/晚/g, "")
-    .replace(/^[，,\s]+/, "")
+    .replace(/^[，,。.\s]+/, "")
     .trim();
 }
 
