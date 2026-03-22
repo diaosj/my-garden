@@ -3,8 +3,12 @@ import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
 import { VOYAGES } from "@consts";
 import kyushu from "@data/kyushu-2026.json";
+import sendai from "@data/sendai-2026.json";
 
-const trips = [{ slug: "kyushu-2026", data: kyushu, emoji: "\u{1F338}" }];
+const trips = [
+  { slug: "sendai-2026", data: sendai, emoji: "\u{1F386}" },
+  { slug: "kyushu-2026", data: kyushu, emoji: "\u{1F338}" },
+];
 ---
 
 <PageLayout title={VOYAGES.TITLE} description={VOYAGES.DESCRIPTION}>

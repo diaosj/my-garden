@@ -1,0 +1,548 @@
+{
+  "title": "仙台东北 + 横滨 2026",
+  "startDate": "2026-08-04",
+  "endDate": "2026-08-09",
+  "region": "Tohoku + Kanto, Japan",
+  "days": [
+    {
+      "date": "2026-08-04",
+      "dayIndex": 1,
+      "weekday": "周二",
+      "title": "上海 → 羽田 → 仙台",
+      "theme": "出征与安营（点亮宫城县）",
+      "color": "#22c55e",
+      "stops": [
+        {
+          "id": "pvg",
+          "name": "上海浦东T2",
+          "nameJa": "上海浦東国際空港",
+          "coordinate": { "lng": 121.8083, "lat": 31.1443 },
+          "time": "08:25",
+          "description": "ANA NH972 起飞",
+          "type": "transport",
+          "icon": "plane-departure"
+        },
+        {
+          "id": "hnd",
+          "name": "羽田空港 T2",
+          "nameJa": "はねだくうこう だいにたーみなる",
+          "coordinate": { "lng": 139.7798, "lat": 35.5494 },
+          "time": "12:25",
+          "description": "ANA国际线到达T2。入境审查+通关~30-60min",
+          "type": "transport",
+          "icon": "plane-arrival"
+        },
+        {
+          "id": "hnd-monorail",
+          "name": "羽田T2 モノレール駅",
+          "nameJa": "はねだくうこうだいにたーみなるえき",
+          "coordinate": { "lng": 139.7798, "lat": 35.5494 },
+          "time": "~13:30",
+          "description": "東京モノレール乗車（JR EAST PASS対象）",
+          "type": "station"
+        },
+        {
+          "id": "hamamatsucho",
+          "name": "浜松町站",
+          "nameJa": "はままつちょうえき",
+          "coordinate": { "lng": 139.7572, "lat": 35.6555 },
+          "time": "~13:45",
+          "description": "JR山手線/京浜東北線に乗り換え",
+          "type": "station"
+        },
+        {
+          "id": "tokyo-sta",
+          "name": "东京站",
+          "nameJa": "とうきょうえき",
+          "coordinate": { "lng": 139.7671, "lat": 35.6812 },
+          "time": "~13:55",
+          "description": "JR EAST PASS受取 + 指定席予約 + 駅弁購入",
+          "type": "station"
+        },
+        {
+          "id": "sendai-sta",
+          "name": "仙台站",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "~16:00",
+          "description": "はやぶさ号到着、約1.5h",
+          "type": "station"
+        },
+        {
+          "id": "hotel-sendai",
+          "name": "仙台メトロポリタンホテル East",
+          "nameJa": "せんだいめとろぽりたんほてる いーすと",
+          "coordinate": { "lng": 140.8830, "lat": 38.2608 },
+          "time": "~16:05",
+          "description": "仙台駅直結、4泊。¥200,601（現地払い）",
+          "type": "hotel",
+          "icon": "bed"
+        },
+        {
+          "id": "jozenji-dori",
+          "name": "定禅寺通",
+          "nameJa": "じょうぜんじどおり",
+          "coordinate": { "lng": 140.8700, "lat": 38.2640 },
+          "time": "~17:00",
+          "description": "ケヤキ並木の散歩、伊坂幸太郎の仙台",
+          "type": "attraction",
+          "icon": "tree"
+        },
+        {
+          "id": "dinner-d1",
+          "name": "利久 仙台駅前西口本店",
+          "nameJa": "りきゅう せんだいえきまえにしぐちほんてん",
+          "coordinate": { "lng": 140.8795, "lat": 38.2598 },
+          "time": "~18:00",
+          "description": "仙台厚切り牛たん定食 ~¥2,500/人。Tel: 022-266-5077",
+          "type": "food",
+          "icon": "utensils"
+        }
+      ],
+      "legs": [
+        { "from": "pvg", "to": "hnd", "transport": "ANA NH972", "duration": "3h55m", "cost": "¥12,051 RMB（含回程）", "verified": true, "note": "已出票。ANA国際線は羽田T2" },
+        { "from": "hnd", "to": "hnd-monorail", "transport": "入境审查 + 通関", "duration": "~30-60min", "verified": false, "note": "8月暑假旺季、最悪1h。T2内移動" },
+        { "from": "hnd-monorail", "to": "hamamatsucho", "transport": "東京モノレール", "duration": "~13min", "cost": "¥520（JR EAST PASS対象）", "verified": false },
+        { "from": "hamamatsucho", "to": "tokyo-sta", "transport": "JR山手線/京浜東北線", "duration": "~5min", "cost": "JR EAST PASS", "verified": false },
+        { "from": "tokyo-sta", "to": "sendai-sta", "transport": "はやぶさ号（東北新幹線）", "duration": "~1h30m", "cost": "JR EAST PASS（全席指定、要予約）", "verified": false, "note": "20-23番線（緑標識）。14-19番線は東海道新幹線、間違えないこと" },
+        { "from": "sendai-sta", "to": "hotel-sendai", "transport": "徒歩（駅直結）", "duration": "2-3min", "verified": true, "note": "仙台駅西口中央改札→右手連絡通路→East館" },
+        { "from": "hotel-sendai", "to": "jozenji-dori", "transport": "徒歩 or 地下鉄1駅", "duration": "15min/5min", "cost": "無料/¥210", "verified": false },
+        { "from": "jozenji-dori", "to": "dinner-d1", "transport": "徒歩", "duration": "~15min", "verified": false }
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "dayIndex": 2,
+      "weekday": "周三",
+      "title": "鲁迅情怀 + 七夕花火大会",
+      "theme": "全场最高潮",
+      "color": "#ef4444",
+      "stops": [
+        {
+          "id": "tohoku-univ",
+          "name": "东北大学 片平キャンパス",
+          "nameJa": "とうほくだいがく かたひらきゃんぱす",
+          "coordinate": { "lng": 140.8710, "lat": 38.2545 },
+          "time": "10:15",
+          "description": "鲁迅の階段教室（B04棟）。要予約、水金のみ開放",
+          "type": "attraction",
+          "icon": "school"
+        },
+        {
+          "id": "lunch-d2",
+          "name": "善治郎 仙台駅前本店",
+          "nameJa": "ぜんじろう せんだいえきまえほんてん",
+          "coordinate": { "lng": 140.8808, "lat": 38.2595 },
+          "time": "~12:00",
+          "description": "真中たん定食 ~¥2,000/人。Tel: 022-723-1877",
+          "type": "food",
+          "icon": "utensils"
+        },
+        {
+          "id": "hotel-sendai-d2",
+          "name": "ホテル（午睡+浴衣準備）",
+          "nameJa": "ほてる",
+          "coordinate": { "lng": 140.8830, "lat": 38.2608 },
+          "time": "13:00",
+          "description": "午睡休整、15:00浴衣着付け",
+          "type": "hotel",
+          "icon": "bed"
+        },
+        {
+          "id": "nishi-koen",
+          "name": "西公園 / 広瀬川 花火会場",
+          "nameJa": "にしこうえん / ひろせがわ",
+          "coordinate": { "lng": 140.8580, "lat": 38.2610 },
+          "time": "17:30",
+          "description": "花火19:15開始、早めに到着して場所取り",
+          "type": "attraction",
+          "icon": "fireworks"
+        },
+        {
+          "id": "hanabi",
+          "name": "仙台七夕花火祭",
+          "nameJa": "せんだいたなばたはなびまつり",
+          "coordinate": { "lng": 140.8580, "lat": 38.2610 },
+          "time": "19:15-20:30",
+          "description": "約1.6万発、75分間。有料席: 青叶山交流広場 or 東北大学グラウンド",
+          "type": "attraction",
+          "icon": "fireworks"
+        }
+      ],
+      "legs": [
+        { "from": "hotel-sendai", "to": "tohoku-univ", "transport": "タクシー or 徒歩", "duration": "5min/15min", "cost": "~¥800/無料", "verified": false, "note": "要提前Google Form予約！水曜10:30-12:00開放。連絡: 022-217-5040" },
+        { "from": "tohoku-univ", "to": "lunch-d2", "transport": "タクシー or 徒歩", "duration": "5min/15min", "verified": false },
+        { "from": "lunch-d2", "to": "hotel-sendai-d2", "transport": "徒歩", "duration": "3min", "verified": false },
+        { "from": "hotel-sendai-d2", "to": "nishi-koen", "transport": "地下鉄東西線（大町西公園駅）+ 徒歩", "duration": "~15min", "cost": "¥210", "verified": false, "note": "17:00以降交通規制あり。花火日は45万人の人出" },
+        { "from": "nishi-koen", "to": "hotel-sendai", "transport": "徒歩（混雑のため）", "duration": "~20-30min", "verified": false, "note": "散場後大混雑。地下鉄は入場規制の可能性。駅直結ホテルの最大のメリット" }
+      ]
+    },
+    {
+      "date": "2026-08-06",
+      "dayIndex": 3,
+      "weekday": "周四",
+      "title": "山寺 + 山形 + 七夕祭初日",
+      "theme": "文学与顶级和牛（点亮山形县）",
+      "color": "#eab308",
+      "stops": [
+        {
+          "id": "sendai-sta-d3",
+          "name": "仙台站（仙山線）",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "08:00",
+          "description": "JR仙山線在来線ホーム（山形行き）",
+          "type": "station"
+        },
+        {
+          "id": "yamadera-sta",
+          "name": "山寺站",
+          "nameJa": "やまでらえき",
+          "coordinate": { "lng": 140.4370, "lat": 38.3120 },
+          "time": "~08:55",
+          "description": "到着、登山口まで徒歩5-7min",
+          "type": "station"
+        },
+        {
+          "id": "yamadera-temple",
+          "name": "山寺 立石寺（五大堂）",
+          "nameJa": "やまでら りっしゃくじ（ごだいどう）",
+          "coordinate": { "lng": 140.4355, "lat": 38.3145 },
+          "time": "09:00-10:30",
+          "description": "1,015段石階、登頂~30min。大人¥300/子供¥200。松尾芭蕉の名句の地",
+          "type": "attraction",
+          "icon": "temple"
+        },
+        {
+          "id": "yamagata-sta",
+          "name": "山形站",
+          "nameJa": "やまがたえき",
+          "coordinate": { "lng": 140.3280, "lat": 38.2486 },
+          "time": "~11:20",
+          "description": "仙山線で山寺から約20min",
+          "type": "station"
+        },
+        {
+          "id": "lunch-d3",
+          "name": "栄屋本店（冷やしラーメン元祖）",
+          "nameJa": "さかえやほんてん",
+          "coordinate": { "lng": 140.3350, "lat": 38.2530 },
+          "time": "~11:30",
+          "description": "冷やしラーメン ¥900。水曜定休→木曜OK。Tel: 023-623-0766",
+          "type": "food",
+          "icon": "utensils"
+        },
+        {
+          "id": "sendai-sta-d3-return",
+          "name": "仙台站（帰着）",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "~14:10",
+          "description": "仙山線で山形から約70min",
+          "type": "station"
+        },
+        {
+          "id": "tanabata-d3",
+          "name": "仙台七夕祭（一番町商店街）",
+          "nameJa": "せんだいたなばたまつり",
+          "coordinate": { "lng": 140.8720, "lat": 38.2610 },
+          "time": "16:00",
+          "description": "七夕祭初日！巨大吹き流し+屋台。クリスロード/マーブルロード",
+          "type": "attraction",
+          "icon": "star"
+        }
+      ],
+      "legs": [
+        { "from": "hotel-sendai", "to": "sendai-sta-d3", "transport": "徒歩（駅直結）", "duration": "2min", "verified": true },
+        { "from": "sendai-sta-d3", "to": "yamadera-sta", "transport": "JR仙山線（山形行き）", "duration": "~50-60min", "cost": "JR EAST PASS", "verified": false, "note": "約1時間に1本！乗り遅れると次は1時間後。在来線ホーム（7-8番線付近）" },
+        { "from": "yamadera-sta", "to": "yamadera-temple", "transport": "徒歩", "duration": "5-7min", "verified": false, "note": "駅出て左手、宝珠橋渡って登山口。8月は暑い！水必携" },
+        { "from": "yamadera-temple", "to": "yamadera-sta", "transport": "徒歩（下山）", "duration": "~20min", "verified": false },
+        { "from": "yamadera-sta", "to": "yamagata-sta", "transport": "JR仙山線（山形行き続行）", "duration": "~20min", "cost": "JR EAST PASS", "verified": false, "note": "約1時間に1本！下山後の次の電車時刻を事前把握" },
+        { "from": "yamagata-sta", "to": "lunch-d3", "transport": "徒歩", "duration": "~15min", "verified": false },
+        { "from": "lunch-d3", "to": "yamagata-sta", "transport": "徒歩", "duration": "~15min", "verified": false },
+        { "from": "yamagata-sta", "to": "sendai-sta-d3-return", "transport": "JR仙山線（仙台行き）", "duration": "~70min", "cost": "JR EAST PASS", "verified": false },
+        { "from": "sendai-sta-d3-return", "to": "tanabata-d3", "transport": "徒歩", "duration": "~10min", "verified": false, "note": "仙台駅西口→クリスロード入口" }
+      ]
+    },
+    {
+      "date": "2026-08-07",
+      "dayIndex": 4,
+      "weekday": "周五",
+      "title": "童话村 + 盛冈碗子荞麦面",
+      "theme": "爆笑挑战日（点亮岩手县）",
+      "color": "#3b82f6",
+      "stops": [
+        {
+          "id": "sendai-sta-d4",
+          "name": "仙台站（新幹線）",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "08:30",
+          "description": "やまびこ号乗車（隼号は新花巻に停まらない場合多い）",
+          "type": "station"
+        },
+        {
+          "id": "shin-hanamaki",
+          "name": "新花巻站",
+          "nameJa": "しんはなまきえき",
+          "coordinate": { "lng": 141.1147, "lat": 39.3825 },
+          "time": "~09:15",
+          "description": "到着、タクシーで童話村へ",
+          "type": "station"
+        },
+        {
+          "id": "kenji-village",
+          "name": "宮沢賢治童話村",
+          "nameJa": "みやざわけんじどうわむら",
+          "coordinate": { "lng": 141.1200, "lat": 39.3870 },
+          "time": "09:30-11:00",
+          "description": "5つのファンタジー部屋+森の散歩道。大人¥350/小中¥150。現金のみ！",
+          "type": "attraction",
+          "icon": "castle"
+        },
+        {
+          "id": "morioka-sta",
+          "name": "盛冈站",
+          "nameJa": "もりおかえき",
+          "coordinate": { "lng": 141.1366, "lat": 39.7014 },
+          "time": "~11:40",
+          "description": "新花巻から新幹線で約15min",
+          "type": "station"
+        },
+        {
+          "id": "azumaya",
+          "name": "東家 盛冈駅前店",
+          "nameJa": "あずまや もりおかえきまえてん",
+          "coordinate": { "lng": 141.1340, "lat": 39.6975 },
+          "time": "~12:00",
+          "description": "わんこそば ~¥3,575/大人 ~¥2,530/小学生。Tel: 019-622-2233",
+          "type": "food",
+          "icon": "utensils"
+        },
+        {
+          "id": "sendai-sta-d4-return",
+          "name": "仙台站（帰着）",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "~14:10",
+          "description": "はやぶさ号で盛岡から約40min",
+          "type": "station"
+        },
+        {
+          "id": "aoba-castle",
+          "name": "仙台城址（青葉城）",
+          "nameJa": "せんだいじょうし（あおばじょう）",
+          "coordinate": { "lng": 140.8560, "lat": 38.2520 },
+          "time": "~17:00",
+          "description": "伊達政宗騎馬像 + 仙台市街一望。るーぷる仙台バス~¥260",
+          "type": "attraction",
+          "icon": "castle"
+        },
+        {
+          "id": "dinner-d4",
+          "name": "味 太助（牛たん元祖）",
+          "nameJa": "あじ たすけ",
+          "coordinate": { "lng": 140.8700, "lat": 38.2630 },
+          "time": "~18:30",
+          "description": "1948年創業、仙台牛舌の元祖。牛たん定食 ¥1,800。火曜定休→金曜OK",
+          "type": "food",
+          "icon": "utensils"
+        }
+      ],
+      "legs": [
+        { "from": "hotel-sendai", "to": "sendai-sta-d4", "transport": "徒歩（駅直結）", "duration": "2min", "verified": true },
+        { "from": "sendai-sta-d4", "to": "shin-hanamaki", "transport": "やまびこ号（東北新幹線）", "duration": "~40-50min", "cost": "JR EAST PASS", "verified": false, "note": "⚠️隼号は新花巻に停まらない便が多い。やまびこ指定席をeki-netで事前予約推奨" },
+        { "from": "shin-hanamaki", "to": "kenji-village", "transport": "タクシー", "duration": "~5min", "cost": "~¥700-800", "verified": false, "note": "バスは本数少ない。徒歩20minだが8月暑い。タクシー推奨" },
+        { "from": "kenji-village", "to": "shin-hanamaki", "transport": "タクシー or 徒歩", "duration": "5min/20min", "verified": false },
+        { "from": "shin-hanamaki", "to": "morioka-sta", "transport": "やまびこ or はやぶさ（新花巻停車便）", "duration": "~15min", "cost": "JR EAST PASS", "verified": false },
+        { "from": "morioka-sta", "to": "azumaya", "transport": "徒歩", "duration": "5min", "verified": false, "note": "南口（開運橋口）を出て駅前大通りを南へ" },
+        { "from": "azumaya", "to": "morioka-sta", "transport": "徒歩", "duration": "5min", "verified": false },
+        { "from": "morioka-sta", "to": "sendai-sta-d4-return", "transport": "はやぶさ号", "duration": "~40min", "cost": "JR EAST PASS", "verified": false },
+        { "from": "sendai-sta-d4-return", "to": "aoba-castle", "transport": "るーぷる仙台バス", "duration": "~20min", "cost": "¥260", "verified": false, "note": "「仙台城跡」下車" },
+        { "from": "aoba-castle", "to": "dinner-d4", "transport": "るーぷる仙台バス + 徒歩", "duration": "~20min", "verified": false }
+      ]
+    },
+    {
+      "date": "2026-08-08",
+      "dayIndex": 5,
+      "weekday": "周六",
+      "title": "水族馆 + 南下横滨",
+      "theme": "告别东北（点亮神奈川县）",
+      "color": "#a855f7",
+      "stops": [
+        {
+          "id": "sendai-sta-d5",
+          "name": "仙台站（仙石線）",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "09:00",
+          "description": "JR仙石線で中野栄へ",
+          "type": "station"
+        },
+        {
+          "id": "nakanosakae",
+          "name": "中野栄站",
+          "nameJa": "なかのさかええき",
+          "coordinate": { "lng": 140.9620, "lat": 38.2670 },
+          "time": "~09:20",
+          "description": "バスor徒歩で水族館へ",
+          "type": "station"
+        },
+        {
+          "id": "aquarium",
+          "name": "仙台うみの杜水族館",
+          "nameJa": "せんだいうみのもりすいぞくかん",
+          "coordinate": { "lng": 140.9730, "lat": 38.2680 },
+          "time": "09:30-11:30",
+          "description": "東北最大水族館。イルカショー！大人¥2,400/小学生¥1,200。夏季9:00-18:30",
+          "type": "attraction",
+          "icon": "fish"
+        },
+        {
+          "id": "sendai-sta-d5-depart",
+          "name": "仙台站（新幹線南下）",
+          "nameJa": "せんだいえき",
+          "coordinate": { "lng": 140.8824, "lat": 38.2602 },
+          "time": "~12:30",
+          "description": "行李取回、駅弁購入、はやぶさ乗車。JR EAST PASS最終日！",
+          "type": "station"
+        },
+        {
+          "id": "shinagawa-sta",
+          "name": "品川站",
+          "nameJa": "しながわえき",
+          "coordinate": { "lng": 139.7388, "lat": 35.6284 },
+          "time": "~14:20",
+          "description": "はやぶさ号到着、JR在来線で横浜へ",
+          "type": "station"
+        },
+        {
+          "id": "yokohama-sta",
+          "name": "横浜站",
+          "nameJa": "よこはまえき",
+          "coordinate": { "lng": 139.6222, "lat": 35.4660 },
+          "time": "~14:45",
+          "description": "JR東海道線/京浜東北線で品川から約20min",
+          "type": "station"
+        },
+        {
+          "id": "hotel-yokohama",
+          "name": "横浜みなとみらいホテル（未予約）",
+          "nameJa": "よこはまほてる",
+          "coordinate": { "lng": 139.6330, "lat": 35.4570 },
+          "time": "~15:15",
+          "description": "⚠️未予約。港未来エリア推奨。8月旺季早めに予約",
+          "type": "hotel",
+          "icon": "bed"
+        },
+        {
+          "id": "akarenga",
+          "name": "赤レンガ倉庫 + 港未来夜景",
+          "nameJa": "あかれんがそうこ",
+          "coordinate": { "lng": 139.6430, "lat": 35.4530 },
+          "time": "~18:00",
+          "description": "横浜ベイエリア散歩 + 晩餐",
+          "type": "attraction",
+          "icon": "landmark"
+        }
+      ],
+      "legs": [
+        { "from": "hotel-sendai", "to": "sendai-sta-d5", "transport": "徒歩（駅直結）+ 行李寄存", "duration": "5min", "verified": true },
+        { "from": "sendai-sta-d5", "to": "nakanosakae", "transport": "JR仙石線", "duration": "~18min", "cost": "JR EAST PASS", "verified": false, "note": "仙石線専用ホーム（9-10番線付近）" },
+        { "from": "nakanosakae", "to": "aquarium", "transport": "宮城交通バス or 徒歩", "duration": "7min/15min", "cost": "¥200/無料", "verified": false, "note": "バス1日約26便。徒歩は東へ直進1.2km" },
+        { "from": "aquarium", "to": "nakanosakae", "transport": "宮城交通バス or 徒歩", "duration": "7min/15min", "verified": false },
+        { "from": "nakanosakae", "to": "sendai-sta-d5-depart", "transport": "JR仙石線", "duration": "~18min", "cost": "JR EAST PASS", "verified": false },
+        { "from": "sendai-sta-d5-depart", "to": "shinagawa-sta", "transport": "はやぶさ号（東北新幹線）", "duration": "~1h30-40m", "cost": "JR EAST PASS（最終日！）", "verified": false, "note": "品川停車便を選ぶ。品川停車なしなら東京駅で乗換" },
+        { "from": "shinagawa-sta", "to": "yokohama-sta", "transport": "JR東海道線/京浜東北線", "duration": "~20min", "cost": "JR EAST PASS", "verified": false, "note": "品川駅南のりかえ口が便利" },
+        { "from": "yokohama-sta", "to": "hotel-yokohama", "transport": "みなとみらい線 or 徒歩", "duration": "3min/20min", "cost": "¥200/無料", "verified": false, "note": "みなとみらい線は私鉄（PASS対象外）。はまみらいウォーク経由徒歩も可" },
+        { "from": "hotel-yokohama", "to": "akarenga", "transport": "徒歩", "duration": "~10min", "verified": false }
+      ]
+    },
+    {
+      "date": "2026-08-09",
+      "dayIndex": 6,
+      "weekday": "周日",
+      "title": "杯面博物馆 + 丝滑回国",
+      "theme": "专属泡面 + 完美收官",
+      "color": "#6b7280",
+      "stops": [
+        {
+          "id": "cup-noodle-museum",
+          "name": "カップヌードルミュージアム横浜",
+          "nameJa": "かっぷぬーどるみゅーじあむよこはま",
+          "coordinate": { "lng": 139.6380, "lat": 35.4550 },
+          "time": "10:00",
+          "description": "大人¥500/高校以下無料。My CUPNOODLES Factory ¥500/杯(要事前予約！)",
+          "type": "attraction",
+          "icon": "bowl"
+        },
+        {
+          "id": "yokohama-lunch",
+          "name": "横浜ランチ + 免税ショッピング",
+          "nameJa": "よこはまらんち",
+          "coordinate": { "lng": 139.6222, "lat": 35.4660 },
+          "time": "~12:00",
+          "description": "崎陽軒シウマイ or 中華街。横浜駅で妻子の最後の免税扫货",
+          "type": "food",
+          "icon": "utensils"
+        },
+        {
+          "id": "yokohama-sta-depart",
+          "name": "横浜站（京急線）",
+          "nameJa": "よこはまえき",
+          "coordinate": { "lng": 139.6222, "lat": 35.4660 },
+          "time": "~15:00",
+          "description": "京急線で羽田空港へ",
+          "type": "station"
+        },
+        {
+          "id": "hnd-t2",
+          "name": "羽田空港 第1・第2ターミナル駅",
+          "nameJa": "はねだくうこう だいいち・だいにたーみなるえき",
+          "coordinate": { "lng": 139.7798, "lat": 35.5494 },
+          "time": "~15:30",
+          "description": "⚠️終点下車（途中の第3ターミナル駅で降りないこと！ANA=T2）",
+          "type": "station"
+        },
+        {
+          "id": "hnd-pickup",
+          "name": "T2 ヤマト運輸カウンター",
+          "nameJa": "やまとうんゆかうんたー",
+          "coordinate": { "lng": 139.7798, "lat": 35.5494 },
+          "time": "~15:40",
+          "description": "空港宅急便受取。到着ロビー1F、送り状控え提示",
+          "type": "station"
+        },
+        {
+          "id": "hnd-depart",
+          "name": "羽田空港 T2 出発",
+          "nameJa": "はねだくうこう しゅっぱつ",
+          "coordinate": { "lng": 139.7798, "lat": 35.5494 },
+          "time": "18:35",
+          "description": "ANA NH971 → 20:40上海浦東T2着",
+          "type": "transport",
+          "icon": "plane-departure"
+        },
+        {
+          "id": "pvg-arrival",
+          "name": "上海浦东T2",
+          "nameJa": "上海浦東国際空港",
+          "coordinate": { "lng": 121.8083, "lat": 31.1443 },
+          "time": "20:40",
+          "description": "到着、タクシーで龙阳路へ帰宅",
+          "type": "transport",
+          "icon": "plane-arrival"
+        }
+      ],
+      "legs": [
+        { "from": "hotel-yokohama", "to": "cup-noodle-museum", "transport": "徒歩", "duration": "~8min", "verified": false, "note": "みなとみらいエリア内。⚠️My CUPNOODLES Factory要事前オンライン予約（8月は当日整理券売切必至）" },
+        { "from": "cup-noodle-museum", "to": "yokohama-lunch", "transport": "徒歩 or みなとみらい線", "duration": "~15min", "verified": false },
+        { "from": "yokohama-lunch", "to": "yokohama-sta-depart", "transport": "徒歩", "duration": "~5min", "verified": false },
+        { "from": "yokohama-sta-depart", "to": "hnd-t2", "transport": "京急線 エアポート急行/快特", "duration": "~25-30min", "cost": "¥370", "verified": false, "note": "追加料金不要。⚠️「第3ターミナル駅」は通過、「第1・第2ターミナル駅」終点で下車" },
+        { "from": "hnd-t2", "to": "hnd-pickup", "transport": "T2ビル内徒歩", "duration": "~5min", "verified": false, "note": "到着ロビー1F ヤマト運輸カウンター（6:00-21:00）" },
+        { "from": "hnd-pickup", "to": "hnd-depart", "transport": "T2ビル内（1F→3F）", "duration": "~5min", "verified": false, "note": "チェックイン→手荷物検査→出国審査→免税店。3hバッファ十分" },
+        { "from": "hnd-depart", "to": "pvg-arrival", "transport": "ANA NH971", "duration": "3h05m", "verified": true, "note": "已出票。18:35発→20:40着" }
+      ]
+    }
+  ]
+}

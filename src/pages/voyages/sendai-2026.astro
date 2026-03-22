@@ -2,7 +2,7 @@
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
 import BackToPrevious from "@components/BackToPrevious.astro";
-import rawData from "@data/kyushu-2026.json";
+import rawData from "@data/sendai-2026.json";
 import { geoMercator, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
@@ -88,7 +88,7 @@ function getEmoji(s: Stop): string {
   return emojiMap[s.icon || ""] || emojiMap[s.type] || "\u{1F4CD}";
 }
 
-// ── Strip hotel nightly cost from description ───────────────
+// ── Strip hotel cost from description ───────────────────────
 function cleanDesc(desc: string, type: string): string {
   if (type !== "hotel") return desc;
   return desc
@@ -116,12 +116,9 @@ function buildRouteMap(
   h: number,
   pad: number,
 ): RouteMapData | null {
+  // Filter to Japan only (exclude Shanghai at lng ~121)
   const ks = stops.filter(
-    (s) =>
-      s.coordinate.lng >= 128 &&
-      s.coordinate.lng <= 133 &&
-      s.coordinate.lat >= 31.5 &&
-      s.coordinate.lat <= 35,
+    (s) => s.coordinate.lng >= 128 && s.coordinate.lng <= 146,
   );
   if (ks.length < 2) return null;
 
