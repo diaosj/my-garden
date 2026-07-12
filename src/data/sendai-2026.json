@@ -277,8 +277,8 @@
           "name": "仙台站（新幹線）",
           "nameJa": "せんだいえき",
           "coordinate": { "lng": 140.8824, "lat": 38.2602 },
-          "time": "08:30",
-          "description": "やまびこ号乗車（隼号は新花巻に停まらない）",
+          "time": "08:50",
+          "description": "はやぶさ101号乗車（新花巻に停まる希少便・予約済）",
           "type": "station"
         },
         {
@@ -286,7 +286,7 @@
           "name": "新花巻站",
           "nameJa": "しんはなまきえき",
           "coordinate": { "lng": 141.1147, "lat": 39.3825 },
-          "time": "~09:15",
+          "time": "09:50",
           "description": "到着、タクシーで童話村へ",
           "type": "station"
         },
@@ -295,7 +295,7 @@
           "name": "宮沢賢治童話村",
           "nameJa": "みやざわけんじどうわむら",
           "coordinate": { "lng": 141.1200, "lat": 39.3870 },
-          "time": "09:30-11:00",
+          "time": "10:10-11:25",
           "description": "5つのファンタジー部屋+森の散歩道。大人¥350/小中¥150。現金のみ！",
           "type": "attraction",
           "icon": "castle"
@@ -314,7 +314,7 @@
           "name": "東家 盛冈駅前店",
           "nameJa": "あずまや もりおかえきまえてん",
           "coordinate": { "lng": 141.1340, "lat": 39.6975 },
-          "time": "~12:00",
+          "time": "~12:20",
           "description": "わんこそば ~¥3,575/大人 ~¥2,530/小学生。Tel: 019-622-2233",
           "type": "food",
           "icon": "bowl"
@@ -324,8 +324,8 @@
           "name": "仙台站（帰着）",
           "nameJa": "せんだいえき",
           "coordinate": { "lng": 140.8824, "lat": 38.2602 },
-          "time": "~14:10",
-          "description": "はやぶさ号 盛岡~13:30発→仙台約40min",
+          "time": "15:29",
+          "description": "はやぶさ24号 盛岡14:50発→仙台15:29着（予約済）",
           "type": "station"
         },
         {
@@ -351,13 +351,13 @@
       ],
       "legs": [
         { "from": "hotel-sendai", "to": "sendai-sta-d4", "transport": "徒歩（駅直結）", "duration": "2min" },
-        { "from": "sendai-sta-d4", "to": "shin-hanamaki", "transport": "やまびこ号（東北新幹線）", "duration": "~40-50min", "cost": "JR EAST PASS", "note": "⚠️隼号は新花巻に停まらない。やまびこ指定席をeki-netで予約" },
+        { "from": "sendai-sta-d4", "to": "shin-hanamaki", "transport": "はやぶさ101号（東北新幹線）", "duration": "1h00m", "cost": "JR EAST PASS", "note": "08:50→09:50・予約済（新花巻停車の希少便）" },
         { "from": "shin-hanamaki", "to": "kenji-village", "transport": "タクシー", "duration": "~5min", "cost": "~¥700-800", "note": "バスは本数少ない。タクシー推奨" },
         { "from": "kenji-village", "to": "shin-hanamaki", "transport": "タクシー or 徒歩", "duration": "5min/20min" },
-        { "from": "shin-hanamaki", "to": "morioka-sta", "transport": "やまびこ or はやぶさ（新花巻停車便）", "duration": "~15min", "cost": "JR EAST PASS" },
+        { "from": "shin-hanamaki", "to": "morioka-sta", "transport": "やまびこ53号 自由席", "duration": "12min", "cost": "JR EAST PASS", "note": "11:54発（逃したら12:42のやまびこ55）" },
         { "from": "morioka-sta", "to": "azumaya", "transport": "徒歩", "duration": "5min", "note": "南口（開運橋口）を出て駅前大通りを南へ" },
         { "from": "azumaya", "to": "morioka-sta", "transport": "徒歩", "duration": "5min" },
-        { "from": "morioka-sta", "to": "sendai-sta-d4-return", "transport": "はやぶさ号", "duration": "~40min", "cost": "JR EAST PASS", "note": "盛岡~13:30発" },
+        { "from": "morioka-sta", "to": "sendai-sta-d4-return", "transport": "はやぶさ号", "duration": "39min", "cost": "JR EAST PASS", "note": "はやぶさ24号 14:50発（予約済）" },
         { "from": "sendai-sta-d4-return", "to": "aoba-castle", "transport": "るーぷる仙台バス", "duration": "~20min", "cost": "¥260", "note": "「仙台城跡」下車" },
         { "from": "aoba-castle", "to": "dinner-d4", "transport": "るーぷる仙台バス + 徒歩", "duration": "~20min" }
       ]
@@ -403,8 +403,8 @@
           "name": "仙台站（新幹線南下）",
           "nameJa": "せんだいえき",
           "coordinate": { "lng": 140.8824, "lat": 38.2602 },
-          "time": "~12:50",
-          "description": "行李取回、はやぶさ乗車（仙台12:50頃発）。JR EAST PASS最終日！",
+          "time": "12:57",
+          "description": "行李取回、はやぶさ56号乗車（12:57発・予約済）。JR EAST PASS最終日！",
           "type": "station"
         },
         {
@@ -412,8 +412,8 @@
           "name": "东京站",
           "nameJa": "とうきょうえき",
           "coordinate": { "lng": 139.7671, "lat": 35.6812 },
-          "time": "~14:20",
-          "description": "はやぶさ号到着（はやぶさは東京止まり）、JR在来線で横浜へ",
+          "time": "14:32",
+          "description": "はやぶさ56号到着（はやぶさは東京止まり）、JR在来線で横浜へ",
           "type": "station"
         },
         {
@@ -421,7 +421,7 @@
           "name": "横浜站",
           "nameJa": "よこはまえき",
           "coordinate": { "lng": 139.6222, "lat": 35.4660 },
-          "time": "~14:50",
+          "time": "~15:15",
           "description": "JR東海道線/京浜東北線で東京から約25min",
           "type": "station"
         },
@@ -482,7 +482,7 @@
         { "from": "nakanosakae", "to": "aquarium", "transport": "宮城交通バス or 徒歩", "duration": "7min/15min", "cost": "¥200/無料", "note": "バス1日約26便。徒歩は東へ直進1.2km" },
         { "from": "aquarium", "to": "nakanosakae", "transport": "宮城交通バス or 徒歩", "duration": "7min/15min" },
         { "from": "nakanosakae", "to": "sendai-sta-d5-depart", "transport": "JR仙石線", "duration": "~18min", "cost": "JR EAST PASS" },
-        { "from": "sendai-sta-d5-depart", "to": "shinagawa-sta", "transport": "はやぶさ号（東北新幹線）", "duration": "~1h30m", "cost": "JR EAST PASS（最終日！）", "note": "仙台12:50頃発。はやぶさは東京止まり" },
+        { "from": "sendai-sta-d5-depart", "to": "shinagawa-sta", "transport": "はやぶさ号（東北新幹線）", "duration": "1h35m", "cost": "JR EAST PASS（最終日！）", "note": "はやぶさ56号 12:57→東京14:32（予約済）" },
         { "from": "shinagawa-sta", "to": "yokohama-sta", "transport": "JR東海道線/京浜東北線", "duration": "~25min", "cost": "JR EAST PASS", "note": "東京→横浜" },
         { "from": "yokohama-sta", "to": "hotel-yokohama", "transport": "みなとみらい線 or 徒歩", "duration": "3min/15min", "note": "Westinはみなとみらい駅至近。みなとみらい線は私鉄（PASS対象外）" },
         { "from": "hotel-yokohama", "to": "air-cabin", "transport": "徒歩", "duration": "~10min" },
