@@ -24,17 +24,17 @@
         },
         {
           "id": "hnd",
-          "name": "羽田空港 T2",
+          "name": "羽田空港 T3",
           "nameJa": "はねだくうこう だいにたーみなる",
           "coordinate": { "lng": 139.7798, "lat": 35.5494 },
           "time": "12:25",
-          "description": "ANA国际线到达T2。入境审查+通关~30-60min",
+          "description": "ANA国际线到达T3（出票数据核定）。入境审查+通关~40-70min",
           "type": "transport",
           "icon": "plane-arrival"
         },
         {
           "id": "hnd-monorail",
-          "name": "羽田T2 モノレール駅",
+          "name": "羽田T3 モノレール駅",
           "nameJa": "はねだくうこうだいにたーみなるえき",
           "coordinate": { "lng": 139.7798, "lat": 35.5494 },
           "time": "~13:30",
@@ -100,8 +100,8 @@
         }
       ],
       "legs": [
-        { "from": "pvg", "to": "hnd", "transport": "ANA NH972", "duration": "3h55m", "note": "已出票。ANA国際線は羽田T2" },
-        { "from": "hnd", "to": "hnd-monorail", "transport": "入境审查 + 通関", "duration": "~30-60min", "note": "8月暑假旺季、最悪1h。T2内移動" },
+        { "from": "pvg", "to": "hnd", "transport": "ANA NH972", "duration": "3h55m", "note": "已出票。到着は羽田T3・帰りの出発はT2" },
+        { "from": "hnd", "to": "hnd-monorail", "transport": "入境审查 + 通関", "duration": "~30-60min", "note": "8月暑假旺季、最悪1h。T3内移動" },
         { "from": "hnd-monorail", "to": "hamamatsucho", "transport": "東京モノレール", "duration": "~13min", "cost": "JR EAST PASS対象" },
         { "from": "hamamatsucho", "to": "tokyo-sta", "transport": "JR山手線/京浜東北線", "duration": "~5min", "cost": "JR EAST PASS" },
         { "from": "tokyo-sta", "to": "sendai-sta", "transport": "はやぶさ31号（東北新幹線）", "duration": "~1h30m", "cost": "JR EAST PASS", "note": "東京15:20発→仙台16:51着、指定席予約済（Car2）。20-23番線" },
