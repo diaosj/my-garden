@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Token 平台 · 租户控制台（演示）</title>
+<style>
+  :root { --pri:#2563eb; --pri-d:#1e40af; --ink:#1f2937; --ink2:#6b7280; --ink3:#9ca3af;
+          --line:#e5e7eb; --bg:#f6f8fb; --ok:#10b981; --warn:#d97706; --bad:#dc2626; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+         background:var(--bg); color:var(--ink); font-size:13px; }
+  .demo-banner { background:#fef3c7; color:#92400e; font-size:12px; text-align:center;
+                 padding:5px; border-bottom:1px solid #f5d478; }
+  .demo-banner a { color:#1d4ed8; }
+  .app { display:flex; min-height:calc(100vh - 27px); }
+
+  /* 浅色侧边栏 = 租户端(区别于运营端深色) */
+  .side { width:196px; background:#fff; border-right:1px solid var(--line); flex:none; padding:16px 0; }
+  .logo { padding:0 20px 14px; font-weight:600; font-size:14px; border-bottom:1px solid var(--line); margin-bottom:10px; }
+  .logo small { display:block; font-weight:400; font-size:10.5px; color:var(--ink3); margin-top:2px; }
+  .nav { display:flex; align-items:center; gap:9px; padding:9.5px 20px; cursor:pointer;
+         font-size:13px; color:var(--ink2); border-left:3px solid transparent; }
+  .nav:hover { background:#f3f6fb; }
+  .nav.on { background:#eef4fe; color:var(--pri-d); border-left-color:var(--pri); font-weight:600; }
+  .tenant-chip { margin:14px 16px 0; background:#f6f8fb; border:1px solid var(--line); border-radius:8px;
+                 padding:9px 12px; font-size:11.5px; color:var(--ink2); }
+  .tenant-chip b { display:block; color:var(--ink); font-size:12.5px; }
+
+  .main { flex:1; padding:20px 26px; min-width:0; }
+  .crumb { font-size:12px; color:var(--ink3); margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .crumb b { color:var(--ink); font-size:15px; font-weight:600; }
+  .crumb .right { margin-left:auto; }
+  .view { display:none; } .view.on { display:block; }
+
+  .cards { display:flex; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:13px 16px; }
+  .kpi { flex:1; min-width:150px; }
+  .kpi small { color:var(--ink3); font-size:11px; }
+  .kpi b { display:block; font-size:21px; margin-top:3px; font-weight:600; }
+  .kpi .sub { font-size:10.5px; color:var(--ink2); margin-top:2px; }
+  .card h4 { font-size:13px; font-weight:600; margin-bottom:10px; }
+
+  table { width:100%; border-collapse:collapse; font-size:12.5px; background:#fff; }
+  th,td { border-bottom:1px solid var(--line); padding:10px 10px; text-align:left; }
+  th { color:var(--ink3); font-weight:500; font-size:11px; background:#fafbfc; white-space:nowrap; }
+  tr.click { cursor:pointer; } tr.click:hover td { background:#f8faff; }
+  .tbl-card { padding:0; overflow:hidden; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+  .dot.g{background:var(--ok)} .dot.y{background:#eab308}
+  .num { font-variant-numeric:tabular-nums; }
+  .btn { border:1px solid #cbd5e1; background:#fff; border-radius:6px; font-size:11.5px;
+         padding:3.5px 12px; color:#374151; cursor:pointer; }
+  .btn:hover { border-color:var(--pri); color:var(--pri); }
+  .btn.pri { background:var(--pri); border-color:var(--pri); color:#fff; }
+  .push { margin-left:auto; }
+  .tag { font-size:10.5px; border-radius:99px; padding:1.5px 9px; }
+  .tag.info { background:#eff6ff; color:#1d4ed8; border:1px solid #cfe0fb; }
+  .tag.ok { background:#ecfdf3; color:#047857; border:1px solid #bbe3d4; }
+  .tag.warn { background:#fffbeb; color:#92400e; border:1px solid #f0dfa8; }
+
+  /* 模型卡片(OpenRouter 风) */
+  .mcard { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 18px; margin-bottom:10px; }
+  .mcard .mrow { display:flex; align-items:baseline; gap:10px; }
+  .mcard b.name { font-size:14.5px; }
+  .mcard .meta { font-size:11px; color:var(--ink3); }
+  .mcard .desc { font-size:12px; color:var(--ink2); margin:6px 0 8px; }
+  .mstats { display:flex; gap:22px; font-size:11.5px; color:var(--ink2); flex-wrap:wrap; }
+  .mstats b { color:var(--ink); font-weight:600; }
+  .filters { display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+  .chip { border:1px solid #cbd5e1; border-radius:99px; padding:3px 13px; font-size:11.5px; color:var(--ink2); cursor:pointer; background:#fff; }
+  .chip.on { background:#eef4fe; color:var(--pri-d); border-color:#b6d1f8; font-weight:500; }
+
+  /* 偏好设置 */
+  .pref { max-width:720px; }
+  .pref .row { display:flex; align-items:center; padding:13px 0; border-bottom:1px dashed var(--line); gap:14px; }
+  .pref .row b { font-size:13px; display:block; }
+  .pref .row small { color:var(--ink3); font-size:11.5px; display:block; margin-top:2px; }
+  input[type=range] { width:180px; accent-color:var(--pri); }
+  .switch { width:36px; height:20px; border-radius:99px; background:#cbd5e1; position:relative; cursor:pointer; flex:none; }
+  .switch.on { background:var(--pri); }
+  .switch::after { content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; transition:left .15s; }
+  .switch.on::after { left:18px; }
+  select { font-size:12px; border:1px solid #cbd5e1; border-radius:6px; padding:3px 8px; color:#374151; }
+
+  .drawer-mask { display:none; position:fixed; inset:0; background:rgba(15,28,51,.35); z-index:40; }
+  .drawer { position:fixed; top:0; right:-500px; width:480px; height:100vh; background:#fff; z-index:41;
+            box-shadow:-8px 0 30px rgba(0,0,0,.12); transition:right .25s; padding:22px; overflow-y:auto; }
+  .drawer.on { right:0; } .drawer-mask.on { display:block; }
+  .kv { display:flex; font-size:12.5px; padding:7px 0; border-bottom:1px dashed var(--line); }
+  .kv span:first-child { width:104px; color:var(--ink3); flex:none; }
+  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:#111827; color:#fff;
+           font-size:12.5px; padding:9px 20px; border-radius:8px; opacity:0; transition:opacity .25s; z-index:60; pointer-events:none; }
+  .toast.on { opacity:.94; }
+  footer { text-align:center; color:#b6bfc9; font-size:11px; padding:18px 0 10px; }
+  .grid2 { display:flex; gap:12px; margin-bottom:14px; }
+</style>
+</head>
+<body>
+<div class="demo-banner">⚠ 演示环境 —— 租户控制台(客户视角) · 数据为模拟 · 配套的<a href="../token-console-demo/">平台运营端 Demo →</a></div>
+<div class="app">
+  <div class="side">
+    <div class="logo">Token 平台<small>租户控制台 · Demo</small></div>
+    <div class="nav on" data-v="act">📈 用量总览</div>
+    <div class="nav" data-v="models">📦 模型目录</div>
+    <div class="nav" data-v="keys">🔑 API Keys</div>
+    <div class="nav" data-v="bill">💳 额度与账单</div>
+    <div class="nav" data-v="pref">🧭 路由偏好</div>
+    <div class="nav" data-v="docs">📄 接入文档</div>
+    <div class="tenant-chip"><b>星桥科技有限公司</b>生产版套餐 · 管理员:张骋</div>
+  </div>
+
+  <div class="main">
+
+    <!-- ============ 用量总览(对标 OpenRouter Activity) ============ -->
+    <div class="view on" id="v-act">
+      <div class="crumb"><b>用量总览</b><span class="right"><select><option>近 30 天</option><option>近 7 天</option><option>本月</option></select></span></div>
+      <div class="cards">
+        <div class="card kpi"><small>本月消费</small><b class="num">¥23,410</b><div class="sub">月预算 ¥30,000 · 已用 78%</div></div>
+        <div class="card kpi"><small>本月请求</small><b class="num">2,847,120</b><div class="sub">成功率 99.95%</div></div>
+        <div class="card kpi"><small>Tokens(in / out)</small><b class="num">8.2B / 1.9B</b><div class="sub">缓存命中节省 ¥1,204</div></div>
+        <div class="card kpi"><small>平均首字延迟</small><b class="num">0.62s</b><div class="sub">P95 2.1s</div></div>
+      </div>
+      <div class="grid2">
+        <div class="card" style="flex:2"><h4>每日消费(按模型)</h4><svg id="chart" width="100%" height="190"></svg></div>
+        <div class="card" style="flex:1"><h4>按模型分布(本月)</h4><table style="font-size:12px">
+          <tr><td>deepseek-v4</td><td class="num" style="text-align:right">¥14,860</td><td class="num" style="text-align:right;color:var(--ink3)">63%</td></tr>
+          <tr><td>qwen-plus</td><td class="num" style="text-align:right">¥3,720</td><td class="num" style="text-align:right;color:var(--ink3)">16%</td></tr>
+          <tr><td>kimi-k3</td><td class="num" style="text-align:right">¥3,180</td><td class="num" style="text-align:right;color:var(--ink3)">14%</td></tr>
+          <tr><td>glm-5</td><td class="num" style="text-align:right">¥1,650</td><td class="num" style="text-align:right;color:var(--ink3)">7%</td></tr>
+        </table></div>
+      </div>
+      <div class="card tbl-card"><table>
+        <tr><th>时间</th><th>项目 / Key</th><th>模型</th><th>tokens(in/out)</th><th>首字延迟</th><th>费用</th><th>状态</th></tr>
+        <tr class="click" onclick="openReq()"><td class="num">14:02:11</td><td>客服机器人 / ak-7f3•••</td><td>deepseek-v4</td><td class="num">1,204 / 512</td><td class="num">0.42s</td><td class="num">¥0.0082</td><td><span class="dot g"></span>200</td></tr>
+        <tr class="click" onclick="openReq()"><td class="num">14:01:58</td><td>营销文案 / ak-9e8•••</td><td>kimi-k3</td><td class="num">3,880 / 1,041</td><td class="num">0.88s</td><td class="num">¥0.0417</td><td><span class="dot g"></span>200</td></tr>
+        <tr class="click" onclick="openReq()"><td class="num">14:01:40</td><td>客服机器人 / ak-7f3•••</td><td>qwen-plus</td><td class="num">640 / 220</td><td class="num">0.31s</td><td class="num">¥0.0011</td><td><span class="dot g"></span>200(缓存命中 · ¥0)</td></tr>
+        <tr class="click" onclick="openReq()"><td class="num">14:01:22</td><td>营销文案 / ak-9e8•••</td><td>glm-5</td><td class="num">1,913 / 388</td><td class="num">0.71s</td><td class="num">¥0.0201</td><td><span class="dot g"></span>200</td></tr>
+      </table></div>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">点击任意请求查看明细(模型/供给渠道/计量/延迟拆解)——对标 OpenRouter Activity 的单请求下钻</p>
+    </div>
+
+    <!-- ============ 模型目录(对标 OpenRouter Models) ============ -->
+    <div class="view" id="v-models">
+      <div class="crumb"><b>模型目录</b><span class="right muted" style="color:var(--ink3)">9 个模型 · 全国产 · 每模型 ≥2 供给渠道</span></div>
+      <div class="filters">
+        <span class="chip on">全部</span><span class="chip">对话</span><span class="chip">推理增强</span><span class="chip">长上下文</span><span class="chip">可私有化</span><span class="chip">按价格 ↑</span><span class="chip">按延迟 ↑</span>
+      </div>
+      <div class="mcard"><div class="mrow"><b class="name">deepseek-v4</b><span class="tag info">对话</span><span class="tag info">推理增强</span><span class="meta push">本月你的用量:¥14,860</span></div>
+        <div class="desc">通用旗舰,复杂推理与代码场景表现均衡;平台侧 3 个供给渠道自动比价与故障切换。</div>
+        <div class="mstats"><span>输入 <b>¥2.4</b>/M tok</span><span>输出 <b>¥9.6</b>/M tok</span><span>上下文 <b>128K</b></span><span>首字延迟 <b>0.5s</b>(P50)</span><span>吞吐 <b>48 tok/s</b></span><span>供给渠道 <b>3</b></span><span class="tag ok">可私有化</span></div></div>
+      <div class="mcard"><div class="mrow"><b class="name">qwen-plus</b><span class="tag info">对话</span><span class="meta push">本月你的用量:¥3,720</span></div>
+        <div class="desc">高性价比主力,客服/摘要等高频场景首选;支持语义缓存加速。</div>
+        <div class="mstats"><span>输入 <b>¥1.0</b>/M tok</span><span>输出 <b>¥2.5</b>/M tok</span><span>上下文 <b>128K</b></span><span>首字延迟 <b>0.3s</b>(P50)</span><span>吞吐 <b>62 tok/s</b></span><span>供给渠道 <b>2</b></span><span class="tag ok">可私有化</span></div></div>
+      <div class="mcard"><div class="mrow"><b class="name">kimi-k3</b><span class="tag info">长上下文</span><span class="meta push">本月你的用量:¥3,180</span></div>
+        <div class="desc">超长文档理解与编码场景;当前一个供给渠道处于半开观察,平台自动倾斜至健康渠道。</div>
+        <div class="mstats"><span>输入 <b>¥6.0</b>/M tok</span><span>输出 <b>¥18.0</b>/M tok</span><span>上下文 <b>256K</b></span><span>首字延迟 <b>0.9s</b>(P50)</span><span>吞吐 <b>35 tok/s</b></span><span>供给渠道 <b>2</b> <span class="tag warn">供给降级</span></span></div></div>
+      <div class="mcard"><div class="mrow"><b class="name">glm-5</b><span class="tag info">对话</span><span class="meta push">本月你的用量:¥1,650</span></div>
+        <div class="desc">中文理解与结构化输出稳健;等保场景常用。</div>
+        <div class="mstats"><span>输入 <b>¥4.8</b>/M tok</span><span>输出 <b>¥14.4</b>/M tok</span><span>上下文 <b>128K</b></span><span>首字延迟 <b>0.7s</b>(P50)</span><span>吞吐 <b>41 tok/s</b></span><span>供给渠道 <b>2</b></span><span class="tag ok">可私有化</span></div></div>
+      <p style="font-size:11.5px;color:var(--ink3)">界面形态对标 OpenRouter Models:价格/上下文/实时性能/供给数一屏可比;差异是我们标注"可私有化/合规"标签(国内 2B 刚需)。</p>
+    </div>
+
+    <!-- ============ API Keys ============ -->
+    <div class="view" id="v-keys">
+      <div class="crumb"><b>API Keys</b><button class="btn pri right" onclick="toast('创建 Key:选择项目与限额(演示)')">+ 创建 Key</button></div>
+      <div class="card tbl-card"><table>
+        <tr><th>名称 / Key</th><th>所属项目</th><th>模型白名单</th><th>月限额</th><th>本月已用</th><th>状态</th><th>操作</th></tr>
+        <tr><td><b>生产主 Key</b><br><span class="num" style="color:var(--ink3)">ak-7f3•••••</span></td><td>客服机器人</td><td>deepseek-v4 · qwen-plus</td><td class="num">¥20,000</td><td class="num">¥18,220(91%)</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button> <button class="btn" onclick="toast('Key 已停用(演示)')">停用</button></td></tr>
+        <tr><td><b>测试 Key</b><br><span class="num" style="color:var(--ink3)">ak-2c1•••••</span></td><td>客服机器人</td><td>同上</td><td class="num">¥500</td><td class="num">¥310(62%)</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button></td></tr>
+        <tr><td><b>营销 Key</b><br><span class="num" style="color:var(--ink3)">ak-9e8•••••</span></td><td>营销文案</td><td>kimi-k3 · glm-5</td><td class="num">¥8,000</td><td class="num">¥4,880(61%)</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button></td></tr>
+      </table></div>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">Key 归属项目、项目归属租户——限额在网关硬执行;超限动作(告警/限流/熔断)由贵司管理员在"路由偏好"配置。</p>
+    </div>
+
+    <!-- ============ 额度与账单 ============ -->
+    <div class="view" id="v-bill">
+      <div class="crumb"><b>额度与账单</b></div>
+      <div class="cards">
+        <div class="card kpi"><small>本月已消费</small><b class="num">¥23,410</b><div class="sub">账期:月结 30 天 · 对公</div></div>
+        <div class="card kpi"><small>月预算</small><b class="num">¥30,000</b><div class="sub">超限动作:告警(管理员可改)</div></div>
+        <div class="card kpi"><small>缓存累计节省</small><b class="num" style="color:var(--ok)">¥1,204</b><div class="sub">语义缓存命中 26.4%</div></div>
+      </div>
+      <div class="card tbl-card"><table>
+        <tr><th>账期</th><th>消费金额</th><th>状态</th><th>发票</th><th></th></tr>
+        <tr><td>2026-08(进行中)</td><td class="num">¥23,410</td><td><span class="tag info">计量中</span></td><td>—</td><td><button class="btn" onclick="toast('导出用量明细 CSV(演示)')">导出明细</button></td></tr>
+        <tr><td>2026-07</td><td class="num">¥26,180</td><td><span class="tag ok">已结清</span></td><td><button class="btn" onclick="toast('下载发票 PDF(演示)')">下载发票</button></td><td><button class="btn" onclick="toast('导出用量明细 CSV(演示)')">导出明细</button></td></tr>
+        <tr><td>2026-06</td><td class="num">¥19,930</td><td><span class="tag ok">已结清</span></td><td><button class="btn" onclick="toast('下载发票 PDF(演示)')">下载发票</button></td><td><button class="btn" onclick="toast('导出用量明细 CSV(演示)')">导出明细</button></td></tr>
+      </table></div>
+    </div>
+
+    <!-- ============ 路由偏好(对标 OpenRouter Provider Preferences) ============ -->
+    <div class="view" id="v-pref">
+      <div class="crumb"><b>路由偏好</b><span class="tag info">管理员</span></div>
+      <div class="card pref">
+        <div class="row"><div style="flex:1"><b>成本 / 质量权衡</b><small>影响平台为你自动选择供给渠道与(未来)模型档位的倾向</small></div>
+          <span style="font-size:11px;color:var(--ink3)">省钱</span><input type="range" value="40"><span style="font-size:11px;color:var(--ink3)">质量</span></div>
+        <div class="row"><div style="flex:1"><b>故障自动切换(Failover)</b><small>供给渠道异常时自动切换,业务无感;关闭则直接返回错误</small></div>
+          <div class="switch on" onclick="this.classList.toggle('on');toast('已保存(演示)')"></div></div>
+        <div class="row"><div style="flex:1"><b>数据合规约束</b><small>标记后,相关请求只会路由到满足约束的渠道</small></div>
+          <select onchange="toast('已保存(演示)')"><option>无约束</option><option>数据不出域优先</option><option>仅私有化渠道</option></select></div>
+        <div class="row"><div style="flex:1"><b>语义缓存</b><small>相似请求直接返回缓存结果(费用为 0);可按项目粒度开关</small></div>
+          <select onchange="toast('已保存(演示)')"><option>客服机器人:开 · 其余:关</option><option>全部开启</option><option>全部关闭</option></select></div>
+        <div class="row"><div style="flex:1"><b>场景绑定</b><small>指定项目锁定模型集合,平台不做跨模型调度</small></div>
+          <span style="font-size:12px;color:var(--ink2)">内部知识库 → 锁定 qwen-plus <button class="btn" onclick="toast('打开场景绑定(演示)')">编辑</button></span></div>
+      </div>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:10px">对标 OpenRouter 的 Provider Routing 偏好(order/fallback/ZDR),本土化为:合规约束 + 场景绑定 + 项目级缓存开关。</p>
+    </div>
+
+    <!-- ============ 文档 ============ -->
+    <div class="view" id="v-docs">
+      <div class="crumb"><b>接入文档</b></div>
+      <div class="card" style="max-width:720px">
+        <h4>60 秒接入</h4>
+        <pre style="background:#0f1c33;color:#c7d2e3;border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.7;overflow-x:auto">from openai import OpenAI
+
+client = OpenAI(
+    api_key="ak-你的Key",
+    base_url="https://gw.example.com/v1"   # 仅改这一行
+)
+resp = client.chat.completions.create(
+    model="deepseek-v4",
+    messages=[{"role": "user", "content": "你好"}]
+)</pre>
+        <p style="font-size:12px;color:var(--ink2);margin-top:10px">OpenAI 兼容协议:现有代码只改 base_url 与 Key,零改造迁移。Anthropic 兼容端点、流式、工具调用见完整文档(演示略)。</p>
+      </div>
+    </div>
+
+    <footer>Token 平台 · 租户控制台交互演示 · 纯前端静态页面 · 所有数据为模拟</footer>
+  </div>
+</div>
+
+<div class="drawer-mask" id="mask" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <h3 style="font-size:15px;margin-bottom:4px">请求明细 — req-8f2c91a4</h3>
+  <div style="font-size:11.5px;color:var(--ink3);margin-bottom:14px">客服机器人 · deepseek-v4 · 2026-08-28 14:02:11</div>
+  <div class="kv"><span>模型</span><span>deepseek-v4(供给渠道由平台自动选择)</span></div>
+  <div class="kv"><span>语义缓存</span><span>未命中(相似度 0.71)</span></div>
+  <div class="kv"><span>首字延迟</span><span>0.42s · 总时长 1.38s · SSE 流式</span></div>
+  <div class="kv"><span>计量</span><span>输入 1,204 tok(¥0.0024) + 输出 512 tok(¥0.0058)= <b>¥0.0082</b></span></div>
+  <div class="kv"><span>计入</span><span>项目"客服机器人" · Key ak-7f3•••</span></div>
+  <div class="kv"><span>请求指纹</span><span class="num">trace-8f2c91a4(排障时报给平台支持)</span></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+function go(v){
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on', n.dataset.v===v));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  document.getElementById('v-'+v).classList.add('on'); window.scrollTo(0,0);
+}
+document.querySelectorAll('.nav').forEach(n=>n.onclick=()=>go(n.dataset.v));
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));c.classList.add('on');toast('筛选:'+c.textContent+'(演示)')});
+function drawChart(){
+  const svg=document.getElementById('chart'); const W=svg.clientWidth||700,H=190;
+  const cols=['#2563eb','#7c3aed','#0891b2','#d97706']; let bars='';
+  for(let d=0;d<30;d++){
+    let y=H-24;
+    for(let m=0;m<4;m++){
+      const h=(([63,16,14,7][m])/100)*( ( (Math.sin(d/5)+1.4)/2.4 )*(H-70) );
+      y-=h; bars+=`<rect x="${(d*(W-20)/30+10).toFixed(1)}" y="${y.toFixed(1)}" width="${((W-20)/30-4).toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="${cols[m]}" opacity=".85"/>`;
+    }
+  }
+  svg.innerHTML=bars+`<line x1="10" y1="${H-24}" x2="${W-10}" y2="${H-24}" stroke="#e5e7eb"/>`;
+}
+drawChart(); window.addEventListener('resize',drawChart);
+function openReq(){ document.getElementById('drawer').classList.add('on'); document.getElementById('mask').classList.add('on'); }
+function closeDrawer(){ document.getElementById('drawer').classList.remove('on'); document.getElementById('mask').classList.remove('on'); }
+let tt; function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('on'),1800); }
+</script>
+</body>
+</html>
