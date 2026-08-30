@@ -98,7 +98,7 @@
 </style>
 </head>
 <body>
-<div class="demo-banner">⚠ 演示环境 —— 租户控制台(客户视角) · 数据为模拟 · 配套的<a href="../token-console-demo/">平台运营端 Demo →</a></div>
+<div class="demo-banner">⚠ 演示环境 —— 本页是 <b>租户控制台(客户企业视角:接入方管理员使用)</b> · 数据为模拟 · 配套的 <a href="../token-console-demo/">平台运营端 Demo(平台方内部视角)→</a></div>
 <div class="app">
   <div class="side">
     <div class="logo">Token 平台<small>租户控制台 · Demo</small></div>
@@ -107,6 +107,8 @@
     <div class="nav" data-v="keys">🔑 API Keys</div>
     <div class="nav" data-v="bill">💳 额度与账单</div>
     <div class="nav" data-v="pref">🧭 路由偏好</div>
+    <div class="nav" data-v="guard">🛡️ 治理策略</div>
+    <div class="nav" data-v="obs">📡 可观测性</div>
     <div class="nav" data-v="docs">📄 接入文档</div>
     <div class="tenant-chip"><b>星桥科技有限公司</b>生产版套餐 · 管理员:张骋</div>
   </div>
@@ -119,8 +121,9 @@
       <div class="cards">
         <div class="card kpi"><small>本月消费</small><b class="num">¥23,410</b><div class="sub">月预算 ¥30,000 · 已用 78%</div></div>
         <div class="card kpi"><small>本月请求</small><b class="num">2,847,120</b><div class="sub">成功率 99.95%</div></div>
-        <div class="card kpi"><small>Tokens(in / out)</small><b class="num">8.2B / 1.9B</b><div class="sub">缓存命中节省 ¥1,204</div></div>
-        <div class="card kpi"><small>平均首字延迟</small><b class="num">0.62s</b><div class="sub">P95 2.1s</div></div>
+        <div class="card kpi"><small>Tokens(in / out)</small><b class="num">8.2B / 1.9B</b><div class="sub">缓存命中率 26.4% · 节省 ¥1,204</div></div>
+        <div class="card kpi"><small>混合单价(Blended)</small><b class="num">¥2.32<span style="font-size:12px;font-weight:400;color:var(--ink3)">/M tok</span></b><div class="sub">上月 ¥2.61 · 路由优化 ↓11%</div></div>
+        <div class="card kpi"><small>平均首字延迟</small><b class="num">0.62s</b><div class="sub">P95 2.1s · 路由开销 &lt;20ms</div></div>
       </div>
       <div class="grid2">
         <div class="card" style="flex:2"><h4>每日消费(按模型)</h4><svg id="chart" width="100%" height="190"></svg></div>
@@ -138,7 +141,7 @@
         <tr class="click" onclick="openReq()"><td class="num">14:01:40</td><td>客服机器人 / ak-7f3•••</td><td>qwen-plus</td><td class="num">640 / 220</td><td class="num">0.31s</td><td class="num">¥0.0011</td><td><span class="dot g"></span>200(缓存命中 · ¥0)</td></tr>
         <tr class="click" onclick="openReq()"><td class="num">14:01:22</td><td>营销文案 / ak-9e8•••</td><td>glm-5</td><td class="num">1,913 / 388</td><td class="num">0.71s</td><td class="num">¥0.0201</td><td><span class="dot g"></span>200</td></tr>
       </table></div>
-      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">点击任意请求查看明细(模型/供给渠道/计量/延迟拆解)——对标 OpenRouter Activity 的单请求下钻</p>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">点击任意请求查看明细(模型/供给渠道/计量/延迟与路由开销拆解/结束原因)——对标 OpenRouter 的 Activity 聚合 + Logs 单请求下钻</p>
     </div>
 
     <!-- ============ 模型目录(对标 OpenRouter Models) ============ -->
@@ -166,12 +169,12 @@
     <div class="view" id="v-keys">
       <div class="crumb"><b>API Keys</b><button class="btn pri right" onclick="toast('创建 Key:选择项目与限额(演示)')">+ 创建 Key</button></div>
       <div class="card tbl-card"><table>
-        <tr><th>名称 / Key</th><th>所属项目</th><th>模型白名单</th><th>月限额</th><th>本月已用</th><th>状态</th><th>操作</th></tr>
-        <tr><td><b>生产主 Key</b><br><span class="num" style="color:var(--ink3)">ak-7f3•••••</span></td><td>客服机器人</td><td>deepseek-v4 · qwen-plus</td><td class="num">¥20,000</td><td class="num">¥18,220(91%)</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button> <button class="btn" onclick="toast('Key 已停用(演示)')">停用</button></td></tr>
-        <tr><td><b>测试 Key</b><br><span class="num" style="color:var(--ink3)">ak-2c1•••••</span></td><td>客服机器人</td><td>同上</td><td class="num">¥500</td><td class="num">¥310(62%)</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button></td></tr>
-        <tr><td><b>营销 Key</b><br><span class="num" style="color:var(--ink3)">ak-9e8•••••</span></td><td>营销文案</td><td>kimi-k3 · glm-5</td><td class="num">¥8,000</td><td class="num">¥4,880(61%)</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button></td></tr>
+        <tr><th>名称 / Key</th><th>所属项目</th><th>治理策略</th><th>月限额</th><th>本月已用</th><th>过期</th><th>状态</th><th>操作</th></tr>
+        <tr><td><b>生产主 Key</b><br><span class="num" style="color:var(--ink3)">ak-7f3•••••</span></td><td>客服机器人</td><td><span class="tag warn">生产严格</span></td><td class="num">¥20,000</td><td class="num">¥18,220(91%)</td><td class="num">2026-12-31</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button> <button class="btn" onclick="toast('Key 已停用(演示)')">停用</button></td></tr>
+        <tr><td><b>测试 Key</b><br><span class="num" style="color:var(--ink3)">ak-2c1•••••</span></td><td>客服机器人</td><td><span class="tag info">租户默认</span></td><td class="num">¥500</td><td class="num">¥310(62%)</td><td>永不</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button></td></tr>
+        <tr><td><b>营销 Key</b><br><span class="num" style="color:var(--ink3)">ak-9e8•••••</span></td><td>营销文案</td><td><span class="tag info">租户默认</span></td><td class="num">¥8,000</td><td class="num">¥4,880(61%)</td><td class="num">2026-09-30</td><td><span class="dot g"></span>启用</td><td><button class="btn" onclick="toast('已复制(演示)')">复制</button> <button class="btn" onclick="toast('打开限额设置(演示)')">限额</button></td></tr>
       </table></div>
-      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">Key 归属项目、项目归属租户——限额在网关硬执行;超限动作(告警/限流/熔断)由贵司管理员在"路由偏好"配置。</p>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">Key 归属项目、项目归属租户——限额与模型白名单由所挂"治理策略"统一定义,在网关硬执行;策略详情见左侧"治理策略"。</p>
     </div>
 
     <!-- ============ 额度与账单 ============ -->
@@ -204,8 +207,46 @@
           <select onchange="toast('已保存(演示)')"><option>客服机器人:开 · 其余:关</option><option>全部开启</option><option>全部关闭</option></select></div>
         <div class="row"><div style="flex:1"><b>场景绑定</b><small>指定项目锁定模型集合,平台不做跨模型调度</small></div>
           <span style="font-size:12px;color:var(--ink2)">内部知识库 → 锁定 qwen-plus <button class="btn" onclick="toast('打开场景绑定(演示)')">编辑</button></span></div>
+        <div class="row"><div style="flex:1"><b>自带供应商额度(BYOK)</b><small>绑定你与供应商直签的 Key:优先消耗你自己的额度,异常时自动回退平台共享池</small></div>
+          <span style="font-size:12px;color:var(--ink2)">已绑定:火山引擎 ×1 <button class="btn" onclick="toast('管理直签 Key(演示)')">管理</button></span></div>
+        <div class="row"><div style="flex:1"><b>参数模板(Presets)</b><small>系统提示词 + 模型 + 参数存成模板,API 按名引用;改配置不用改代码</small></div>
+          <span style="font-size:12px;color:var(--ink2)">2 个模板(客服-稳态 / 营销-创意) <button class="btn" onclick="toast('编辑参数模板(演示)')">编辑</button></span></div>
       </div>
-      <p style="font-size:11.5px;color:var(--ink3);margin-top:10px">对标 OpenRouter 的 Provider Routing 偏好(order/fallback/ZDR),本土化为:合规约束 + 场景绑定 + 项目级缓存开关。</p>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:10px">对标 OpenRouter 的 Auto Router(按成本档位自动选模型)+ Provider Routing(order/fallback/ZDR)+ BYOK + Presets,本土化为:合规约束 + 场景绑定 + 项目级缓存开关。</p>
+    </div>
+
+    <!-- ============ 治理策略(对标 OpenRouter Guardrails) ============ -->
+    <div class="view" id="v-guard">
+      <div class="crumb"><b>治理策略</b><span class="tag info">管理员</span><button class="btn pri right" onclick="toast('新建策略包(演示)')">+ 新建策略</button></div>
+      <div class="card tbl-card"><table>
+        <tr><th>策略名称</th><th>状态</th><th>策略内容</th><th>作用范围</th><th>操作</th></tr>
+        <tr><td><b>租户默认策略</b><br><span style="color:var(--ink3)">未单独挂策略的 Key 自动套用</span></td><td><span class="dot g"></span>生效中</td><td>月限额 ¥30,000(超限告警)· 数据不出域 · 全模型可用</td><td>全部 Key</td><td><button class="btn" onclick="toast('编辑策略(演示)')">编辑</button></td></tr>
+        <tr><td><b>生产严格策略</b></td><td><span class="dot g"></span>生效中</td><td>月限额 ¥20,000(超限熔断)· 仅 deepseek-v4 / qwen-plus · 禁止输入输出留存</td><td>生产主 Key</td><td><button class="btn" onclick="toast('编辑策略(演示)')">编辑</button> <button class="btn" onclick="toast('查看命中记录(演示)')">命中记录</button></td></tr>
+        <tr><td><b>实验沙箱策略</b></td><td><span class="dot y"></span>草稿</td><td>日限额 ¥50 · 仅 qwen-plus · 输入输出全量留存(内部审计)</td><td>未挂载</td><td><button class="btn" onclick="toast('编辑策略(演示)')">编辑</button></td></tr>
+      </table></div>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:8px">把"消费限额 + 数据约束 + 模型白名单 + 超限动作"打包成可复用策略,挂到 Key 上、网关硬执行——对标 OpenRouter Guardrails;本土化差异:增加数据出域/留存约束与审计留存选项(等保场景)。</p>
+    </div>
+
+    <!-- ============ 可观测性(对标 OpenRouter Observability) ============ -->
+    <div class="view" id="v-obs">
+      <div class="crumb"><b>可观测性</b></div>
+      <div class="card" style="max-width:840px;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="flex:1"><b style="font-size:13px">输入 / 输出日志留存</b><br><small style="color:var(--ink3);font-size:11.5px">开启后请求明细可查看完整 prompt 与回复,用于调试与评测;默认关闭(仅留计量元数据)</small></div>
+          <div class="switch" onclick="this.classList.toggle('on');toast('已保存(演示)')"></div>
+        </div>
+      </div>
+      <div class="card" style="max-width:840px">
+        <h4>日志外发(零埋点)</h4>
+        <p style="font-size:12px;color:var(--ink2);margin-bottom:12px">网关自动把每条请求的 trace 推送到你自己的观测平台,业务代码无需任何埋点改造。</p>
+        <div class="cards" style="margin-bottom:0">
+          <div class="card" style="flex:1;min-width:170px;border-color:#b6d1f8"><b style="font-size:13px">自建 Langfuse</b><br><small style="color:var(--ink3)">LLM 全链路 trace</small><br><span class="tag ok" style="margin-top:8px;display:inline-block">已连接</span></div>
+          <div class="card" style="flex:1;min-width:170px"><b style="font-size:13px">阿里云 SLS</b><br><small style="color:var(--ink3)">日志检索与告警</small><br><button class="btn" style="margin-top:8px" onclick="toast('添加外发目的地(演示)')">添加</button></div>
+          <div class="card" style="flex:1;min-width:170px"><b style="font-size:13px">对象存储 OSS / S3</b><br><small style="color:var(--ink3)">明细归档,供 BI 消费</small><br><button class="btn" style="margin-top:8px" onclick="toast('添加外发目的地(演示)')">添加</button></div>
+          <div class="card" style="flex:1;min-width:170px"><b style="font-size:13px">自定义 Webhook</b><br><small style="color:var(--ink3)">签名回调,接入内部系统</small><br><button class="btn" style="margin-top:8px" onclick="toast('添加外发目的地(演示)')">添加</button></div>
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--ink3);margin-top:10px">对标 OpenRouter Observability(Broadcast 到 Langfuse / Datadog / S3 等 19 类目的地)——企业客户"数据回流自有系统"的刚需;国内首发目的地选 SLS / OSS / 自建 Langfuse。</p>
     </div>
 
     <!-- ============ 文档 ============ -->
@@ -238,6 +279,8 @@ resp = client.chat.completions.create(
   <div class="kv"><span>模型</span><span>deepseek-v4(供给渠道由平台自动选择)</span></div>
   <div class="kv"><span>语义缓存</span><span>未命中(相似度 0.71)</span></div>
   <div class="kv"><span>首字延迟</span><span>0.42s · 总时长 1.38s · SSE 流式</span></div>
+  <div class="kv"><span>路由开销</span><span>14ms(鉴权 + 选路 + 计量,不含模型推理)</span></div>
+  <div class="kv"><span>结束原因</span><span>stop(正常完成)</span></div>
   <div class="kv"><span>计量</span><span>输入 1,204 tok(¥0.0024) + 输出 512 tok(¥0.0058)= <b>¥0.0082</b></span></div>
   <div class="kv"><span>计入</span><span>项目"客服机器人" · Key ak-7f3•••</span></div>
   <div class="kv"><span>请求指纹</span><span class="num">trace-8f2c91a4(排障时报给平台支持)</span></div>
