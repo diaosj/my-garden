@@ -1,55 +1,54 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import Entry from "@components/Entry.astro";
+import Stone from "@components/Stone.astro";
 import { BLOG } from "@consts";
+import { GROUPS, groupPosts } from "@lib/archive";
+import { detectLang } from "@lib/seo";
 
-const data = (await getCollection("blog"))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-type Acc = {
-  [year: string]: CollectionEntry<"blog">[];
-};
-
-const posts = data.reduce((acc: Acc, post) => {
-  const year = post.data.date.getFullYear().toString();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {});
-
-const years = Object.keys(posts).sort((a, b) => parseInt(b) - parseInt(a));
+const posts = (await getCollection("blog")).filter((p) => !p.data.draft);
+const grouped = groupPosts(posts);
 ---
 
 <Layout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
   <Container>
-    <aside data-pagefind-ignore>
-      <div class="space-y-10">
-        <div class="space-y-4">
-          {
-            years.map((year) => (
-              <section class="animate space-y-4">
-                <div class="font-semibold text-ink">
-                  {year}
-                </div>
-                <div>
-                  <ul class="not-prose flex flex-col gap-4">
-                    {posts[year].map((post) => (
-                      <li>
-                        <Entry href={`/blog/${post.id}`} title={post.data.title} description={post.data.description} meta={post.data.date.getFullYear().toString()} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </section>
-            ))
-          }
-        </div>
-      </div>
-    </aside>
+    <h1 class="animate font-mono text-xl font-medium text-ink">Writing</h1>
+    <p class="animate t-muted mt-2 max-w-prose">{BLOG.DESCRIPTION}</p>
+    <div class="mt-12 space-y-16">
+      {
+        GROUPS.map((g, i) => {
+          const list = grouped.get(g.id) ?? [];
+          return (
+            <section id={g.id} data-group={g.id} class="animate scroll-mt-28">
+              <div class="grid items-end gap-x-8 gap-y-2 border-b border-rule pb-3 sm:grid-cols-[1fr_auto]">
+                <h2 class="flex items-center gap-2 font-medium text-ink">
+                  <Stone size={8} />
+                  <span>{g.label}</span>
+                  <span class="t-muted font-mono text-xs">
+                    {String(i + 1).padStart(2, "0")} · {list.length}
+                  </span>
+                </h2>
+                <p class="t-muted text-sm sm:text-right">{g.intro}</p>
+              </div>
+              {list.length === 0 ? (
+                <p class="t-mono t-muted py-5">in progress</p>
+              ) : (
+                list.map((post) => (
+                  <Entry
+                    href={`/blog/${post.id}/`}
+                    title={post.data.title}
+                    description={post.data.description}
+                    meta={post.data.date.getFullYear().toString()}
+                    lang={post.data.lang ?? detectLang(post.data.title)}
+                  />
+                ))
+              )}
+            </section>
+          );
+        })
+      }
+    </div>
   </Container>
 </Layout>

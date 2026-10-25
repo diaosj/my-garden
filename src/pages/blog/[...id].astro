@@ -9,6 +9,8 @@ import PostNavigation from "@components/PostNavigation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Giscus from "@components/Giscus.astro";
 import { blogPostingJsonld, detectLang } from "@lib/seo";
+import ArchiveBadge from "@components/ArchiveBadge.astro";
+import { isArchive } from "@lib/archive";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -71,7 +73,7 @@ const jsonld = blogPostingJsonld({
 >
   <Container>
     <div class="animate">
-      <BackToPrevious href="/blog">Back to blog</BackToPrevious>
+      <BackToPrevious href="/blog">Writing</BackToPrevious>
     </div>
     <div class="my-10 space-y-1">
       <div class="animate flex items-center gap-1.5">
@@ -88,6 +90,11 @@ const jsonld = blogPostingJsonld({
       <h1 class="animate text-3xl font-semibold text-ink">
         {post.data.title}
       </h1>
+      {isArchive(post.data.date) && (
+        <div class="animate pt-1">
+          <ArchiveBadge year={post.data.date.getFullYear()} />
+        </div>
+      )}
       {
         post.data.tags && post.data.tags?.length > 0 ? (
           <div class="animate flex gap-2 pt-1">

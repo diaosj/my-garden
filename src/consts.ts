@@ -14,8 +14,8 @@ export const HOME: Metadata = {
 };
 
 export const BLOG: Metadata = {
-  TITLE: "Blog",
-  DESCRIPTION: "A collection of articles on topics I am passionate about.",
+  TITLE: "Writing",
+  DESCRIPTION: "Notes on infrastructure, and an archive of a younger me — code, roads, books and football, 2008–2016.",
 };
 
 export const PROJECTS: Metadata = {

@@ -25,4 +25,9 @@ check "favicon is svg stone"       grep -q 'rel="icon" href="/favicon.svg"' dist
 check "footer has Chinese name"    grep -q '刁寿钧' dist/index.html
 check "ArrowCard removed"          bash -c "! test -f src/components/ArrowCard.astro"
 check "Entry used on projects"     grep -q 'data-entry' dist/projects/index.html
+check "blog grouped: cycling anchor"   grep -q 'id="cycling"' dist/blog/index.html
+check "blog grouped: 6 groups"         bash -c "[ \$(grep -o 'data-group=' dist/blog/index.html | wc -l) -eq 6 ]"
+check "archive badge on 2014 post"     grep -q 'written in 2014' dist/blog/sorting-algorithms-summary/index.html
+check "welcome post not built"         bash -c "! test -d dist/blog/welcome"
+check "blog title Writing"             grep -q '<title>Writing | Shoujun Diao' dist/blog/index.html
 exit $fail
