@@ -109,6 +109,23 @@ Precedence when a post matches several: infra > cycling > reading > football > b
 
 Rewritten first-person, five parts: (1) opening scene — March 2016, AlphaGo vs Lee Sedol, seen by an amateur 5-dan; (2) what I do now; (3) the path — existing timeline, adjectives removed; (4) beyond the code; (5) connect. The Chinese one-line bio stays under the heading. English copy drafted by Claude, edited by Adrian before merge.
 
+## §5b Travel data contract (Voyages / Atlas)
+
+Voyages itineraries and Atlas footprints are authored in the separate
+`~/Documents/travel/travel-poc` project and copied into this repo by hand
+(there is no sync script; `travel-poc/src/data/<trip>.json` → `src/data/<trip>.json`
+with identical filenames and schema). The redesign must not change that contract:
+
+- `src/data/*.json` keep their filenames and schema; pages read them exactly as today.
+- The `Footprint` array in `src/pages/footprints.astro` keeps its shape
+  (`city, country, lat, lng, year, description`) and location; it is not moved
+  to a data file in this iteration.
+- Visual changes to `/voyages`, `/voyages/<trip>` and `/footprints` come only
+  from global tokens and the removal of rounded cards; no template logic changes.
+- As part of this work, refresh `src/data/sendai-2026.json` and
+  `src/data/kyushu-2026.json` from travel-poc, which is newer (Haneda T3 fix,
+  2026-08-03) than the copy in this repo (2026-07-13).
+
 ## §6 Non-goals
 
 - No new articles (only Now sentences and topic titles).
