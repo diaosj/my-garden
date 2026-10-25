@@ -9,6 +9,8 @@ const blog = defineCollection({
     date: z.coerce.date(),
     draft: z.boolean().optional(),
     tags: z.array(z.string()).optional(),
+    /** BCP-47 language of the post (e.g. "en", "zh-CN", "ja", "es"); auto-detected zh-CN/en when omitted */
+    lang: z.string().optional(),
   }),
 });
 

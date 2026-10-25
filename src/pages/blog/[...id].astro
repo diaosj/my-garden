@@ -50,7 +50,7 @@ const prevPost = getPrevPost();
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
-const lang = detectLang(`${post.data.title} ${post.body ?? ""}`);
+const lang = post.data.lang ?? detectLang(`${post.data.title} ${post.body ?? ""}`);
 const postUrl = new URL(`/blog/${post.id}/`, Astro.site).toString();
 const jsonld = blogPostingJsonld({
   url: postUrl,

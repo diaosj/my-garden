@@ -2,7 +2,7 @@ import type { Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
   TITLE: "Adrian's Garden",
-  DESCRIPTION: "Backend Architect. Exploring systems, code, and life.",
+  DESCRIPTION: "Shoujun (Adrian) Diao 刁寿钧 — AI infrastructure architect. Notes on inference systems, gateways, Go, Kubernetes, and life beyond code.",
   EMAIL: "shoujun.diao@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 5,
   NUM_PROJECTS_ON_HOMEPAGE: 3,
@@ -10,7 +10,7 @@ export const SITE: Site = {
 
 export const HOME: Metadata = {
   TITLE: "Home",
-  DESCRIPTION: "My Garden.",
+  DESCRIPTION: "Personal site of Shoujun (Adrian) Diao 刁寿钧, AI infrastructure architect at Lovart, formerly Tencent Cloud AI platform architect.",
 };
 
 export const BLOG: Metadata = {
@@ -26,7 +26,7 @@ export const PROJECTS: Metadata = {
 
 export const ABOUT: Metadata = {
   TITLE: "About",
-  DESCRIPTION: "Learn more about Shoujun (Adrian) Diao.",
+  DESCRIPTION: "Shoujun (Adrian) Diao 刁寿钧: AI infrastructure architect, ex-Tencent, amateur 5-dan Go player, technical book translator. Experience and contact.",
 };
 
 export const VOYAGES: Metadata = {

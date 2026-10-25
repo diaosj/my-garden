@@ -48,6 +48,7 @@ description: "Description"
 date: "YYYY-MM-DD"
 draft: false        # optional
 tags: ["tag1"]      # optional
+lang: "ja"          # optional BCP-47; zh-CN/en auto-detected when omitted
 ```
 
 Project:
