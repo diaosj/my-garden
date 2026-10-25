@@ -13,7 +13,7 @@ const countries = feature(
   worldTopo as unknown as Topology,
   (worldTopo as unknown as Topology).objects.countries as GeometryCollection,
 );
-const japan = countries.features.find((f: any) => f.id === "392");
+const indonesia = countries.features.find((f: any) => f.id === "360");
 
 // ── Types ───────────────────────────────────────────────────
 interface Coord {
@@ -110,6 +110,10 @@ interface RouteMapData {
   points: MapPoint[];
 }
 
+const inBali = (s: Stop) => s.coordinate.lng >= 114 && s.coordinate.lng <= 116;
+// Day legs on Bali span only a few km, so every day's map uses the whole trip's extent.
+const tripExtentStops: Stop[] = (rawData as any).days.flatMap((d: any) => d.stops).filter(inBali);
+
 function buildRouteMap(
   stops: Stop[],
   w: number,
@@ -117,14 +121,12 @@ function buildRouteMap(
   pad: number,
 ): RouteMapData | null {
   // Filter to Bali only (exclude Shanghai at lng ~121)
-  const ks = stops.filter(
-    (s) => s.coordinate.lng >= 114 && s.coordinate.lng <= 116,
-  );
-  if (ks.length < 2) return null;
+  const ks = stops.filter(inBali);
+  if (ks.length < 1) return null;
 
-  const lngs = ks.map((s) => s.coordinate.lng);
-  const lats = ks.map((s) => s.coordinate.lat);
-  const geoPad = 0.15;
+  const lngs = tripExtentStops.map((s) => s.coordinate.lng);
+  const lats = tripExtentStops.map((s) => s.coordinate.lat);
+  const geoPad = 0.12;
   const minLng = Math.min(...lngs) - geoPad;
   const maxLng = Math.max(...lngs) + geoPad;
   const minLat = Math.min(...lats) - geoPad;
@@ -161,7 +163,7 @@ function buildRouteMap(
   ]);
 
   const pathGen = geoPath(projection);
-  const coastline = japan ? pathGen(japan) || "" : "";
+  const coastline = indonesia ? pathGen(indonesia) || "" : "";
 
   const points = ks.map((s, i) => {
     const p = projection([s.coordinate.lng, s.coordinate.lat])!;
