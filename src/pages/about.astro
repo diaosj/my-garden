@@ -2,6 +2,7 @@
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
 import Link from "@components/Link.astro";
+import SectionLabel from "@components/SectionLabel.astro";
 import { ABOUT, SITE, SOCIALS } from "@consts";
 import { graph, PERSON_JSONLD, WEBSITE_JSONLD } from "@lib/seo";
 
@@ -18,86 +19,71 @@ const jsonld = graph(
 
 <PageLayout title={ABOUT.TITLE} description={ABOUT.DESCRIPTION} jsonld={jsonld}>
   <Container>
-    <h1 class="animate font-semibold text-ink mb-2">
-      About
-    </h1>
-    <p class="animate mb-6 text-sm t-muted" lang="zh-CN">
+    <h1 class="animate mb-2 font-mono text-xl font-medium text-ink">About</h1>
+    <p class="animate t-muted mb-10 text-sm" lang="zh-CN">
       刁寿钧，AI 基础设施架构师，现任 Lovart 架构师，前腾讯云 AI 平台架构师；业余围棋五段，技术图书译者。
     </p>
 
     <div class="space-y-16">
-      <section>
-        <article class="space-y-4">
-          <p class="animate">
-            With 15 years of total professional experience, including 13.5 years in software engineering (progressing from junior roles to a Staff/Architect level) and over 5 years specifically dedicated to architecting and building scalable AI platforms on K8s, Go, and Python. My career journey has evolved from foundational software development to leading complex AI infrastructure initiatives. I am driven by a passion for creating robust systems that empower complex AI solutions.
-          </p>
-          <p class="animate">
-            My journey into AI was profoundly influenced by AlphaGo. As an accomplished amateur 5-dan Go player, witnessing AlphaGo's breakthrough was a key catalyst for my career pivot into the AI domain. This inspiration led me to self-teach Deep Reinforcement Learning, culminating in a technical seminar for my engineering team.
-          </p>
-          <p class="animate">
-            Beyond core engineering, I am committed to community engagement and knowledge sharing. I've had the privilege of speaking at the Apache APISIX Meetup, sharing insights on high-performance gateways. I also revitalized and led the Tencent Football Association for over 200 members, successfully fostering a highly engaged and competitive community. Furthermore, I am a published translator, having translated technical books such as 'Practical Data Analysis' from English to Chinese, which deepened my professional knowledge and honed my bilingual technical communication skills.
-          </p>
-          <p class="animate">
-            I am always excited to apply my expertise to challenging problems within dynamic, international environments, particularly in the realm of innovative AI engineering.
-          </p>
-        </article>
+      <!-- Copy draft by Claude 2026-10-25; Adrian to edit before merge. -->
+      <section class="animate max-w-prose space-y-4 leading-relaxed text-ink">
+        <p>
+          In March 2016 I watched AlphaGo play Lee Sedol the way an amateur 5-dan watches anything: counting, and
+          expecting to be able to follow. By game two I couldn't. Move 37 wasn't a move I would have rejected — it was
+          one I would never have considered. I had been a backend engineer for eight years. That week I decided the
+          thing that beat me was the thing I wanted to build.
+        </p>
+        <p>
+          I taught myself deep reinforcement learning, gave a seminar on it to my team, and spent the next seven years
+          at Tencent turning that interest into infrastructure: the unified AI platform of Tencent Cloud, built from
+          nothing, and the gateways that carried it through the first wave of LLM traffic. Today I do the same job at
+          Lovart for generative media: routing, serving and paying for models so a global product stays up.
+        </p>
+        <p>
+          I like systems that are honest about their limits, people who explain things plainly, and games where the
+          position tells you what to do next.
+        </p>
       </section>
 
-      <section class="animate space-y-6">
-        <div class="flex items-end justify-between border-b border-rule pb-4">
-          <h5 class="font-medium text-ink tracking-wide uppercase text-sm">
-            Professional Experience
-          </h5>
-        </div>
-        <ul class="flex flex-col">
-          <li class="group py-6 border-b border-rule">
-            <div class="flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center">
-              <h3 class="text-lg"><span class="font-medium text-ink">Architect</span>, Lovart</h3>
-              <div class="font-mono text-xs t-muted mt-2 sm:mt-0 text-sm sm:text-base">2025 — Present</div>
+      <section class="animate space-y-2">
+        <SectionLabel index="01" label="Path" />
+        {
+          [
+            { role: "Architect", org: "Lovart", years: "2025 — now", note: "Inference serving, model gateways, multi-cloud GPU and cost for image, video and LLM generation." },
+            { role: "Staff Engineer, AI Platform Architect", org: "Tencent", years: "2018 — 2025", note: "Tencent Cloud's unified AI platform from zero; cloud-native gateways that absorbed a 100× traffic rise during the LLM boom." },
+            { role: "Senior Backend Engineer", org: "Tencent", years: "2016 — 2018", note: "Microservices refactor of the brand-advertising system." },
+            { role: "Senior Engineer", org: "Bilibili", years: "2016", note: "Core backend for creators during the move to microservices." },
+            { role: "Backend Developer", org: "Adways (Nint)", years: "2012 — 2015", note: "Early engineer on an e-commerce analytics product, built from scratch." },
+          ].map((e) => (
+            <div class="grid items-baseline gap-x-8 gap-y-1 border-b border-rule py-5 sm:grid-cols-[1fr_auto]">
+              <div>
+                <div class="text-ink">
+                  <span class="font-medium">{e.role}</span>, {e.org}
+                </div>
+                <div class="t-muted mt-1 text-sm">{e.note}</div>
+              </div>
+              <div class="t-muted font-mono text-xs whitespace-nowrap sm:text-right">{e.years}</div>
             </div>
-            <!-- <p class="t-muted mt-2 text-sm">Architecting the core infrastructure for autonomous AI agents. Designing scalable orchestration frameworks that bridge complex LLM reasoning with reliable, real-world execution.</p> -->
-            <p class="t-muted mt-2 text-sm">Optimizing high availability, memory efficiency, and load balancing for global generative API services.</p>
-          </li>
-          <li class="group py-6 border-b border-rule">
-            <div class="flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center">
-              <h3 class="text-lg"><span class="font-medium text-ink">Staff Engineer & AI Platform Architect</span>, Tencent</h3>
-              <div class="font-mono text-xs t-muted mt-2 sm:mt-0 text-sm sm:text-base">2018 — 2025</div>
-            </div>
-            <p class="t-muted mt-2 text-sm">Spearheaded the 0-to-1 architecture of Tencent Cloud's unified AI platform and engineered high-performance cloud-native gateways. Scaled infrastructure to flawlessly absorb 100x traffic surges during the explosive LLM boom with zero downtime.</p>
-          </li>
-          <li class="group py-6 border-b border-rule">
-            <div class="flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center">
-              <h3 class="text-lg"><span class="font-medium text-ink">Senior Backend Engineer</span>, Tencent</h3>
-              <div class="font-mono text-xs t-muted mt-2 sm:mt-0 text-sm sm:text-base">2016 — 2018</div>
-            </div>
-            <p class="t-muted mt-2 text-sm">Drove the critical microservices refactoring for massive-scale brand advertising systems, significantly elevating architectural scalability.</p>
-          </li>
-          <li class="group py-6 border-b border-rule">
-            <div class="flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center">
-              <h3 class="text-lg"><span class="font-medium text-ink">Senior Engineer</span>, Bilibili</h3>
-              <div class="font-mono text-xs t-muted mt-2 sm:mt-0 text-sm sm:text-base">2016</div>
-            </div>
-            <p class="t-muted mt-2 text-sm">Participated in the core architecture migration towards microservices, building foundational backend systems for millions of creators.</p>
-          </li>
-          <li class="group py-6 border-b border-rule">
-            <div class="flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center">
-              <h3 class="text-lg"><span class="font-medium text-ink">Core Backend Developer</span>, Adways (Nint)</h3>
-              <div class="font-mono text-xs t-muted mt-2 sm:mt-0 text-sm sm:text-base">2012 — 2015</div>
-            </div>
-            <p class="t-muted mt-2 text-sm">Acted as an early founding engineer to build a data-intensive e-commerce analytics product from scratch, laying a lifelong foundation in robust system design.</p>
-          </li>
-        </ul>
+          ))
+        }
       </section>
 
-      <section class="animate space-y-4">
-        <h5 class="font-semibold text-ink">
-          Connect
-        </h5>
-        <div class="flex flex-wrap gap-x-4 gap-y-2">
-          <Link href="https://github.com/diaosj" external>github ↗</Link>
-          <Link href="https://www.linkedin.com/in/shoujun-diao/" external>linkedin ↗</Link>
-          <Link href="https://x.com/diaosj" external>twitter ↗</Link>
-          <Link href={`mailto:${SITE.EMAIL}`}>email ↗</Link>
+      <section class="animate space-y-2">
+        <SectionLabel index="02" label="Beyond" />
+        <p class="t-muted max-w-prose py-4">
+          I have spoken at the Apache APISIX Meetup on high-performance gateways, translated two technical books into
+          Chinese, run a 200-person football association at Tencent, and taught Go to children of migrant workers in
+          Shanghai. I am learning Japanese and Spanish, slowly and out loud.
+        </p>
+      </section>
+
+      <section class="animate space-y-2">
+        <SectionLabel index="03" label="Connect" />
+        <div class="flex flex-wrap gap-x-6 gap-y-2 py-4 font-mono text-sm">
+          <Link href="https://github.com/diaosj" external>github</Link>
+          <Link href="https://www.linkedin.com/in/shoujun-diao/" external>linkedin</Link>
+          <Link href="https://x.com/diaosj" external>x</Link>
+          <Link href={`mailto:${SITE.EMAIL}`}>email</Link>
         </div>
       </section>
     </div>

@@ -39,4 +39,6 @@ check "nav has four items"         bash -c "grep -o 'href=\"/\(blog\|projects\|a
 check "life page built"            test -s dist/life/index.html
 check "life has Next row"          grep -q 'Nagaoka' dist/life/index.html
 check "voyages no rounded cards"   bash -c "! grep -q 'rounded-lg' dist/voyages/index.html"
+check "about opens with AlphaGo"   grep -q 'AlphaGo' dist/about/index.html
+check "about has no adjectives"    bash -c "! grep -qiE 'flawlessly|spearheaded|massive-scale|explosive' dist/about/index.html"
 exit $fail
