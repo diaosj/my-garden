@@ -6,7 +6,7 @@ export const isArchive = (date: Date) => date < ARCHIVE_CUTOFF;
 
 export const GROUPS: Group[] = [
   { id: "infra",    label: "Infra",                   intro: "Inference serving, gateways, GPUs and cost — what I work on now." },
-  { id: "backend",  label: "Backend Notes 2011–2016", intro: "Source-code reading, MySQL, PHP/Lua/JS notes from my first decade as an engineer." },
+  { id: "backend",  label: "Backend Notes 2011–2017", intro: "Source-code reading, MySQL, PHP/Lua/JS notes from my first decade as an engineer." },
   { id: "cycling",  label: "骑行 2010",                intro: "Twenty days on a bicycle from Shanghai to Xi'an, written on the road." },
   { id: "reading",  label: "读书与围棋",               intro: "Books, and the game I have played since I was a kid." },
   { id: "football", label: "足球",                     intro: "Inter, derbies, and the long habit of staying up for Serie A." },

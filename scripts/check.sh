@@ -30,4 +30,9 @@ check "blog grouped: 6 groups"         bash -c "[ \$(grep -o 'data-group=' dist/
 check "archive badge on 2014 post"     grep -q 'written in 2014' dist/blog/sorting-algorithms-summary/index.html
 check "welcome post not built"         bash -c "! test -d dist/blog/welcome"
 check "blog title Writing"             grep -q '<title>Writing | Shoujun Diao' dist/blog/index.html
+check "home has 5 sections"        bash -c "[ \$(grep -o '§ 0[1-5]' dist/index.html | sort -u | wc -l) -eq 5 ]"
+check "home writing in progress"   grep -q 'in progress' dist/index.html
+check "home work lists token demo" grep -q 'token-console-demo' dist/index.html
+check "home archive links"         grep -q 'href="/blog#cycling"' dist/index.html
+check "hero grid present"          grep -q 'grid-bg' dist/index.html
 exit $fail

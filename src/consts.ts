@@ -19,9 +19,8 @@ export const BLOG: Metadata = {
 };
 
 export const PROJECTS: Metadata = {
-  TITLE: "Projects",
-  DESCRIPTION:
-    "A collection of my projects with links to repositories and live demos.",
+  TITLE: "Work",
+  DESCRIPTION: "Demos and tools I built, mostly to explain something.",
 };
 
 export const ABOUT: Metadata = {
