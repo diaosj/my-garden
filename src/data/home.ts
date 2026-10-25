@@ -8,7 +8,7 @@ export const NOW = [
   "At Lovart I am the backend architect for an AI-agent product: the service topology, the gateways, the model and tool access layers, and the cost of inference across GPUs and vendor APIs. Recent work: moving core services from Python to Go, a 30% TTFT cut that let a 14-node H200 cluster run on 6, and routing with fallback across 10+ model vendors.",
   "Before that, seven years at Tencent: edge computing and AI cameras at YouTu Lab, then tech lead for the gateway, AutoML and data-processing modules of Tencent Cloud's TI platform, which we built from zero to commercialization. Its AI gateway took a 100× traffic surge during the DeepSeek boom without an incident.",
   "I think about inference the way I once thought about Go: position first, then tempo. Most of what I write here is about that.",
-]
+];
 
 export const WRITING_IN_PROGRESS: { title: string; summary: string }[] = [
   {
@@ -34,7 +34,7 @@ export const BEYOND: { title: string; meta: string }[] = [
   { title: "President, Tencent East-China Football Association", meta: "Weekly turnout from under 5 to 40–50" },
   { title: "President, Fudan University Go Club", meta: "Self-taught to amateur 5-dan" },
   { title: "Volunteer Go (weiqi) instructor", meta: "Children of migrant workers, Shanghai" },
-]
+];
 
 export const LIFE_LEAD =
   "Somewhere in 2026 I started travelling on purpose instead of by accident. This is where I keep the plans and the map.";
