@@ -189,3 +189,7 @@ pre {
 .copy-code:active {
   @apply scale-90 transition-transform;
 }
+
+/* KaTeX: long formulas scroll instead of pushing the page wider */
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+.katex { white-space: normal; }

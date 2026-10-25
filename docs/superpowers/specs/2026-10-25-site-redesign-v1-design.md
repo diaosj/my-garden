@@ -1,7 +1,7 @@
 # diaosj.info redesign v1 — narrative IA + visual system
 
 Date: 2026-10-25
-Status: approved by Adrian (chat), implementation pending
+Status: implemented on branch redesign-v1 (2026-10-25); copy in src/data/home.ts and about.astro is a draft for Adrian to edit
 
 ## Goal
 

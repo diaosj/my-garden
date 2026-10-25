@@ -33,6 +33,14 @@ No test framework is configured.
 
 **Utilities** — `src/lib/utils.ts` provides `cn()` (clsx + tailwind-merge), `formatDate()`, and `readingTime()`.
 
+**Design system (2026-10 redesign)** — tokens live in `src/styles/global.css` (`--paper/--ink/--muted/--rule/--stone`), exposed as Tailwind colors `paper/ink/muted/rule/stone`. Utilities `.t-mono .t-muted .rule .grid-bg`. Components: `SectionLabel`, `Entry`, `Stone`, `ArchiveBadge`. No italics/serif anywhere. Go-stone motif only in favicon/OG, home section labels, blog group headings. Light is the default theme; dark/system only when the visitor picks them.
+
+**Home copy** — `src/data/home.ts` (HERO_LINE, NOW, WRITING_IN_PROGRESS, BEYOND, LIFE_*). **Archive grouping** — `src/lib/archive.ts` (`GROUPS`, `groupOf`, `groupPosts`, `isArchive`; cutoff 2020-01-01; precedence infra > cycling > reading > football > backend > essays).
+
+**Travel data** — `src/data/<trip>.json` are hand-copied from `~/Documents/travel/travel-poc/src/data/` (same filenames/schema); the footprints array is inline in `src/pages/footprints.astro`. A new trip = JSON in travel-poc → copy here → clone a `voyages/<trip>.astro` page (pick the country feature id and longitude filter) → add to `voyages/index.astro` and `life.astro`. Sanitise before publishing (no booking numbers, paid amounts, private phone numbers, children's names).
+
+**Verification** — `npm run check` builds and asserts on `dist/`; add an assertion whenever you add a page or a rule.
+
 **Integrations** — Sitemap, MDX, Pagefind (client-side search), Giscus (GitHub Discussions comments). Markdown uses Shiki with `css-variables` theme.
 
 ## Path Aliases
