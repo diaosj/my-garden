@@ -1,7 +1,7 @@
 import type { Metadata, Site, Socials } from "@types";
 
 export const SITE: Site = {
-  TITLE: "Adrian's Garden",
+  TITLE: "Shoujun Diao",
   DESCRIPTION: "Shoujun (Adrian) Diao 刁寿钧 — AI infrastructure architect. Notes on inference systems, gateways, Go, Kubernetes, and life beyond code.",
   EMAIL: "shoujun.diao@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 5,
@@ -14,14 +14,13 @@ export const HOME: Metadata = {
 };
 
 export const BLOG: Metadata = {
-  TITLE: "Blog",
-  DESCRIPTION: "A collection of articles on topics I am passionate about.",
+  TITLE: "Writing",
+  DESCRIPTION: "Notes on infrastructure, and an archive of a younger me — code, roads, books and football, 2008–2016.",
 };
 
 export const PROJECTS: Metadata = {
-  TITLE: "Projects",
-  DESCRIPTION:
-    "A collection of my projects with links to repositories and live demos.",
+  TITLE: "Work",
+  DESCRIPTION: "Demos and tools I built, mostly to explain something.",
 };
 
 export const ABOUT: Metadata = {
@@ -31,7 +30,12 @@ export const ABOUT: Metadata = {
 
 export const VOYAGES: Metadata = {
   TITLE: "Voyages",
-  DESCRIPTION: "Adventures beyond the code.",
+  DESCRIPTION: "Itineraries, written before leaving.",
+};
+
+export const LIFE: Metadata = {
+  TITLE: "Life",
+  DESCRIPTION: "Voyages, a map of footprints, and what's next.",
 };
 
 export const SOCIALS: Socials = [

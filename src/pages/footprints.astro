@@ -10,8 +10,7 @@ import PageLayout from "@layouts/Layout.astro";
     </h1>
 
     <p class="animate text-black/75 dark:text-white/75 leading-relaxed">
-      Coding locally, deploying globally. <br>
-      A map of the cities and countries I've explored.
+      Every city I have slept in. Drag the globe; filter by year.
     </p>
 
     <!-- Year filter -->
@@ -86,6 +85,21 @@ import PageLayout from "@layouts/Layout.astro";
   const footprints: Footprint[] = [
     // --- 日本足迹 ---
     { city: "Nagoya",    country: "Japan", lat: 35.1815, lng: 136.9066, year: 2026, description: "Legoland adventure with my eldest daughter" },
+    { city: "Fukuoka",   country: "Japan", lat: 33.5902, lng: 130.4017, year: 2026, description: "Gateway to Kyushu, again" },
+    { city: "Karatsu",   country: "Japan", lat: 33.4470, lng: 129.9690, year: 2026, description: "Castle at night under cherry blossom" },
+    { city: "Hirado",    country: "Japan", lat: 33.3680, lng: 129.5570, year: 2026, description: "Westernmost station, Dutch trading post" },
+    { city: "Sasebo",    country: "Japan", lat: 33.1640, lng: 129.7260, year: 2026, description: "Harbour town, one night" },
+    { city: "Nagasaki",  country: "Japan", lat: 32.7530, lng: 129.8690, year: 2026, description: "Peace museum, Sofukuji, Chinatown" },
+    { city: "Dazaifu",   country: "Japan", lat: 33.5200, lng: 130.5340, year: 2026, description: "Tenmangu shrine on the way home" },
+    { city: "Sendai",    country: "Japan", lat: 38.2600, lng: 140.8820, year: 2026, description: "Tanabata fireworks, four nights" },
+    { city: "Yamagata",  country: "Japan", lat: 38.3150, lng: 140.4350, year: 2026, description: "Yamadera's thousand steps" },
+    { city: "Hanamaki",  country: "Japan", lat: 39.3870, lng: 141.1200, year: 2026, description: "Kenji Miyazawa's fairy-tale village" },
+    { city: "Morioka",   country: "Japan", lat: 39.7010, lng: 141.1370, year: 2026, description: "Wanko soba" },
+    { city: "Yokohama",  country: "Japan", lat: 35.4660, lng: 139.6220, year: 2026, description: "Model railway museum before flying home" },
+    // --- 印尼足迹 ---
+    { city: "Jimbaran",  country: "Indonesia", lat: -8.7867, lng: 115.1431, year: 2026, description: "Cliff bar sunsets, badminton with locals" },
+    { city: "Nusa Dua",  country: "Indonesia", lat: -8.7993, lng: 115.2317, year: 2026, description: "Lagoon pools, beach football" },
+    { city: "Ubud",      country: "Indonesia", lat: -8.5064, lng: 115.2625, year: 2026, description: "Waterfall, rice terraces, palace" },
     { city: "Urayasu",   country: "Japan", lat: 35.6531, lng: 139.9039, year: 2024, description: "Tokyo Disneyland family trip" },
     { city: "Osaka",     country: "Japan", lat: 34.6937, lng: 135.5023, year: 2024, description: "Universal Studios Japan with the family" },
     { city: "Nara",      country: "Japan", lat: 34.6851, lng: 135.8048, year: 2024, description: "Feeding the sacred deer" },

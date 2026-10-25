@@ -9,6 +9,8 @@ import PostNavigation from "@components/PostNavigation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Giscus from "@components/Giscus.astro";
 import { blogPostingJsonld, detectLang } from "@lib/seo";
+import ArchiveBadge from "@components/ArchiveBadge.astro";
+import { isArchive } from "@lib/archive";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -71,7 +73,7 @@ const jsonld = blogPostingJsonld({
 >
   <Container>
     <div class="animate">
-      <BackToPrevious href="/blog">Back to blog</BackToPrevious>
+      <BackToPrevious href="/blog">Writing</BackToPrevious>
     </div>
     <div class="my-10 space-y-1">
       <div class="animate flex items-center gap-1.5">
@@ -85,16 +87,21 @@ const jsonld = blogPostingJsonld({
           </div>
         )}        
       </div>
-      <h1 class="animate text-3xl font-semibold text-black dark:text-white">
+      <h1 class="animate text-3xl font-semibold text-ink">
         {post.data.title}
       </h1>
+      {isArchive(post.data.date) && (
+        <div class="animate pt-1">
+          <ArchiveBadge year={post.data.date.getFullYear()} />
+        </div>
+      )}
       {
         post.data.tags && post.data.tags?.length > 0 ? (
           <div class="animate flex gap-2 pt-1">
             {post.data.tags.map((tag) => (
               <a
                 href={`/tags/${tag}`}
-                class="rounded-sm border border-black/15 px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+                class="border border-rule px-2 py-1 text-sm transition-colors duration-300 ease-in-out hover:bg-rule focus-visible:bg-rule"
               >
                 {tag}
               </a>

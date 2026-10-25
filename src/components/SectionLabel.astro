@@ -1,0 +1,15 @@
+---
+import Stone from "@components/Stone.astro";
+
+type Props = { index: string; label: string; stone?: boolean };
+const { index, label, stone = false } = Astro.props;
+---
+
+<div class="flex items-end justify-between border-b border-rule pb-3">
+  <h2 class="t-mono text-ink flex items-center gap-2">
+    {stone && <Stone size={8} />}
+    <span class="t-muted">§ {index}</span>
+    <span>{label}</span>
+  </h2>
+  <div class="t-mono t-muted"><slot name="right" /></div>
+</div>

@@ -2,110 +2,125 @@
 import { getCollection } from "astro:content";
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import SectionLabel from "@components/SectionLabel.astro";
+import Entry from "@components/Entry.astro";
 import Link from "@components/Link.astro";
 import { HOME } from "@consts";
 import { graph, PERSON_JSONLD, WEBSITE_JSONLD } from "@lib/seo";
+import { GROUPS, groupPosts } from "@lib/archive";
+import { HERO_LINE, NOW, WRITING_IN_PROGRESS, BEYOND_LEAD, BEYOND } from "@data/home";
 
 const jsonld = graph(PERSON_JSONLD, WEBSITE_JSONLD);
 
-const blog = (await getCollection("blog"))
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+const posts = (await getCollection("blog")).filter((p) => !p.data.draft);
+const grouped = groupPosts(posts);
+const recent = (grouped.get("infra") ?? []).slice(0, 3);
 
 const projects = (await getCollection("projects"))
-  .filter(project => !project.data.draft)
+  .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+  .slice(0, 4);
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION} jsonld={jsonld}>
   <Container>
     <div class="space-y-24">
-      <!-- 1. 门面/名片区 (Hero) -->
-      <section class="animate flex flex-col items-center text-center py-16 sm:py-24">
-        <h1 class="font-semibold text-black dark:text-white text-4xl sm:text-5xl tracking-tight">
-          Shoujun <span class="font-serif italic font-normal">(Adrian)</span> Diao
+      <!-- Hero -->
+      <section class="animate relative isolate flex flex-col items-start py-16 sm:py-24">
+        <div class="grid-bg absolute inset-0 -z-10" aria-hidden="true"></div>
+        <h1 class="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+          Shoujun <span class="t-muted font-normal">(Adrian)</span> Diao
         </h1>
-        <p class="mt-3 text-base tracking-[0.3em] text-black/40 dark:text-white/40" lang="zh-CN">刁寿钧</p>
-        <p class="mt-6 leading-relaxed text-black/60 dark:text-white/60 max-w-xl font-serif italic text-lg">
-          Architecting backend systems and AI infrastructure built to last.
-        </p>
-        <div class="mt-8">
-          <Link href="/about">More about me & connect ↗</Link>
+        <p class="t-muted mt-3 font-mono text-sm tracking-[0.3em]" lang="zh-CN">刁寿钧</p>
+        <p class="mt-8 max-w-xl text-lg leading-relaxed text-ink">{HERO_LINE}</p>
+        <div class="mt-6 font-mono text-xs">
+          <Link href="/about">About, and how to reach me ↗</Link>
         </div>
       </section>
 
-      <!-- 2. 思考/文章区 (Thoughts & Notes) -->
+      <!-- § 01 Now -->
       <section class="animate space-y-6">
-        <div class="flex items-end justify-between border-b border-black/10 dark:border-white/10 pb-4">
-          <h5 class="font-medium text-black dark:text-white tracking-wide uppercase text-sm">
-            Latest from the Journal
-          </h5>
-          <Link href="/blog">
-            See all posts
-          </Link>
+        <SectionLabel index="01" label="Now" stone />
+        <div class="max-w-prose space-y-4 leading-relaxed text-ink">
+          {NOW.map((p) => <p>{p}</p>)}
         </div>
-        <ul class="flex flex-col gap-4">
-          {blog.map(post => (
-            <li>
-              <ArrowCard entry={post} />
-            </li>
-          ))}
-        </ul>
       </section>
 
-      <!-- 3. 实验室/Demo区 (The Lab) -->
-      <section class="animate space-y-6">
-        <div class="flex items-end justify-between border-b border-black/10 dark:border-white/10 pb-4">
-          <h5 class="font-medium text-black dark:text-white tracking-wide uppercase text-sm">
-            Selected Craft
-          </h5>
-          <Link href="/projects">
-            See all projects
-          </Link>
-        </div>
-        <ul class="flex flex-col gap-4">
-          {projects.map(project => (
-            <li>
-              <ArrowCard entry={project} />
-            </li>
-          ))}
-        </ul>
+      <!-- § 02 Writing -->
+      <section class="animate space-y-2">
+        <SectionLabel index="02" label="Writing" stone>
+          <Link slot="right" href="/blog">All writing</Link>
+        </SectionLabel>
+        {
+          recent.length > 0
+            ? recent.map((post) => (
+                <Entry
+                  href={`/blog/${post.id}/`}
+                  title={post.data.title}
+                  description={post.data.description}
+                  meta={post.data.date.toISOString().slice(0, 10)}
+                />
+              ))
+            : WRITING_IN_PROGRESS.map((t) => (
+                <div class="grid items-baseline gap-x-8 gap-y-1 border-b border-rule py-5 sm:grid-cols-[1fr_auto]">
+                  <div>
+                    <div class="font-medium text-ink">{t.title}</div>
+                    <div class="t-muted mt-1 text-sm">{t.summary}</div>
+                  </div>
+                  <div class="t-muted font-mono text-xs sm:text-right">in progress</div>
+                </div>
+              ))
+        }
       </section>
 
-      <!-- 4. 生活与社区区 (Life & Community) -->
-      <section class="animate space-y-6">
-        <div class="flex items-end justify-between border-b border-black/10 dark:border-white/10 pb-4">
-          <h5 class="font-medium text-black dark:text-white tracking-wide uppercase text-sm">
-            Beyond the Code
-          </h5>
-        </div>
-        <ul class="flex flex-col">
-          <li class="group flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center py-6 border-b border-black/5 dark:border-white/5">
-            <h3 class="font-medium text-black dark:text-white text-lg">Speaker at Apache APISIX Meetup</h3>
-            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 text-sm sm:text-base">Building High-Performance Gateways</div>
-          </li>
-          <li class="group flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center py-6 border-b border-black/5 dark:border-white/5">
-            <h3 class="font-medium text-black dark:text-white text-lg">Co-translator: Problem Solving with Algorithms and Data Structures Using Python</h3>
-            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 text-sm sm:text-base">Posts &amp; Telecom Press · 2019</div>
-          </li>
-          <li class="group flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center py-6 border-b border-black/5 dark:border-white/5">
-            <h3 class="font-medium text-black dark:text-white text-lg">Translator: Practical Data Analysis</h3>
-            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 text-sm sm:text-base">China Machine Press · 2018</div>
-          </li>
-          <li class="group flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center py-6 border-b border-black/5 dark:border-white/5">
-            <h3 class="font-medium text-black dark:text-white text-lg">Community Builder</h3>
-            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 text-sm sm:text-base">Led the Tencent Football Association (200+ members)</div>
-          </li>
-          <li class="group flex flex-col sm:grid sm:grid-cols-[5fr_4fr] sm:gap-x-8 sm:items-center py-6 border-b border-black/5 dark:border-white/5">
-            <h3 class="font-medium text-black dark:text-white text-lg">Volunteer Go (Weiqi) Instructor</h3>
-            <div class="font-serif italic text-black/50 dark:text-white/50 mt-2 sm:mt-0 text-sm sm:text-base">Mentored children of migrant workers in Shanghai</div>
-          </li>
-        </ul>
+      <!-- § 03 Work -->
+      <section class="animate space-y-2">
+        <SectionLabel index="03" label="Work" stone>
+          <Link slot="right" href="/projects">All work</Link>
+        </SectionLabel>
+        {
+          projects.map((p) => (
+            <Entry
+              href={p.data.demoURL ?? `/projects/${p.id}/`}
+              external={!!p.data.demoURL}
+              title={p.data.title}
+              description={p.data.description}
+              meta={p.data.date.getFullYear().toString()}
+            />
+          ))
+        }
       </section>
 
+      <!-- § 04 Archive -->
+      <section class="animate space-y-2">
+        <SectionLabel index="04" label="Archive" stone>
+          <span slot="right">2008 – 2016</span>
+        </SectionLabel>
+        {
+          GROUPS.filter((g) => g.id !== "infra").map((g) => (
+            <Entry
+              href={`/blog#${g.id}`}
+              title={g.label}
+              description={g.intro}
+              meta={`${(grouped.get(g.id) ?? []).length} posts`}
+            />
+          ))
+        }
+      </section>
+
+      <!-- § 05 Beyond -->
+      <section class="animate space-y-2">
+        <SectionLabel index="05" label="Beyond" stone />
+        <p class="t-muted max-w-prose py-4">{BEYOND_LEAD}</p>
+        {
+          BEYOND.map((b) => (
+            <div class="grid items-baseline gap-x-8 gap-y-1 border-b border-rule py-4 sm:grid-cols-[1fr_auto]">
+              <div class="text-ink">{b.title}</div>
+              <div class="t-muted font-mono text-xs sm:text-right">{b.meta}</div>
+            </div>
+          ))
+        }
+      </section>
     </div>
   </Container>
 </PageLayout>

@@ -8,35 +8,23 @@ import { SITE } from "@consts";
   <Container>
     <div class="flex flex-wrap justify-between gap-y-2">
       <Link href="/" underline={false}>
-        <div class="font-semibold">
+        <div class="font-mono font-medium tracking-tight">
           {SITE.TITLE}
         </div>
       </Link>
-      <nav class="flex items-center gap-1 text-sm">
-        <Link href="/blog">journal</Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/projects">craft</Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/about">profile</Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/voyages">voyages</Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/footprints">atlas</Link>
-        <span>
-          {`/`}
-        </span>
+      <nav class="flex items-center gap-1 font-mono text-xs">
+        <Link href="/blog">Writing</Link>
+        <span>/</span>
+        <Link href="/projects">Work</Link>
+        <span>/</span>
+        <Link href="/about">About</Link>
+        <span>/</span>
+        <Link href="/life">Life</Link>
+        <span>/</span>
         <button
           id="magnifying-glass"
           aria-label="Search"
-          class="flex items-center rounded-sm border border-black/15 bg-neutral-100 px-2 py-1 text-xs transition-colors duration-300 ease-in-out hover:bg-black/5 hover:text-black focus-visible:bg-black/5 focus-visible:text-black dark:border-white/20 dark:bg-neutral-900 dark:hover:bg-white/5 dark:hover:text-white dark:focus-visible:bg-white/5 dark:focus-visible:text-white"
+          class="flex items-center border border-rule bg-paper px-2 py-1 font-mono text-xs transition-colors duration-300 ease-in-out hover:bg-rule focus-visible:bg-rule"
         >
           <svg
             height="16"

@@ -1,0 +1,52 @@
+---
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/Layout.astro";
+import SectionLabel from "@components/SectionLabel.astro";
+import Entry from "@components/Entry.astro";
+import { LIFE } from "@consts";
+import { LIFE_LEAD, LIFE_NEXT, LIFE_STATS } from "@data/home";
+import kyushu from "@data/kyushu-2026.json";
+import sendai from "@data/sendai-2026.json";
+import bali from "@data/bali-2026.json";
+
+const tripCount = [bali, kyushu, sendai].length;
+---
+
+<PageLayout title={LIFE.TITLE} description={LIFE.DESCRIPTION}>
+  <Container>
+    <h1 class="animate font-mono text-xl font-medium text-ink">Life</h1>
+    <p class="animate t-muted mt-2 max-w-prose">{LIFE_LEAD}</p>
+
+    <div class="mt-12 space-y-16">
+      <section class="animate space-y-2">
+        <SectionLabel index="01" label="Places" />
+        <Entry
+          href="/voyages"
+          title="Voyages"
+          description="Day-by-day itineraries with maps, written before each trip."
+          meta={`${tripCount} trips`}
+        />
+        <Entry
+          href="/footprints"
+          title="Atlas"
+          description="Every city I have slept in, on a globe."
+          meta={LIFE_STATS.map((s) => `${s.label} ${s.value}`).join(" · ")}
+        />
+      </section>
+
+      <section class="animate space-y-2">
+        <SectionLabel index="02" label="Next" />
+        <ul class="space-y-2 py-4 font-mono text-sm text-ink">
+          {
+            LIFE_NEXT.map((n) => (
+              <li class="flex items-center gap-3">
+                <span class="t-muted">→</span>
+                {n}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </Container>
+</PageLayout>

@@ -2,6 +2,7 @@
 title: "Welcome to my Digital Garden"
 description: "Planting the first seeds in my new space."
 date: "2026-02-23"
+draft: true
 ---
 
 Hello, world! 

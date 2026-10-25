@@ -2,10 +2,13 @@
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
 import { VOYAGES } from "@consts";
+import Entry from "@components/Entry.astro";
 import kyushu from "@data/kyushu-2026.json";
 import sendai from "@data/sendai-2026.json";
+import bali from "@data/bali-2026.json";
 
 const trips = [
+  { slug: "bali-2026", data: bali, emoji: "\u{1F334}" },
   { slug: "sendai-2026", data: sendai, emoji: "\u{1F386}" },
   { slug: "kyushu-2026", data: kyushu, emoji: "\u{1F338}" },
 ];
@@ -13,31 +16,22 @@ const trips = [
 
 <PageLayout title={VOYAGES.TITLE} description={VOYAGES.DESCRIPTION}>
   <Container>
-    <h1 class="animate font-semibold text-black dark:text-white">
+    <h1 class="animate font-mono text-xl font-medium text-ink">
       {VOYAGES.TITLE}
     </h1>
-    <p class="animate mt-2 text-black/75 dark:text-white/75">
+    <p class="animate t-muted mt-2">
       {VOYAGES.DESCRIPTION}
     </p>
 
-    <div class="animate mt-8 space-y-3">
+    <div class="animate mt-8">
       {
         trips.map((trip) => (
-          <a
+          <Entry
             href={`/voyages/${trip.slug}`}
-            class="group flex items-center gap-4 rounded-lg border border-black/10 dark:border-white/10 p-4 transition-colors duration-300 hover:bg-black/[0.02] dark:hover:bg-white/[0.02]"
-          >
-            <span class="text-3xl">{trip.emoji}</span>
-            <div>
-              <div class="font-medium text-black dark:text-white group-hover:underline underline-offset-4 decoration-black/20 dark:decoration-white/20">
-                {trip.data.title}
-              </div>
-              <div class="text-sm text-black/50 dark:text-white/50 mt-0.5">
-                {trip.data.startDate} &rarr; {trip.data.endDate} &middot;{" "}
-                {trip.data.region}
-              </div>
-            </div>
-          </a>
+            title={`${trip.emoji} ${trip.data.title}`}
+            description={trip.data.region}
+            meta={`${trip.data.startDate} → ${trip.data.endDate}`}
+          />
         ))
       }
     </div>
