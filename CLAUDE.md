@@ -59,3 +59,13 @@ draft: false        # optional
 demoURL: "https://..." # optional
 repoURL: "https://..." # optional
 ```
+
+## SEO / GEO conventions (added 2026-10-25)
+
+- `site` in `astro.config.mjs` must stay `https://diaosj.info` — canonical, sitemap, og:url and JSON-LD all derive from it.
+- `src/lib/seo.ts` holds the Person/WebSite JSON-LD, `blogPostingJsonld()` and `detectLang()`. `Layout.astro` accepts `lang`, `jsonld`, `ogType`, `image`; blog posts set `lang` automatically (zh-CN vs en) from their prose.
+- `src/pages/llms.txt.ts` generates `/llms.txt` from the content collections; `public/robots.txt` allows AI crawlers and points at the sitemap.
+- Blog slugs are English kebab-case filenames. Never reintroduce Chinese filenames. `vercel.json` carries 301s from the old Chinese slugs and the 2008–2016 Hexo permalinks (`/YYYY/MM/DD/<title>/`); add a redirect there whenever a slug changes.
+- Markdown headings in posts start at `##` (the ToC component treats the shallowest level as top level). Math uses `$…$` / `$$…$$` via remark-math + KaTeX, so wrap literal dollar signs in prose in backticks or escape them as `\$`.
+- Default social image is `public/og-default.png` (1200×630, rendered from a plain HTML mock with headless Chrome).
+- `public/pagefind/` is a build artefact and is git-ignored; `astro-pagefind` regenerates it on `npm run build`.

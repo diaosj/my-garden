@@ -1,7 +1,7 @@
 ---
 title: The World at His Feet
 date: 2014-08-05 00:51:50
-description: "Archived from my original Hexo blog."
+description: "今天看到一段视频。应该是今年世界杯之前拍的。"
 tags: ["足球"]
 ---
 今天看到一段视频。应该是今年世界杯之前拍的。

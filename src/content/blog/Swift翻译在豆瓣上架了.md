@@ -1,8 +1,0 @@
----
-title: "Swift翻译在豆瓣上架了"
-date: 2014-11-20 21:55:48
-description: "Archived from my original Hexo blog."
----
-嘛，感谢小鱼同学。
-
-算是给自己的生日礼物。欢迎大家尽情拍砖。

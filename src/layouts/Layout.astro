@@ -8,15 +8,26 @@ import { SITE } from "@consts";
 type Props = {
   title: string;
   description: string;
+  /** BCP-47 language of the page's main content. Defaults to "en". */
+  lang?: string;
+  image?: string;
+  jsonld?: Record<string, unknown> | Record<string, unknown>[];
+  ogType?: "website" | "article";
 };
 
-const { title, description } = Astro.props;
+const { title, description, lang = "en", image, jsonld, ogType } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
-    <Head title={`${title} | ${SITE.TITLE}`} description={description} />
+    <Head
+      title={`${title} | ${SITE.TITLE}`}
+      description={description}
+      image={image}
+      jsonld={jsonld}
+      ogType={ogType}
+    />
   </head>
   <body>
     <noscript>

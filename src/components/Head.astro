@@ -21,15 +21,28 @@ import "@fontsource/geist-mono/700.css";
 import "@fontsource/geist-mono/800.css";
 import "@fontsource/geist-mono/900.css";
 
+import "katex/dist/katex.min.css";
+
 interface Props {
   title: string;
   description: string;
   image?: string;
+  /** Optional JSON-LD object(s) rendered as <script type="application/ld+json"> */
+  jsonld?: Record<string, unknown> | Record<string, unknown>[];
+  /** Open Graph type: "website" (default) or "article" */
+  ogType?: "website" | "article";
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = "/astro-micro.jpg" } = Astro.props;
+const {
+  title,
+  description,
+  image = "/og-default.png",
+  jsonld,
+  ogType = "website",
+} = Astro.props;
+const jsonldList = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
 ---
 
 <!-- Global Metadata -->
@@ -50,18 +63,27 @@ const { title, description, image = "/astro-micro.jpg" } = Astro.props;
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="Adrian's Garden" />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={new URL(image, Astro.site)} />
+<link rel="alternate" type="application/rss+xml" title="Adrian's Garden" href={new URL("/rss.xml", Astro.site)} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Structured data -->
+{jsonldList.map((obj) => (
+  <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+))}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:image" content={new URL(image, Astro.site)} />
+<meta name="twitter:creator" content="@diaosj" />
 
 <!-- PageFind -->
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />

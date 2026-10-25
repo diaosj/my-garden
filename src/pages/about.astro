@@ -3,9 +3,20 @@ import Container from "@components/Container.astro";
 import PageLayout from "@layouts/Layout.astro";
 import Link from "@components/Link.astro";
 import { ABOUT, SITE, SOCIALS } from "@consts";
+import { graph, PERSON_JSONLD, WEBSITE_JSONLD } from "@lib/seo";
+
+const jsonld = graph(
+  { ...PERSON_JSONLD, mainEntityOfPage: "https://diaosj.info/about/" },
+  WEBSITE_JSONLD,
+  {
+    "@type": "ProfilePage",
+    "@id": "https://diaosj.info/about/",
+    mainEntity: { "@id": "https://diaosj.info/#person" },
+  },
+);
 ---
 
-<PageLayout title={ABOUT.TITLE} description={ABOUT.DESCRIPTION}>
+<PageLayout title={ABOUT.TITLE} description={ABOUT.DESCRIPTION} jsonld={jsonld}>
   <Container>
     <h1 class="animate font-semibold text-black dark:text-white mb-6">
       About

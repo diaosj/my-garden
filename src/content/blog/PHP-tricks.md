@@ -2,7 +2,7 @@
 title: PHP tricks
 date: 2011-04-02 15:40:54
 tags: ["PHP"]
-description: "Archived from my original Hexo blog."
+description: "一些PHP编程的tips & tricks。"
 ---
 一些PHP编程的tips & tricks。
 

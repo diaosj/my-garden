@@ -5,6 +5,9 @@ import PageLayout from "@layouts/Layout.astro";
 import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import { HOME } from "@consts";
+import { graph, PERSON_JSONLD, WEBSITE_JSONLD } from "@lib/seo";
+
+const jsonld = graph(PERSON_JSONLD, WEBSITE_JSONLD);
 
 const blog = (await getCollection("blog"))
   .filter(post => !post.data.draft)
@@ -17,7 +20,7 @@ const projects = (await getCollection("projects"))
   .slice(0, 3);
 ---
 
-<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION} jsonld={jsonld}>
   <Container>
     <div class="space-y-24">
       <!-- 1. 门面/名片区 (Hero) -->

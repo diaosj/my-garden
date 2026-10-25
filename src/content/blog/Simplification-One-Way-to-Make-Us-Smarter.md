@@ -1,7 +1,7 @@
 ---
 title: "Simplification: One Way to Make Us Smarter"
 date: 2016-05-30 10:31:38
-description: "Archived from my original Hexo blog."
+description: "People value their powers of thinking, and most of us are interested in why some people seem to drive a highly tuned Maserati brain while others potte…"
 tags: ["English"]
 ---
 

@@ -2,7 +2,7 @@
 title: "Our only light in paradise"
 date: 2013-05-01 23:26:40
 tags: ["足球"]
-description: "Archived from my original Hexo blog."
+description: "看了上半场之后出门接亲。 比赛最后十五分钟，在新娘家里。伴娘看着我，我盯着手机，不时地刷比分。外面在放鞭，我还在听这张专辑打气。 最后十分钟，还是0比0。"
 ---
 　　看了上半场之后出门接亲。 
 　　比赛最后十五分钟，在新娘家里。伴娘看着我，我盯着手机，不时地刷比分。外面在放鞭，我还在听这张专辑打气。 

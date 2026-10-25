@@ -12,15 +12,25 @@ export interface Heading {
 }
 
 function buildToc(headings: Heading[]) {
+  // Tolerant of posts whose headings start at h1 or skip levels:
+  // the shallowest depth becomes the top level, and a heading whose parent
+  // level is missing attaches to the nearest shallower heading (or the root).
   const toc: Heading[] = [];
-  const parentHeadings = new Map();
+  const parentHeadings = new Map<number, Heading & { subheadings: Heading[] }>();
+  const minDepth = Math.min(...headings.map((h) => h.depth));
   headings.forEach((h) => {
-    const heading = { ...h, subheadings: [] };
+    const heading = { ...h, subheadings: [] as Heading[] };
+    for (const d of [...parentHeadings.keys()]) if (d >= heading.depth) parentHeadings.delete(d);
     parentHeadings.set(heading.depth, heading);
-    if (heading.depth === 2) {
+    let parent: (Heading & { subheadings: Heading[] }) | undefined;
+    for (let d = heading.depth - 1; d >= minDepth; d--) {
+      parent = parentHeadings.get(d);
+      if (parent) break;
+    }
+    if (heading.depth === minDepth || !parent) {
       toc.push(heading);
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+      parent.subheadings.push(heading);
     }
   });
   return toc;

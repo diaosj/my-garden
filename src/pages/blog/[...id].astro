@@ -8,6 +8,7 @@ import BackToPrevious from "@components/BackToPrevious.astro";
 import PostNavigation from "@components/PostNavigation.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Giscus from "@components/Giscus.astro";
+import { blogPostingJsonld, detectLang } from "@lib/seo";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog"))
@@ -49,9 +50,25 @@ const prevPost = getPrevPost();
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
+const lang = detectLang(`${post.data.title} ${post.body ?? ""}`);
+const postUrl = new URL(`/blog/${post.id}/`, Astro.site).toString();
+const jsonld = blogPostingJsonld({
+  url: postUrl,
+  title: post.data.title,
+  description: post.data.description,
+  date: post.data.date,
+  tags: post.data.tags,
+  lang,
+});
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  lang={lang}
+  ogType="article"
+  jsonld={jsonld}
+>
   <Container>
     <div class="animate">
       <BackToPrevious href="/blog">Back to blog</BackToPrevious>
