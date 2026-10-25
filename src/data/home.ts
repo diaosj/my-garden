@@ -34,6 +34,8 @@ export const BEYOND: { title: string; meta: string }[] = [
   { title: "President, Tencent East-China Football Association", meta: "Weekly turnout from under 5 to 40–50" },
   { title: "President, Fudan University Go Club", meta: "Self-taught to amateur 5-dan" },
   { title: "Volunteer Go (weiqi) instructor", meta: "Children of migrant workers, Shanghai" },
+  { title: "Oracle Certified Professional, MySQL", meta: "Certification" },
+  { title: "Father of two", meta: "Long commitments, steady growth" },
 ];
 
 export const LIFE_LEAD =
