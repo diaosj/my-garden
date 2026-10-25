@@ -126,10 +126,28 @@ with identical filenames and schema). The redesign must not change that contract
   `src/data/kyushu-2026.json` from travel-poc, which is newer (Haneda T3 fix,
   2026-08-03) than the copy in this repo (2026-07-13).
 
+## §5c Travel content refresh (added 2026-10-25, approved)
+
+Three 2026 trips are missing from Atlas and/or Voyages. Fill them as part of this work.
+
+**Atlas footprints** — append to the `Footprint` array in `footprints.astro`, city level, `year: 2026`, one-line English description each, coordinates taken from the itinerary JSON stops:
+- Kyushu (Mar 2026): Fukuoka, Karatsu, Hirado, Sasebo, Nagasaki, Dazaifu.
+- Tohoku + Kanto (Aug 2026): Sendai, Yamadera/Yamagata, Hanamaki, Morioka, Yokohama.
+- Bali (Oct 2026): Jimbaran, Nusa Dua, Ubud.
+
+**Bali voyage** — author `bali-2026.json` in `travel-poc/src/data/` first (same schema as `sendai-2026.json`: `title, startDate, endDate, region, days[{date, dayIndex, weekday, title, theme, color, stops[], legs[]}]`), converted from `travel-poc/docs/bali2026/itinerary.md`, then copy to `src/data/bali-2026.json` and add `src/pages/voyages/bali-2026.astro` (clone of the Sendai page; adjust the map's longitude filter to Indonesia ~114–116) and a third entry in `voyages/index.astro`. Day colours follow the existing palette.
+
+**Sanitisation rules for anything published** (existing house rule, restated): no booking/confirmation numbers, no paid amounts, no private individuals' phone numbers or names (e.g. the badminton coach), no home addresses, no children's names. Public venues, their coordinates, public ticket prices and restaurant phone numbers may stay. Keep itinerary text in the language it was written (Chinese), trimmed to what a reader needs.
+
+**Life page extras** (`/life`):
+- One-line lead written in first person about the 2026 shift to travelling more deliberately (final wording drafted by Claude, edited by Adrian).
+- A `Next` row listing destinations only, no dates beyond the year and no family detail: `Spain (2027) · Nagaoka fireworks, Japan (2027) · USA West Coast (2028)`.
+- A small mono stat under Atlas: `Japan: 28 / 47 prefectures` (from `travel-poc/docs/wishlist/japan.md`, 2026-08-17 tally). Update by hand after each trip.
+
 ## §6 Non-goals
 
-- No new articles (only Now sentences and topic titles).
-- Atlas and Voyages pages are only reskinned by the global tokens; no layout change.
+- No new articles (only Now sentences, topic titles, the Life lead and the Bali itinerary data).
+- Atlas and Voyages templates get no layout changes beyond §5b/§5c (new data, new Bali page cloned from Sendai).
 - No URL changes, no new redirects.
 - No new dependencies.
 
