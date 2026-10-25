@@ -2,24 +2,11 @@
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 
-import "@fontsource/geist-sans/100.css";
-import "@fontsource/geist-sans/200.css";
-import "@fontsource/geist-sans/300.css";
 import "@fontsource/geist-sans/400.css";
 import "@fontsource/geist-sans/500.css";
 import "@fontsource/geist-sans/600.css";
-import "@fontsource/geist-sans/700.css";
-import "@fontsource/geist-sans/800.css";
-import "@fontsource/geist-sans/900.css";
-import "@fontsource/geist-mono/100.css";
-import "@fontsource/geist-mono/200.css";
-import "@fontsource/geist-mono/300.css";
 import "@fontsource/geist-mono/400.css";
 import "@fontsource/geist-mono/500.css";
-import "@fontsource/geist-mono/600.css";
-import "@fontsource/geist-mono/700.css";
-import "@fontsource/geist-mono/800.css";
-import "@fontsource/geist-mono/900.css";
 
 import "katex/dist/katex.min.css";
 
@@ -48,10 +35,7 @@ const jsonldList = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link
-  rel="icon"
-  href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌱</text></svg>"
-/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Canonical URL -->
@@ -145,25 +129,24 @@ const jsonldList = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
     const systemThemeButton = document.getElementById("system-theme-button");
 
     function removeActiveButtonTheme(button) {
-      button?.classList.remove("bg-black/5");
-      button?.classList.remove("dark:bg-white/5");
+      button?.classList.remove("bg-rule");
     }
 
     function addActiveButtonTheme(button) {
-      button?.classList.add("bg-black/5");
-      button?.classList.add("dark:bg-white/5");
+      button?.classList.add("bg-rule");
     }
 
     removeActiveButtonTheme(lightThemeButton);
     removeActiveButtonTheme(darkThemeButton);
     removeActiveButtonTheme(systemThemeButton);
 
-    if (theme === "light") {
-      addActiveButtonTheme(lightThemeButton);
-    } else if (theme === "dark") {
+    if (theme === "dark") {
       addActiveButtonTheme(darkThemeButton);
-    } else {
+    } else if (theme === "system") {
       addActiveButtonTheme(systemThemeButton);
+    } else {
+      // Light is the default when nothing has been chosen.
+      addActiveButtonTheme(lightThemeButton);
     }
   }
 
@@ -226,10 +209,13 @@ const jsonldList = jsonld ? (Array.isArray(jsonld) ? jsonld : [jsonld]) : [];
   function preloadTheme() {
     const userTheme = localStorage.theme;
 
-    if (userTheme === "light" || userTheme === "dark") {
-      toggleTheme(userTheme === "dark");
-    } else {
+    if (userTheme === "dark") {
+      toggleTheme(true);
+    } else if (userTheme === "system") {
       toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+    } else {
+      // Default is light; "system" only applies when explicitly chosen.
+      toggleTheme(false);
     }
   }
 

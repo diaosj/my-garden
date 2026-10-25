@@ -5,27 +5,48 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: Geist Sans, ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono: Geist Mono, ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-sans: "Geist Sans", ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans SC", monospace;
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-stone: var(--stone);
+  --color-stone-contrast: var(--stone-contrast);
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+/* Design tokens — light is the default, dark flips on html.dark */
+:root {
+  --paper: #f7f6f2;
+  --ink: #1a1a1a;
+  --muted: #6b6b66;
+  --rule: #e6e4dd;
+  --stone: #1a1a1a;
+  --stone-contrast: #f7f6f2;
+}
+html.dark {
+  --paper: #141414;
+  --ink: #ececec;
+  --muted: #9a9a94;
+  --rule: #2a2a2a;
+  --stone: #ececec;
+  --stone-contrast: #141414;
+}
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--rule);
+  }
+  /* House rule: no italics anywhere (CJK italics render badly). */
+  em,
+  i {
+    font-style: normal;
   }
 }
 
@@ -48,14 +69,13 @@
   body {
     @apply font-sans antialiased;
     @apply flex flex-col;
-    @apply bg-neutral-100 dark:bg-neutral-900;
-    @apply text-black/75 dark:text-white/75;
+    background: var(--paper);
+    color: var(--ink);
   }
 
   header {
-    @apply fixed left-0 right-0 top-0 z-50 py-6;
-    @apply bg-neutral-100/75 dark:bg-neutral-900/75;
-    @apply saturate-200 backdrop-blur-xs;
+    @apply fixed left-0 right-0 top-0 z-50 py-6 backdrop-blur-xs;
+    background: color-mix(in srgb, var(--paper) 80%, transparent);
   }
 
   main {
@@ -64,24 +84,44 @@
 
   footer {
     @apply py-6 text-sm;
+    color: var(--muted);
   }
 
   article {
     @apply prose prose-neutral max-w-full dark:prose-invert prose-img:mx-auto prose-img:my-auto;
     @apply prose-headings:font-semibold;
-    @apply prose-headings:text-black dark:prose-headings:text-white;
+    color: var(--ink);
   }
-}
-
-@layer utilities {
+  article :is(h1, h2, h3, h4) {
+    color: var(--ink);
+  }
   article a {
-    @apply font-sans text-current underline underline-offset-[3px];
-    @apply decoration-black/30 dark:decoration-white/30;
+    @apply font-sans underline underline-offset-[3px];
     @apply transition-colors duration-300 ease-in-out;
+    color: var(--ink);
+    text-decoration-color: var(--rule);
   }
   article a:hover {
-    @apply text-black dark:text-white;
-    @apply decoration-black/50 dark:decoration-white/50;
+    text-decoration-color: var(--ink);
+  }
+
+  /* manuscript utilities */
+  .t-mono {
+    @apply font-mono text-xs uppercase tracking-[0.18em];
+  }
+  .t-muted {
+    color: var(--muted);
+  }
+  .rule {
+    border-top: 1px solid var(--rule);
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, color-mix(in srgb, var(--rule) 55%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--rule) 55%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
   }
 }
 
@@ -104,7 +144,9 @@ html.scrolled #back-to-top {
 
 /* shiki config */
 pre {
-  @apply border border-black/15 py-5 dark:border-white/20;
+  border: 1px solid var(--rule);
+  padding-block: 1.25rem;
+  border-radius: 0;
 }
 
 :root {
@@ -137,11 +179,11 @@ pre {
 
 /* copy code button on codeblocks */
 .copy-code {
-  @apply absolute right-3 top-3 grid size-9 place-content-center rounded-sm border border-black/15 bg-neutral-100 text-center duration-300 ease-in-out dark:border-white/20 dark:bg-neutral-900;
+  @apply absolute right-3 top-3 grid size-9 place-content-center border border-rule bg-paper text-center duration-300 ease-in-out;
 }
 
 .copy-code:hover {
-  @apply bg-[#E9E9E9] transition-colors dark:bg-[#232323];
+  @apply bg-rule transition-colors;
 }
 
 .copy-code:active {

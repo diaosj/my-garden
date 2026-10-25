@@ -18,4 +18,9 @@ check "blog posts built (>170)"  bash -c "[ \$(ls dist/blog | wc -l) -gt 170 ]"
 check "zh-CN posts tagged"       grep -q '<html lang="zh-CN"' dist/blog/sorting-algorithms-summary/index.html
 check "JSON-LD on home"          grep -q 'application/ld+json' dist/index.html
 # --- redesign assertions are appended below by later tasks ---
+check "title is Shoujun Diao"      grep -q '<title>Home | Shoujun Diao' dist/index.html
+check "no italic utility"          bash -c "! grep -rlE 'font-serif|\bitalic\b' dist --include=index.html | grep -q ."
+check "font files <= 10"           bash -c "[ \$(ls dist/_astro | grep -c -E 'geist-(sans|mono).*\\.woff2') -le 10 ]"
+check "favicon is svg stone"       grep -q 'rel="icon" href="/favicon.svg"' dist/index.html
+check "footer has Chinese name"    grep -q '刁寿钧' dist/index.html
 exit $fail
