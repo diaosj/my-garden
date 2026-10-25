@@ -5526,7 +5526,22 @@
       "statusCode": 301
     },
     {
-      "source": "/archives/:path*",
+      "source": "/archives/",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/archives/:path(.*)",
+      "destination": "/blog/",
+      "statusCode": 301
+    },
+    {
+      "source": "/categories/:path(.*)",
+      "destination": "/tags/",
+      "statusCode": 301
+    },
+    {
+      "source": "/:year(\\d{4})/:month(\\d{2})/:day(\\d{2})/:path(.*)",
       "destination": "/blog/",
       "statusCode": 301
     }
