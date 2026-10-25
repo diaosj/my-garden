@@ -1,0 +1,96 @@
+{
+  "title": "巴厘岛 2026 国庆",
+  "startDate": "2026-10-01",
+  "endDate": "2026-10-05",
+  "region": "Bali, Indonesia",
+  "days": [
+    {
+      "date": "2026-10-01",
+      "dayIndex": 1,
+      "weekday": "周四",
+      "title": "上海 → 登巴萨 → 金巴兰",
+      "theme": "出征与安营",
+      "color": "#22c55e",
+      "stops": [
+        { "id": "pvg", "name": "上海浦东T2", "coordinate": { "lng": 121.8083, "lat": 31.1443 }, "time": "09:30", "description": "吉祥航空 HO1355 起飞，6h20m", "type": "transport", "icon": "plane-departure" },
+        { "id": "dps", "name": "登巴萨 Ngurah Rai 机场", "coordinate": { "lng": 115.1672, "lat": -8.7482 }, "time": "15:50", "description": "e-VOA + All Indonesia 入境卡 + Love Bali 旅游税，三码分开扫", "type": "transport", "icon": "plane-arrival" },
+        { "id": "ayana", "name": "AYANA Resort 金巴兰", "coordinate": { "lng": 115.1431, "lat": -8.7867 }, "time": "17:00", "description": "酒店接机 20min；两晚", "type": "hotel", "icon": "hotel" },
+        { "id": "rockbar1", "name": "Rock Bar", "coordinate": { "lng": 115.1414, "lat": -8.7896 }, "time": "19:30", "description": "崖边夜景场，听海", "type": "sight", "icon": "sunset" }
+      ],
+      "legs": [
+        { "from": "pvg", "to": "dps", "transport": "HO1355", "duration": "6h20m", "note": "" },
+        { "from": "dps", "to": "ayana", "transport": "酒店接机", "duration": "20min", "note": "" },
+        { "from": "ayana", "to": "rockbar1", "transport": "园区内", "duration": "5min", "note": "" }
+      ]
+    },
+    {
+      "date": "2026-10-02",
+      "dayIndex": 2,
+      "weekday": "周五",
+      "title": "羽毛球 + Rock Bar 日落",
+      "theme": "各玩各的一天",
+      "color": "#ef4444",
+      "stops": [
+        { "id": "jbc", "name": "Jimbaran Badminton Club", "coordinate": { "lng": 115.1660, "lat": -8.7955 }, "time": "09:00", "description": "两小时球课，当地教练", "type": "activity", "icon": "activity" },
+        { "id": "sumizen", "name": "Sumizen（AYANA 园区日料）", "coordinate": { "lng": 115.1437, "lat": -8.7864 }, "time": "12:00", "description": "全家会合午饭", "type": "food", "icon": "restaurant" },
+        { "id": "ocean", "name": "Ocean Adventure（园区海上活动）", "coordinate": { "lng": 115.1420, "lat": -8.7880 }, "time": "14:00", "description": "娃主场", "type": "activity", "icon": "activity" },
+        { "id": "rockbar2", "name": "Rock Bar 日落场", "coordinate": { "lng": 115.1414, "lat": -8.7896 }, "time": "16:30", "description": "日落约 18:15", "type": "sight", "icon": "sunset" },
+        { "id": "karang", "name": "Karang（园区餐厅）", "coordinate": { "lng": 115.1430, "lat": -8.7870 }, "time": "19:00", "description": "晚饭", "type": "food", "icon": "restaurant" }
+      ],
+      "legs": [
+        { "from": "jbc", "to": "sumizen", "transport": "Grab", "duration": "15min", "note": "" }
+      ]
+    },
+    {
+      "date": "2026-10-03",
+      "dayIndex": 3,
+      "weekday": "周六",
+      "title": "GWK + 搬家到努沙杜瓦",
+      "theme": "全程唯一一次搬家",
+      "color": "#eab308",
+      "stops": [
+        { "id": "gwk", "name": "GWK 神鹰广场", "coordinate": { "lng": 115.1676, "lat": -8.8102 }, "time": "09:00", "description": "121m 毗湿奴像，10:00 巴厘舞；门票约 IDR 125k", "type": "sight", "icon": "landmark" },
+        { "id": "laguna", "name": "The Laguna 努沙杜瓦", "coordinate": { "lng": 115.2317, "lat": -8.7993 }, "time": "13:00", "description": "泻湖泳池房；两晚", "type": "hotel", "icon": "hotel" },
+        { "id": "mengiat", "name": "Mengiat 公共海滩", "coordinate": { "lng": 115.2329, "lat": -8.8046 }, "time": "17:00", "description": "沿沙滩往南，碰沙滩足球", "type": "sight", "icon": "beach" }
+      ],
+      "legs": [
+        { "from": "gwk", "to": "laguna", "transport": "酒店车 / Grab", "duration": "30min", "note": "" },
+        { "from": "laguna", "to": "mengiat", "transport": "步行", "duration": "15min", "note": "" }
+      ]
+    },
+    {
+      "date": "2026-10-04",
+      "dayIndex": 4,
+      "weekday": "周日",
+      "title": "乌布一日",
+      "theme": "瀑布 · 梯田 · 王宫",
+      "color": "#3b82f6",
+      "stops": [
+        { "id": "tegenungan", "name": "Tegenungan 瀑布", "coordinate": { "lng": 115.2886, "lat": -8.5903 }, "time": "09:15", "description": "台阶下到潭边，溯溪鞋", "type": "sight", "icon": "water" },
+        { "id": "tegalalang", "name": "Tegalalang 梯田", "coordinate": { "lng": 115.2790, "lat": -8.4315 }, "time": "10:45", "description": "咖啡馆坐着看；秋千不上", "type": "sight", "icon": "landscape" },
+        { "id": "ubud", "name": "Ubud Palace · 市集 · Saraswati 莲花池", "coordinate": { "lng": 115.2625, "lat": -8.5064 }, "time": "13:15", "description": "三处相邻步行 1.5h；猴林跳过", "type": "sight", "icon": "landmark" },
+        { "id": "laguna2", "name": "The Laguna 努沙杜瓦", "coordinate": { "lng": 115.2317, "lat": -8.7993 }, "time": "17:00", "description": "泳池收尾", "type": "hotel", "icon": "hotel" }
+      ],
+      "legs": [
+        { "from": "tegenungan", "to": "tegalalang", "transport": "包车", "duration": "30min", "note": "" },
+        { "from": "tegalalang", "to": "ubud", "transport": "包车", "duration": "30min", "note": "" },
+        { "from": "ubud", "to": "laguna2", "transport": "包车", "duration": "1h30m", "note": "周日下午回程堵，15:30 前上车" }
+      ]
+    },
+    {
+      "date": "2026-10-05",
+      "dayIndex": 5,
+      "weekday": "周一",
+      "title": "收官回程",
+      "theme": "最后一泡",
+      "color": "#a855f7",
+      "stops": [
+        { "id": "dps2", "name": "登巴萨 Ngurah Rai 机场", "coordinate": { "lng": 115.1672, "lat": -8.7482 }, "time": "13:25", "description": "提前 3.5h 到", "type": "transport", "icon": "plane-departure" },
+        { "id": "pvg2", "name": "上海浦东T2", "coordinate": { "lng": 121.8083, "lat": 31.1443 }, "time": "23:10", "description": "HO1356 落地", "type": "transport", "icon": "plane-arrival" }
+      ],
+      "legs": [
+        { "from": "dps2", "to": "pvg2", "transport": "HO1356", "duration": "6h20m", "note": "" }
+      ]
+    }
+  ]
+}

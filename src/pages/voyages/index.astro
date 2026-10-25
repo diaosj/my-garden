@@ -5,8 +5,10 @@ import { VOYAGES } from "@consts";
 import Entry from "@components/Entry.astro";
 import kyushu from "@data/kyushu-2026.json";
 import sendai from "@data/sendai-2026.json";
+import bali from "@data/bali-2026.json";
 
 const trips = [
+  { slug: "bali-2026", data: bali, emoji: "\u{1F334}" },
   { slug: "sendai-2026", data: sendai, emoji: "\u{1F386}" },
   { slug: "kyushu-2026", data: kyushu, emoji: "\u{1F338}" },
 ];

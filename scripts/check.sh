@@ -41,4 +41,9 @@ check "life has Next row"          grep -q 'Nagaoka' dist/life/index.html
 check "voyages no rounded cards"   bash -c "! grep -q 'rounded-lg' dist/voyages/index.html"
 check "about opens with AlphaGo"   grep -q 'AlphaGo' dist/about/index.html
 check "about has no adjectives"    bash -c "! grep -qiE 'flawlessly|spearheaded|massive-scale|explosive' dist/about/index.html"
+check "bali voyage built"          test -s dist/voyages/bali-2026/index.html
+check "voyages lists 3 trips"      bash -c "[ \$(grep -o 'href=\"/voyages/[a-z]*-2026\"' dist/voyages/index.html | sort -u | wc -l) -eq 3 ]"
+check "footprints: Nagasaki 2026"  bash -c "grep -rqs 'Nagasaki' dist/_astro"
+check "footprints: Ubud 2026"      bash -c "grep -rqs 'Ubud' dist/_astro"
+check "bali json sanitised"        bash -c "! grep -qE '1128150492952579|92064064|858 5211|Milky' src/data/bali-2026.json"
 exit $fail
