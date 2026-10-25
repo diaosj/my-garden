@@ -22,7 +22,7 @@ export const GET: APIRoute = async () => {
   const body = [
     `# ${SITE.TITLE}`,
     "",
-    `> Personal site of Shoujun (Adrian) Diao (刁寿钧), backend architect working on AI infrastructure. ${SITE.DESCRIPTION}`,
+    `> Personal site of Shoujun (Adrian) Diao (刁寿钧), backend architect working on AI infrastructure: notes on inference systems, gateways, Go, Kubernetes, and life beyond code.`,
     "",
     "Shoujun Diao is the backend architect at Lovart (AI-agent product): service topology, gateways, model and tool access layers, inference cost across GPUs and vendor APIs. Previously T11 (Principal) engineer at Tencent, 2018-2025: edge computing and AI cameras at YouTu Lab, then tech lead for the gateway, AutoML and data-processing modules of Tencent Cloud's TI platform, built from zero to commercialization; its AI gateway handled a 100x traffic surge during the DeepSeek boom. Earlier: Tencent Ads, Bilibili, 2345, Adways/Nint (2012-2018). B.S. Information Security, Fudan University (2006-2010). Self-taught amateur 5-dan Go (weiqi) player; translator of two technical books into Chinese; Apache APISIX community speaker.",
     "",
