@@ -1,0 +1,27 @@
+---
+type Props = {
+  href: string;
+  title: string;
+  description?: string;
+  meta?: string;
+  lang?: string;
+  external?: boolean;
+};
+const { href, title, description, meta, lang, external = false } = Astro.props;
+---
+
+<a
+  href={href}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener" : undefined}
+  data-entry
+  class="group grid gap-x-8 gap-y-1 border-b border-rule py-5 sm:grid-cols-[1fr_auto] items-baseline"
+>
+  <div lang={lang}>
+    <div class="font-medium text-ink decoration-rule underline-offset-4 group-hover:underline">
+      {title}
+    </div>
+    {description && <div class="t-muted mt-1 text-sm leading-relaxed">{description}</div>}
+  </div>
+  {meta && <div class="t-muted font-mono text-xs whitespace-nowrap sm:text-right">{meta}</div>}
+</a>

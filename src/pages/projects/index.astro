@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import Entry from "@components/Entry.astro";
 import { PROJECTS } from "@consts";
 
 const projects = (await getCollection("projects"))
@@ -21,7 +21,7 @@ const projects = (await getCollection("projects"))
           {
             projects.map((project) => (
               <li>
-                <ArrowCard entry={project} />
+                <Entry href={`/projects/${project.id}`} title={project.data.title} description={project.data.description} meta={project.data.date.getFullYear().toString()} />
               </li>
             ))
           }

@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import Entry from "@components/Entry.astro";
 import BackToPrevious from "@components/BackToPrevious.astro";
 
 export async function getStaticPaths() {
@@ -37,7 +37,7 @@ const sortedPosts = posts.sort(
         Posts tagged with "{id}"
       </h1>
       <ul class="animate flex flex-col gap-4">
-        {sortedPosts.map((post) => <ArrowCard entry={post} />)}
+        {sortedPosts.map((post) => <Entry href={`/blog/${post.id}`} title={post.data.title} description={post.data.description} meta={post.data.date.getFullYear().toString()} />)}
       </ul>
     </div>
   </Container>

@@ -23,4 +23,6 @@ check "no italic utility"          bash -c "! grep -rlE 'font-serif|\bitalic\b' 
 check "font files <= 10"           bash -c "[ \$(ls dist/_astro | grep -c -E 'geist-(sans|mono).*\\.woff2') -le 10 ]"
 check "favicon is svg stone"       grep -q 'rel="icon" href="/favicon.svg"' dist/index.html
 check "footer has Chinese name"    grep -q '刁寿钧' dist/index.html
+check "ArrowCard removed"          bash -c "! test -f src/components/ArrowCard.astro"
+check "Entry used on projects"     grep -q 'data-entry' dist/projects/index.html
 exit $fail
