@@ -21,27 +21,29 @@ const jsonld = graph(
   <Container>
     <h1 class="animate mb-2 font-mono text-xl font-medium text-ink">About</h1>
     <p class="animate t-muted mb-10 text-sm" lang="zh-CN">
-      刁寿钧，AI 基础设施架构师，现任 Lovart 架构师，前腾讯云 AI 平台架构师；业余围棋五段，技术图书译者。
+      刁寿钧，Lovart 后端架构师（Agent Infra），前腾讯云 TI 平台技术负责人（T11）；自学围棋至业余五段，技术图书译者。
     </p>
 
     <div class="space-y-16">
-      <!-- Copy draft by Claude 2026-10-25; Adrian to edit before merge. -->
+      <!-- Copy draft by Claude 2026-10-25, aligned with resume body-miora.tex; Adrian to edit before merge. -->
       <section class="animate max-w-prose space-y-4 leading-relaxed text-ink">
         <p>
           In March 2016 I watched AlphaGo play Lee Sedol the way an amateur 5-dan watches anything: counting, and
           expecting to be able to follow. By game two I couldn't. Move 37 wasn't a move I would have rejected — it was
-          one I would never have considered. I had been a backend engineer for eight years. That week I decided the
-          thing that beat me was the thing I wanted to build.
+          one I would never have considered. I had been writing backend code for four years by then, after a short
+          first career in pre-sales. That week I decided the thing that beat me was the thing I wanted to build.
         </p>
         <p>
-          I taught myself deep reinforcement learning, gave a seminar on it to my team, and spent the next seven years
-          at Tencent turning that interest into infrastructure: the unified AI platform of Tencent Cloud, built from
-          nothing, and the gateways that carried it through the first wave of LLM traffic. Today I do the same job at
-          Lovart for generative media: routing, serving and paying for models so a global product stays up.
+          I taught myself deep reinforcement learning, gave a seminar on it to my team, and in 2018 moved to Tencent's
+          YouTu Lab: edge computing and AI cameras first, then seven years on Tencent Cloud's TI platform as tech lead
+          for its gateway, AutoML and data-processing modules. We took the platform from zero to commercialization;
+          the gateway I designed went from an APISIX prototype to a Kubernetes-operator architecture at 99.99%
+          availability, and carried a 100× traffic surge during the DeepSeek boom without an incident.
         </p>
         <p>
-          I like systems that are honest about their limits, people who explain things plainly, and games where the
-          position tells you what to do next.
+          Today I am the backend architect at Lovart, an AI-agent product: the service topology, the gateways, the
+          model and tool access layers, and what inference costs. I like systems that are honest about their limits,
+          people who explain things plainly, and games where the position tells you what to do next.
         </p>
       </section>
 
@@ -49,11 +51,14 @@ const jsonld = graph(
         <SectionLabel index="01" label="Path" />
         {
           [
-            { role: "Architect", org: "Lovart", years: "2025 — now", note: "Inference serving, model gateways, multi-cloud GPU and cost for image, video and LLM generation." },
-            { role: "Staff Engineer, AI Platform Architect", org: "Tencent", years: "2018 — 2025", note: "Tencent Cloud's unified AI platform from zero; cloud-native gateways that absorbed a 100× traffic rise during the LLM boom." },
-            { role: "Senior Backend Engineer", org: "Tencent", years: "2016 — 2018", note: "Microservices refactor of the brand-advertising system." },
-            { role: "Senior Engineer", org: "Bilibili", years: "2016", note: "Core backend for creators during the move to microservices." },
-            { role: "Backend Developer", org: "Adways (Nint)", years: "2012 — 2015", note: "Early engineer on an e-commerce analytics product, built from scratch." },
+            { role: "Backend Architect", org: "Lovart (LiblibAI)", years: "2025.11 — now", note: "Agent infra and harness: service topology, gateways, model and tool access, inference cost. Core services Python → Go; TTFT −30%; routing across 10+ model vendors." },
+            { role: "T11 (Principal) Engineer", org: "Tencent · YouTu Lab / Tencent Cloud AI", years: "2018.09 — 2025.09", note: "Tech lead for the gateway, AutoML and data-processing modules of the TI platform (2020–2025); edge computing and AI-camera smart-community lead (2018–2020); Tencent Meeting performance support during its surge (Jan–Feb 2020)." },
+            { role: "T8 Engineer", org: "Tencent · Ads Platform", years: "2016.09 — 2018.09", note: "Core developer on the microservices refactor of the brand-advertising CRM." },
+            { role: "Senior Engineer", org: "Bilibili", years: "2016.04 — 2016.09", note: "Creator-center backend during the move from monolith to microservices." },
+            { role: "Core Developer", org: "2345 · Lottery", years: "2015.05 — 2016.04", note: "Backend for large promotions; led purchase-flow performance work across the stack." },
+            { role: "Core Developer", org: "Adways · Nint", years: "2012.01 — 2015.05", note: "E-commerce analytics product Nint from zero: data parsing and web; spun out as its own company in 2014." },
+            { role: "Sales & pre-sales engineer", org: "Industrial and financial IT solutions", years: "2010.07 — 2011.12", note: "First career, before switching to engineering." },
+            { role: "B.S. Information Security", org: "Fudan University", years: "2006.09 — 2010.07", note: "School of Computer Science and Information Technology." },
           ].map((e) => (
             <div class="grid items-baseline gap-x-8 gap-y-1 border-b border-rule py-5 sm:grid-cols-[1fr_auto]">
               <div>
@@ -71,9 +76,11 @@ const jsonld = graph(
       <section class="animate space-y-2">
         <SectionLabel index="02" label="Beyond" />
         <p class="t-muted max-w-prose py-4">
-          I have spoken at the Apache APISIX Meetup on high-performance gateways, translated two technical books into
-          Chinese, run a 200-person football association at Tencent, and taught Go to children of migrant workers in
-          Shanghai. I am learning Japanese and Spanish, slowly and out loud.
+          I have spoken for the Apache APISIX community on high-performance gateways and translated two technical
+          books into Chinese. I taught myself Go to amateur 5-dan, ran the Go club at Fudan, and later taught the game
+          to children of migrant workers in Shanghai. As president of Tencent's East-China football association I took
+          weekly turnout from under five people to forty or fifty, and the team to its best result in the Shanghai FA
+          amateur league. I am learning Japanese and Spanish, slowly and out loud.
         </p>
       </section>
 

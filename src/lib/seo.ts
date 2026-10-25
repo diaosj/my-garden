@@ -10,7 +10,7 @@ export const PERSON_JSONLD = {
   alternateName: ["Adrian Diao", "diaosj", "刁寿钧"],
   url: SITE_URL,
   email: `mailto:${SITE.EMAIL}`,
-  jobTitle: "AI Infrastructure Architect",
+  jobTitle: "Backend Architect",
   worksFor: { "@type": "Organization", name: "Lovart" },
   alumniOf: { "@type": "CollegeOrUniversity", name: "Fudan University" },
   knowsAbout: [
