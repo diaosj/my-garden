@@ -30,7 +30,12 @@ export const ABOUT: Metadata = {
 
 export const VOYAGES: Metadata = {
   TITLE: "Voyages",
-  DESCRIPTION: "Adventures beyond the code.",
+  DESCRIPTION: "Itineraries, written before leaving.",
+};
+
+export const LIFE: Metadata = {
+  TITLE: "Life",
+  DESCRIPTION: "Voyages, a map of footprints, and what's next.",
 };
 
 export const SOCIALS: Socials = [

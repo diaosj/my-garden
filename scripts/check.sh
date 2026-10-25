@@ -35,4 +35,8 @@ check "home writing in progress"   grep -q 'in progress' dist/index.html
 check "home work lists token demo" grep -q 'token-console-demo' dist/index.html
 check "home archive links"         grep -q 'href="/blog#cycling"' dist/index.html
 check "hero grid present"          grep -q 'grid-bg' dist/index.html
+check "nav has four items"         bash -c "grep -o 'href=\"/\(blog\|projects\|about\|life\)\"' dist/index.html | sort -u | wc -l | grep -q 4"
+check "life page built"            test -s dist/life/index.html
+check "life has Next row"          grep -q 'Nagaoka' dist/life/index.html
+check "voyages no rounded cards"   bash -c "! grep -q 'rounded-lg' dist/voyages/index.html"
 exit $fail
