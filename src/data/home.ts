@@ -6,7 +6,7 @@ export const HERO_LINE =
 
 export const NOW = [
   "At Lovart I am the backend architect for an AI-agent product: the service topology, the gateways, the model and tool access layers, and the cost of inference across GPUs and vendor APIs. Recent work: moving core services from Python to Go, a 30% TTFT cut that let a 14-node H200 cluster run on 6, and routing with fallback across 10+ model vendors.",
-  "Before that, seven years at Tencent: edge computing and AI cameras at YouTu Lab, then tech lead for the gateway, AutoML and data-processing modules of Tencent Cloud's TI platform, which we built from zero to commercialization. Its AI gateway took a 100× traffic surge during the DeepSeek boom without an incident.",
+  "Before that, nine years at Tencent: the brand-advertising platform first, then edge computing and AI cameras at YouTu Lab, then five years as tech lead for the gateway, AutoML and data-processing modules of Tencent Cloud's TI platform, which we built from zero to commercialization. Its AI gateway took a 100× traffic surge during the DeepSeek boom without an incident.",
   "I think about inference the way I once thought about Go: position first, then tempo. Most of what I write here is about that.",
 ];
 
